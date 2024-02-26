@@ -8,3 +8,4 @@ Clases de la asignatura [Administración de Bases de Datos (ABD)](https://www.eh
 * Introducción a grafos.
 * Bases de Datos para Property Graphs.
 * Bases de Datos para RDF (Triple Stores).
+* Bases de Datoa para vectores. 
