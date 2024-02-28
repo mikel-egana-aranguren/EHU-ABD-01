@@ -4,4 +4,4 @@ Clases de la asignatura [Administración de Bases de Datos (ABD)](https://www.eh
 
 * [Introducción a NoSQL](Intro/index.html).
 * [Grafos](Grafos/index.html).
-  * [RDF](Grafos/rdf.html).
+  * [RDF](RDF/index.html).
