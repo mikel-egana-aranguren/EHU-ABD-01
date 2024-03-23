@@ -1,5 +1,11 @@
 # Releases
 
+## 2023-2024-3
+
+* OWL
+* SPARQL
+* Intro NoSQL, Grafos, RDF
+
 ## 2023-2024-2
 
 * SPARQL
