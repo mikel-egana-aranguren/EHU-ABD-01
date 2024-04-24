@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MongoDB</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../ShowerTemplate/shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body class="shower list">
+
+    <header class="caption">
+        <h1>MongoDB</h1>
+        <p>Mikel Egaña Aranguren</p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>MongoDB</h2>
+        <p>Mikel Egaña Aranguren</p>
+        <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
+        <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
+        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" style="border: 1px solid #555;">
+    </section>
+
+    <section class="slide">
+        <h2>MongoDB</h2>
+        <p><a href="https://github.com/mikel-egana-aranguren/ABD">https://github.com/mikel-egana-aranguren/ABD</a></p>
+        <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
+    </section>
+
+    <section class="slide">
+        <h2>MongoDB</h2>
+        https://www.mongodb.com/
+
+        BD NoSQL orientada a documentos
+Creada en 2009
+Última versión: 7.0
+Su nombre viene de la palabra Humongous (“gigantesco”)
+    </section>
+
+    <section class="slide">
+        <h2>MongoDB</h2>
+        Ecosistema de productos MongoDB:
+
+        MongoDB Community Edition
+        Versión libre de la BD 
+        En este tema usaremos esta versión
+        MongoDB Enterprise
+        Versión comercial de la DB
+        Atlas
+        Servicio de BD en la nube
+        Herramientas adicionales
+        P.e. Compass (GUI para MongoDB)
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de datos</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/modelo.svg" alt="Estructura MongoDB" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de datos</h2>
+        <p>Un documento se organiza en formato <a href="https://datatracker.ietf.org/doc/html/rfc4627">JSON</a> (JavaScript Object Notation): Internamente se almacena en formato <a href="https://bsonspec.org/">Binary JSON</a>(BSON)</p>
+        <p>Cada dato como clave valor</p>
+        <p>Un valor puede ser otro documento</p>
+        <p>Un valor puede tener varios documentos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de datos</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/json.png" alt="Estructura MongoDB - JSON" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de datos</h2>
+        <p>Equivalencia aproximada con modelo relacional:
+            <ul>
+                <li>Tabla - coleccion</li>
+                <li>Fila - documento</li>
+                <li>Columna - clave</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de datos</h2>
+        <p>Diferencias principales con modelo relacional:
+            <ul>
+                <li>No todos los documentos tienen por qué tener las mismas claves</li>
+                <li>No es necesario definir relaciones explícitas entre documentos</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Limpiar la pantalla: > cls</li>
+            <li>Mostrar BBDD existentes: > show dbs</li>
+            <li>Mostrar BBDD en uso: > db</li>
+            <li>Cambiar a una BBDD: > use nombre-BBDD</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Creación de BBDD y colecciones</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/crear-bd.png" alt="Crear BD" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Creación de BBDD y colecciones</h2>
+        <p>cada documento tiene un identificador único (Se asigna automáticamente en su creación, aunque también podemos asignar uno de forma manual)</p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/creado.png" alt="Creado" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Creación de BBDD y colecciones</h2>
+        <p>Insertar múltiples documentos en una colección: <pre>> db.<nombre-colección>.insertMany( <array-docs> )</pre></p>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Mostrar todos los documentos: <pre>> db.<nombre-colección>.find()</pre></li>
+            <li>Mostrar los documentos que encajen con un patrón: <pre>> db.<nombre-colección>.find(<patrón>)</pre></li>
+            <li>Encontrar el 1er documento que encaje con un patrón: <pre>> db.<nombre-colección>.findOne(<patrón>)</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Buscar en la colección “clientes” los clientes con nombre “Unai”: <pre>> db.clientes.find( { nombre: "Unai" } )</pre></li>
+            <li>Buscar en “clientes” los clientes con nombre “Unai” y DNI 12345:: <pre>> db.clientes.find( { nombre: "Unai", DNI: 12345 } )</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Operadores de comparación (eq,ne,gt,gte,lt,lte): <pre>> db.clientes.find( { DNI: { $gt: 30000 } } )</pre></li>
+            <li>Expresiones regulares: <pre>> db.clientes.find( { nombre: /M./ } )</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Campos a mostrar: <pre>{ campoAMostrar: 1, campoAOcultar: 0}</pre></li>
+            <li>Recuperar sólo el DNI de los documentos en la colección “clientes”: <pre>> db.clientes.find( {} , {DNI: 1, _id: 0})</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Mostrar el contenido de una colección: <pre>> db.clientes.find( {DNI: 33344}, {nombre:1, _id:0} )</pre></li>
+        </ul>
+    </section>
+
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Eliminar el 1er documento que encaje con patrón: <pre>> db.<nombre-colección>.deleteOne(<patrón>)</pre></li>
+            <li>Eliminar los documentos que encajen con patrón: <pre>> db.<nombre-colección>.deleteMany(<patrón>)</pre></li>
+            <li>Eliminar todos los documentos de una colección: <pre>> db.<nombre-colección>.deleteMany( {} )</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Modificar documentos en una colección: <pre>> db.<nombre-colección>.updateMany(<patrón-busq>, {$set: <cambios>})</pre></li>
+            <li>Para los clientes cuyo DNI sea 22233, actualizar su nombre a “Nagore”: <pre>> db.clientes.updateMany({ DNI: 22233 }, {$set:{ nombre: "Nagore" } })</pre></li>
+            <li>Reemplazar un documento por otro: <pre>> db.<nombre-colección>.replaceOne(<patrón-busq>, <nuevo-doc> )</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Mostrar colecciones en una BD: <pre>> show collections</pre></li>
+            <li>Eliminar una colección completa: <pre>> db.<nombre-colección>.drop()</pre></li>
+            <li>Eliminar una BD: <pre>> db.dropDatabase()</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Relaciones</h2>
+        <p>Un documento puede tener documentos embebidos o listados</p>
+    </section>
+
+    <section class="slide">
+        <h2>Relaciones</h2>
+        <p>Normalmente:
+            <ul>
+                <li>Varias colecciones, cada un representa una entidad del contexto: clientes, productos, pedidos</li>
+                <li>Relaciones entre los datos de diferentes entidades</li>
+            </ul>
+        </p>
+        <p>MongoDB no proporciona una técnica concreta para definir relaciones entre colecciones: las debemos definir nosotros</p>
+    </section>
+
+    <section class="slide">
+        <h2>Relaciones</h2>
+        <p>Documentos embebidos</p>
+        <p>Utilizar campos concretos como referencia</p>
+    </section>
+
+    <section class="slide">
+        <h2>Documentos embebidos</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/embebido.png" alt="Documentos embebidos" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Documentos embebidos</h2>
+        <p>Adecuado para datos que no se solapan/repiten</p>
+        <p>(+) Los datos se agrupan lógicamente</p>
+        <p>(-) Puede generar duplicidades que debemos gestionar</p>
+    </section>
+
+    <section class="slide">
+        <h2>Referencias</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Referencias.png" alt="Referencias" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Referencias</h2>
+        <p>Adecuado para datos que se referencien en diferentes colecciones</p>
+        <p>(+) Elimina posibles duplicidades</p>
+        <p>(-) Más complejo de gestionar</p>
+        <p>(-) Requiere agregaciones para obtener datos relacionados</p>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="badge">
+        <a href="https://github.com/mikel-egana-aranguren/ShowerTemplate">Fork me on GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="../ShowerTemplate/shower/shower.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+
+</body>
+</html>
