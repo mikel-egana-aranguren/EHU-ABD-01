@@ -5,7 +5,7 @@ PREFIX gip: <http://gipuzkoa.eus/resource/>
 SELECT ?poblacion_bilbo
 WHERE {
  gip:bilbo owl:sameAs ?town
- SERVICE <http://dbpedia.org/sparql> {
+ SERVICE <https://dbpedia.org/sparql> {
   ?town dbpedia_ont:populationTotal ?poblacion_bilbo
  }
 }
