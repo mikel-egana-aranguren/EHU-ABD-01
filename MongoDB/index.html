@@ -48,10 +48,36 @@
         <ul>
             <li>MongoDB Community Edition: Versión libre</li>
             <li>MongoDB Enterprise: Versión comercial</li>
+            <li>MongoSH: cliente Shell</li>
             <li>Atlas: Servicio en la nube</li>
-            <li>Herramientas adicionales: P.e. Compass (GUI)</li>
+            <li>Herramientas adicionales: Compass, Atlas CLI, VS Code Plugin, ...</li>
+            <li><a href="https://www.mongodb.com/docs/">Documentación</a></li>
         </ul>
     </section>
+
+    <section class="slide">
+        <h2>Instalación Ubuntu</h2>
+        <ol>
+            <li>Importar clave GPG (Instalar gpg, curl)</li>
+            <li>Crear archivo sources.list (24.04, 22.04, 20.04)</li>
+            <li>Recargar los paquetes disponibles en APT</li>
+            <li>Instalar mediante APT</li>
+        </ol>
+    </section>
+
+
+
+    <section class="slide">
+        <h2>Instalación Docker</h2>
+        <ol>
+            <li><a href="https://hub.docker.com/">https://hub.docker.com/</a></li>
+            <li>mongodb/mongodb-community-server</li>
+            <li>docker pull mongodb/mongodb-community-server</li>
+            <li>docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest</li>
+        </ol>
+    </section>
+
+
 
     <section class="slide">
         <h2>Estructura de datos</h2>
@@ -92,6 +118,11 @@
 
     <section class="slide">
         <h2>Estructura de datos</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/json.svg" alt="Estructura MongoDB - JSON" width="60%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de datos</h2>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/json.png" alt="Estructura MongoDB - JSON" width="60%"></p>
     </section>
 
@@ -102,6 +133,7 @@
                 <li>Tabla - colección</li>
                 <li>Fila - documento</li>
                 <li>Columna - clave</li>
+                <li>Joins - integrados en documentos</li>
             </ul>
         </p>
     </section>
