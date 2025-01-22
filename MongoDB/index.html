@@ -155,6 +155,27 @@
         </ul>
     </section>
 
+    <section class="slide">
+        <h2>Comandos</h2>
+        Crear coleccion con un documento:
+        <ul>
+            <li> <pre>> use tienda</pre></li>
+            <li> <pre>> db.[coleccion].insertOne([documento])</pre></li>
+            <li> <pre>> db.clientes.insertOne({"nombre":"mikel"})</pre></li>
+            <li>Cada documento tiene un identificador único que se asigna automáticamente en su creación</li>
+            <li>Asignar ID de forma manual: <pre>> db.clientes.insertOne ({ _id:1 , nombre:"josu" }) </pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Mostrar todos los documentos: <pre>> db.[nombre-colección].find()</pre></li>
+
+        </ul>
+    </section>
+
+
 
 
     <section class="slide">
@@ -163,30 +184,24 @@
 
 
 
-    <section class="slide">
-        <h2>Creación de BBDD y colecciones</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/crear-bd.png" alt="Crear BD" width="80%"></p>
-    </section>
 
     <section class="slide">
-        <h2>Creación de BBDD y colecciones</h2>
-        <p>Cada documento tiene un identificador único (Se asigna automáticamente en su creación, aunque también podemos asignar uno de forma manual)</p>
-        <p><img  src="pictures-abd-01/creado.png" alt="Creado" width="80%"></p>
+        <h2>Comandos</h2>
+        <ul>
+
+            <li>Mostrar los documentos que encajen con un patrón: <pre>> db.[nombre-colección].find([patrón])</pre></li>
+            <li>Encontrar el 1er documento que encaje con un patrón: <pre>> db.[nombre-colección].findOne([patrón])</pre></li>
+        </ul>
     </section>
+
+
 
     <section class="slide">
         <h2>Creación de BBDD y colecciones</h2>
         <p>Insertar múltiples documentos en una colección: <pre>> db.[nombre-colección].insertMany( [array-docs] )</pre></p>
     </section>
 
-    <section class="slide">
-        <h2>Comandos</h2>
-        <ul>
-            <li>Mostrar todos los documentos: <pre>> db.[nombre-colección].find()</pre></li>
-            <li>Mostrar los documentos que encajen con un patrón: <pre>> db.[nombre-colección].find([patrón])</pre></li>
-            <li>Encontrar el 1er documento que encaje con un patrón: <pre>> db.[nombre-colección].findOne([patrón])</pre></li>
-        </ul>
-    </section>
+
 
     <section class="slide">
         <h2>Comandos</h2>
