@@ -88,42 +88,11 @@
         <h2>Estructura de datos</h2>
         <p>Un documento se organiza en formato <a href="https://datatracker.ietf.org/doc/html/rfc4627">JSON</a> (JavaScript Object Notation): Internamente se almacena en formato <a href="https://bsonspec.org/">Binary JSON</a> (BSON)</p>
         <p>Cada dato como clave valor</p>
-        <p>Un valor puede ser otro documento</p>
-        <p>Un valor puede tener varios documentos</p>
-    </section>
-
-    <section class="slide">
-        <h2>JSON</h2>
-        <pre>
-            <code>
-                {
-                    nombre: "Mikel"
-                    email: "mikel.egana@ehu.eus"
-                    direccion: 
-                    {
-                        ciudad: "Bilbao"
-                    }
-                    telefonos: [
-                        {
-                            despacho: 946014786
-                        },
-                        {
-                            movil: 666777888
-                        }
-                    ] 
-                }
-            </code>
-        </pre>
     </section>
 
     <section class="slide">
         <h2>Estructura de datos</h2>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/json.svg" alt="Estructura MongoDB - JSON" width="60%"></p>
-    </section>
-
-    <section class="slide">
-        <h2>Estructura de datos</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/json.png" alt="Estructura MongoDB - JSON" width="60%"></p>
     </section>
 
     <section class="slide">
@@ -149,20 +118,50 @@
     </section>
 
     <section class="slide">
+        <h2>Directorios importantes</h2>
+            <ul>
+                <li>/var/log/mongodb/</li>
+                <li>/var/lib/mongodb/</li>
+            </ul>
+    </section>
+
+    <section class="slide">
         <h2>Comandos</h2>
         <ul>
-            <li>Limpiar la pantalla: <pre>> cls</pre></li>
+            <li>MongoSH: <pre>$ mongosh</pre></li>
             <li>Mostrar BBDD existentes: <pre>> show dbs</pre></li>
+            <li>Mostrar BBDD en uso: <pre>> db</pre></li>
+
         </ul>
     </section>
 
     <section class="slide">
         <h2>Comandos</h2>
         <ul>
-            <li>Mostrar BBDD en uso: <pre>> db</pre></li>
-            <li>Cambiar a una BBDD: <pre>> use nombre-BBDD</pre></li>
+            <li>Crear/meterse en DB: <pre>> use nombre-BBDD</pre></li>
+            <li>Limpiar la pantalla: <pre>> cls</pre></li>
+            <li>Tabular!!!! <pre>> db.</pre></li>
         </ul>
     </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        Crear coleccion vacia (! NoSQL):
+        <ul>
+            <li> <pre>> use tienda</pre></li>
+            <li> <pre>> db.createCollection("clientes")</pre></li>
+            <li> <pre>> show dbs</pre></li>
+            <li> <pre>> show collections</pre></li>
+        </ul>
+    </section>
+
+
+
+    <section class="slide">
+------------------------------
+    </section>
+
+
 
     <section class="slide">
         <h2>Creación de BBDD y colecciones</h2>
