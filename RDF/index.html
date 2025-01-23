@@ -51,7 +51,7 @@
 
     <section class="slide">
         <h2>Grafo RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo.svg" alt="Grafo RDF" width="60%"></p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -70,7 +70,7 @@
 
     <section class="slide">
         <h2>Grafo RDF: URIs</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo_uris.svg" alt="Grafo RDF: URIs" width="60%"></p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo_uris.svg" alt="Grafo RDF: URIs" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -82,45 +82,7 @@
 
     <section class="slide">
         <h2>Grafo RDF: datatypes</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo_datatypes.svg" alt="Grafo RDF: datatypes" width="60%"></p>
-    </section>
-
-    <section class="slide">
-        -------------- GRAPHDB -----------------------------
-    </section>
-
-
-
-
-    <section class="slide">
-        <h2>Grafo RDF: rdf:type</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Triple_rdf_type.png" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
-    </section>
-
-    <section class="slide">
-        <h2>Vocabularios reservados</h2>
-        <p>Definen el lenguaje mismo</p>
-        <p>RDF: http://www.w3.org/1999/02/22-rdf-syntax-ns# (Ej. rdf:type = http://www.w3.org/1999/02/22-rdf-syntax-ns#type)</p>
-        <p>RDFS: http://www.w3.org/2000/01/rdf-schema#</p>
-        <p>OWL: http://www.w3.org/2002/07/owl#</p>
-    </section>
-
-    <section class="slide">
-        <h2>Vocabularios de dominio (Ontologías)</h2>
-        <p>Describen un dominio concreto</p>
-        <p>Definen propiedades generales de los datos que queremos publicar</p>
-        <p>foaf:person, dbpedia-ont:city, dc:book, schema:person, ...</p>
-    </section>
-
-    <section class="slide">
-        <h2>Ontologías</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Triple_ontologias.png" alt="Ontologias" width="60%"></p>
-    </section>
-
-    <section class="slide">
-        <h2>Herramientas útiles</h2>
-        <p><a href="https://prefix.cc/">Prefix.cc</a></p>
-        <p><a href="https://lov.linkeddata.es/dataset/lov">Linked Open Vocabularies</a></p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo_datatypes.svg" alt="Grafo RDF: datatypes" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -158,6 +120,102 @@
         <p><a href="https://rdf-translator.appspot.com/">http://rdf-translator.appspot.com/</a></p>
         <p><a href="https://www.easyrdf.org/converter">https://www.easyrdf.org/converter</a></p>
     </section>
+
+    <section class="slide">
+        <h2>Triple Stores</h2>
+        <p>RDF es un estandar del W3C (=HTML, !=SQL), dado un archivo RDF:
+            <ul>
+                <li>Modelo de datos: todas las Triple Stores cargan lo mismo</li>
+                <li>Sintaxis (RDF/XML, Turtle, ...): todas las Triple Stores cargan lo mismo</li>
+            </ul>
+        </p>
+        <p>Las Triple Stores surgieron cuando internet ya existia (NoSQL!): 
+            <ul>
+                <li>Todas ofrecen la misma funcionalidad a traves de HTTP(S) SPARQL</li>
+                <li>Federacion</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Triple Stores</h2>
+        <p><a href="https://aws.amazon.com/neptune/">Amazon Neptune</a>:
+            <ul>
+                <li>Amazon AWS</li>
+                <li>Tambien almacena property graphs</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Triple Stores</h2>
+        <p><a href="https://virtuoso.openlinksw.com/">Virtuoso</a></p>
+        <p><a href="https://www.stardog.com/">Stardog</a></p>
+        <p><a href="https://graphdb.ontotext.com/">GraphDB</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>GraphDB</h2>
+        <ul>
+            <li>Razonamiento automatico</li>
+            <li>Conectores para servicios como Lucene o Kafka</li>
+            <li>Virtualizacion de Bases de Datos relacionales (Ontop)</li>
+            <li>...</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>GraphDB - ejemplo</h2>
+    </section>
+
+    <section class="slide">
+        ------------------------------
+    </section>
+
+
+    <section class="slide">
+        <h2>Named Graphs</h2>
+        <p>Agrupar triples en una "bolsa" identifida por una URI</p>
+        <p>Dependiente de implementacion</p>
+        <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
+    </section>
+
+
+
+
+
+    <section class="slide">
+        <h2>Grafo RDF: rdf:type</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Triple_rdf_type.png" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Vocabularios reservados</h2>
+        <p>Definen el lenguaje mismo</p>
+        <p>RDF: http://www.w3.org/1999/02/22-rdf-syntax-ns# (Ej. rdf:type = http://www.w3.org/1999/02/22-rdf-syntax-ns#type)</p>
+        <p>RDFS: http://www.w3.org/2000/01/rdf-schema#</p>
+        <p>OWL: http://www.w3.org/2002/07/owl#</p>
+    </section>
+
+    <section class="slide">
+        <h2>Vocabularios de dominio (Ontologías)</h2>
+        <p>Describen un dominio concreto</p>
+        <p>Definen propiedades generales de los datos que queremos publicar</p>
+        <p>foaf:person, dbpedia-ont:city, dc:book, schema:person, ...</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ontologías</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Triple_ontologias.png" alt="Ontologias" width="60%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Herramientas útiles</h2>
+        <p><a href="https://prefix.cc/">Prefix.cc</a></p>
+        <p><a href="https://lov.linkeddata.es/dataset/lov">Linked Open Vocabularies</a></p>
+    </section>
+
+    
 
     
 
