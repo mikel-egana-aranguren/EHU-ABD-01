@@ -37,6 +37,20 @@
     </section>
 
     <section class="slide">
+        <h2>Web Semántica</h2>
+        <p>Proyecto utopico para una web inteligente</p>
+        <p>Cada recurso publica sus datos y agentes inteligentes los consumen</p>
+        <p>Stack de tecnologías:
+            <a href="https://datatracker.ietf.org/doc/html/rfc3986">URI</a>: identificadores, 
+            <a href="https://www.w3.org/TR/rdf11-concepts/"><RDF/a>: datos, 
+            <a href="https://www.w3.org/TR/sparql11-overview/">SPARQL</a>: consultas RDF,  
+            <a href="https://www.w3.org/TR/shacl/">SHACL</a>: validacion RDF</p>
+            <a href="https://www.w3.org/TR/owl2-overview/">OWL</a>: vocabularios (ontologias),
+        <p>Se ha implementado parcialmente (Ej. JSON-LD )</p>
+        <p>LLMs?</p>
+    </section>
+
+    <section class="slide">
         <h2>RDF</h2>
         <p>RDF: Resource Description Framework</p>
         <p>Estándar <a href="https://www.w3.org/TR/rdf11-primer/">oficial del W3C</a> para representar recursos en la web</p>
@@ -161,36 +175,58 @@
             <li>Conectores para servicios como Lucene o Kafka</li>
             <li>Virtualizacion de Bases de Datos relacionales (Ontop)</li>
             <li>...</li>
+            <li>[Ejecutar ejemplos 1-1, 1-2]</li>
         </ul>
     </section>
 
     <section class="slide">
-        <h2>GraphDB - ejemplo</h2>
+        <h2>Grafos</h2>
+        <p>Agrupar triples en una "bolsa" identificada por una URI (Diferente de los datos): Named Graphs</p>
+        <p>Dependiente de implementación: todas las Triple Stores tienen un Default Graph que contiene todos los triples</p>
+        <p>[Ejecutar ejemplo]</p>
     </section>
 
     <section class="slide">
-        ------------------------------
+        <h2>Grafos</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph.svg" alt="Grafo RDF" width="80%"></p>
+        <p>[Ejecutar ejemplo]</p>
     </section>
 
-
     <section class="slide">
-        <h2>Named Graphs</h2>
-        <p>Agrupar triples en una "bolsa" identifida por una URI</p>
-        <p>Dependiente de implementacion</p>
+        <h2>Grafos</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
-    </section>
-
-
-
-
-
-    <section class="slide">
-        <h2>Grafo RDF: rdf:type</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Triple_rdf_type.png" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
-        <h2>Vocabularios reservados</h2>
+        <h2>Grafos</h2>
+        <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="60%"></p>
+    </section>
+
+
+    <section class="slide">
+        <h2>Grafos</h2>
+        <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata.svg" alt="Grafo RDF" width="80%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Grafos</h2>
+        <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
+        <p>[Ejecutar ejemplos]</p>
+    </section>
+
+    <section class="slide">
+        <h2>Grafos RDF: rdf:type</h2>
+        <p>Predicado rdf:type</p>
+        <p>Agrupar recursos en clases</p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="40%"></p>
+        <p>[Ejecutar ejemplo - Class hierarchy]</p>
+    </section>
+
+    <section class="slide">
+        <h2>Vocabularios reservados (Estándares W3C)</h2>
         <p>Definen el lenguaje mismo</p>
         <p>RDF: http://www.w3.org/1999/02/22-rdf-syntax-ns# (Ej. rdf:type = http://www.w3.org/1999/02/22-rdf-syntax-ns#type)</p>
         <p>RDFS: http://www.w3.org/2000/01/rdf-schema#</p>
@@ -206,7 +242,13 @@
 
     <section class="slide">
         <h2>Ontologías</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Triple_ontologias.png" alt="Ontologias" width="60%"></p>
+        <p>RDF: datos específicos (Mikel, Jon, Bilbo, ...)</p>
+        <p>Ontologías (RDFS, OWL): propiedades generales de esos datos (Persona, Ciudad, ...) </p>
+    </section>
+
+    <section class="slide">
+        <h2>Ontologías</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/ontologia.svg" alt="Ontologia" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -214,12 +256,6 @@
         <p><a href="https://prefix.cc/">Prefix.cc</a></p>
         <p><a href="https://lov.linkeddata.es/dataset/lov">Linked Open Vocabularies</a></p>
     </section>
-
-    
-
-    
-
-    
 
     <!-- FOOTER -->
 
