@@ -1,3 +1,5 @@
+# http://rdf4j.org/schema/rdf4j#SHACLShapeGraph
+
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix schema: <http://schema.org/> .

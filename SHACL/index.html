@@ -38,7 +38,7 @@
 
     <section class="slide">
         <h2>SHACL</h2>
-        <p>SHApes Constraint Language (<a href="https://www.w3.org/TR/shacl/">W3C</a>)</p>
+        <p>SHApes Constraint Language</p>
         <p>Validar datos RDF: define "formas" o "restricciones" que un grafo RDF debería tener</p>
         <p>El mismo lenguaje RDF para definir datos (RDF) esquema (SHACL) e informes de resultados (ValidationReport) (NoSQL!RDF!)</p>
 
@@ -48,8 +48,26 @@
         
         This is where SHACL comes in. If you want to say that familyName is a required property for the Person class, or that a Review class’s rating value must be an integer value between 1 and 5, then SHACL lets you do this. This makes SHACL invaluable for ensuring data quality when you manage your RDF knowledge graph using a tool that supports SHACL such as GraphDB.
 
+    </section>
 
-        <p>[Ejecutar ejemplo]</p>
+    <section class="slide">
+        <h2>SHACL en GraphDB</h2>
+        <p>SHACL es un recomendación (Estándar) del W3C: (<a href="https://www.w3.org/TR/shacl/">W3C</a>)</p>
+        <p>El <a href="https://www.w3.org/ns/shacl.ttl">vocabulario SHACL</a>, definido en RDF, contiene todo el lenguaje SHACL</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL en GraphDB</h2>
+        <p>Crear repositorio activando opción SHACL</p>
+        <p>Los shapes son RDF, simplemente residen en un grafo específico:
+            <ul>
+                <li>Por defecto http://rdf4j.org/schema/rdf4j#SHACLShapeGraph</li>
+                <li>Se pueden definir shapes en cualquier grafo y enlazarlo con los datos: ex:dataGraph sh:shapesGraph ex:GraphConShapes</li>
+            </ul>
+        </p>
+        <p>GraphDB usa ese grafo para buscar shapes y validar los datos que se importen contra esos shapes: los no validos no seran introducidos y se crea un validation report</p>
+
+        <p>[Ejecutar ejemplos ex1, rdf_type]</p>
     </section>
 
 
