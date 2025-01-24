@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SHACL</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../ShowerTemplate/shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body class="shower list">
+
+    <header class="caption">
+        <h1>SHACL</h1>
+        <p>Mikel Egaña Aranguren</p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>SHACL</h2>
+        <p>Mikel Egaña Aranguren</p>
+        <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
+        <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
+        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" style="border: 1px solid #555;">
+    </section>
+
+    <section class="slide">
+        <h2>SHACL</h2>
+        <p><a href="https://github.com/mikel-egana-aranguren/ABD">https://github.com/mikel-egana-aranguren/ABD</a></p>
+        <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
+    </section>
+
+    <section class="slide">
+        <h2>SHACL</h2>
+        <p>SHApes Constraint Language (<a href="https://www.w3.org/TR/shacl/">W3C</a>)</p>
+        <p>Validar datos RDF: define "formas" o "restricciones" que un grafo RDF debería tener</p>
+        <p>El mismo lenguaje RDF para definir datos (RDF) esquema (SHACL) e informes de resultados (ValidationReport) (NoSQL!RDF!)</p>
+
+        Because RDFS schemas and OWL ontologies describe a dataset’s structure by listing classes, properties, and their relationships, many people have thought that these were describing a schema the same way the schema of a relational database or an object-oriented system does — by describing constraints that data must conform to if it will be used in that dataset.
+
+        But, they do not. RDFS schemas and OWL ontologies describe these structures to enable inferencing. For example, if an RDFS schema says that the familyName property has a domain of Person, then we can infer that any resource with a familyName property is an instance of the class Person. Neither RDFS nor OWL give you a way to say that familyName is a required property of Person, so that if an instance of Person lacks a familyName value then it is an invalid instance.
+        
+        This is where SHACL comes in. If you want to say that familyName is a required property for the Person class, or that a Review class’s rating value must be an integer value between 1 and 5, then SHACL lets you do this. This makes SHACL invaluable for ensuring data quality when you manage your RDF knowledge graph using a tool that supports SHACL such as GraphDB.
+
+
+        <p>[Ejecutar ejemplo]</p>
+    </section>
+
+
+
+    <section class="slide">
+        <h2>Triple RDF</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/triple.svg" alt="Triple RDF" width="60%"></p>
+    </section>
+
+    
+    <!-- FOOTER -->
+
+    <footer class="badge">
+        <a href="https://github.com/mikel-egana-aranguren/ShowerTemplate">Fork me on GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="../ShowerTemplate/shower/shower.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+
+</body>
+</html>
