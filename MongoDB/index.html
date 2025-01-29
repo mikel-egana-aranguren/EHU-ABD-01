@@ -162,28 +162,24 @@
             <li> <pre>> use tienda</pre></li>
             <li> <pre>> db.[coleccion].insertOne([documento])</pre></li>
             <li> <pre>> db.clientes.insertOne({"nombre":"mikel"})</pre></li>
-            <li>Cada documento tiene un identificador único que se asigna automáticamente en su creación</li>
-            <li>Asignar ID de forma manual: <pre>> db.clientes.insertOne ({ _id:1 , nombre:"josu" }) </pre></li>
+
         </ul>
     </section>
 
     <section class="slide">
         <h2>Comandos</h2>
         <ul>
+            <li>Cada documento tiene un identificador único que se asigna automáticamente en su creación</li>
+            <li>Asignar ID de forma manual: <pre>> db.clientes.insertOne ({ _id:1 , nombre:"josu" }) </pre></li>
             <li>Mostrar todos los documentos: <pre>> db.[nombre-colección].find()</pre></li>
-
         </ul>
     </section>
 
-
-
-
     <section class="slide">
-------------------------------
+        <h2>Comandos</h2>
+        <p>Insertar múltiples documentos en una colección: <pre>> db.[nombre-colección].insertMany( [array-docs] )</pre></p>
+        <p><pre>> db.departamentos.insertMany([{"nombre":"Contabilidad","empleados":45,"responsable":"Rosa","edificio":"A"},{"nombre":"Almacen","empleados":5}])</pre></p>
     </section>
-
-
-
 
     <section class="slide">
         <h2>Comandos</h2>
@@ -194,30 +190,41 @@
         </ul>
     </section>
 
-
-
-    <section class="slide">
-        <h2>Creación de BBDD y colecciones</h2>
-        <p>Insertar múltiples documentos en una colección: <pre>> db.[nombre-colección].insertMany( [array-docs] )</pre></p>
-    </section>
-
-
-
     <section class="slide">
         <h2>Comandos</h2>
         <ul>
-            <li>Buscar en la colección “clientes” los clientes con nombre “Unai”: <pre>> db.clientes.find( { nombre: "Unai" } )</pre></li>
-            <li>Buscar en “clientes” los clientes con nombre “Unai” y DNI 12345: <pre>> db.clientes.find( { nombre: "Unai", DNI: 12345 } )</pre></li>
+            <li>Buscar en la colección libros los libros con editorial “Biblio”: <pre>> db.libros.find({editorial:"Biblio"})</pre></li>
+            <li>Buscar en la colección libros los libros con editorial “Biblio” y cantidad de 12: <pre>> db.libros.find({editorial:"Biblio", cantidad: 12})</pre></li>
         </ul>
     </section>
 
     <section class="slide">
         <h2>Comandos</h2>
         <ul>
-            <li>Operadores de comparación (eq,ne,gt,gte,lt,lte): <pre>> db.clientes.find( { DNI: { $gt: 30000 } } )</pre></li>
-            <li>Expresiones regulares: <pre>> db.clientes.find( { nombre: /M./ } )</pre></li>
+            <li>{columna: {operador:valor}, ...}</li>
+            <li>Operadores de comparación (eq,ne,gt,gte,lt,lte): <pre>> db.libros.find({editorial:"Biblio", cantidad: { $gt: 20 }})</pre></li>
+            <li>Expresiones regulares: <pre>> db.libros.find({editorial:"Biblio", titulo : /Don.*/})</pre></li>
         </ul>
     </section>
+
+
+    <section class="slide">
+------------------------------
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <section class="slide">
         <h2>Comandos</h2>
