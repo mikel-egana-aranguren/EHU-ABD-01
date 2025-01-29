@@ -39,43 +39,60 @@
     <section class="slide">
         <h2>SHACL</h2>
         <p>SHApes Constraint Language</p>
-        <p>Validar datos RDF: define "formas" o "restricciones" que un grafo RDF debería tener</p>
+        <p>Define la forma que un grafo RDF debería tener: que relaciones, a que nodos, con que valores, etc.</p>
+        <p>Se validan datos RDF contra esa forma, y se genera un informe que dice si los datos cumplen la forma o no (ValidationReport, en RDF)</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL</h2>
+        <p>SHACL es un recomendación (Estándar) del W3C: (<a href="https://www.w3.org/TR/shacl/">W3C</a>)</p>
+        <p>El <a href="https://www.w3.org/ns/shacl.ttl">vocabulario SHACL</a>, definido en RDF, contiene todo el lenguaje SHACL</p>
         <p>El mismo lenguaje RDF para definir datos (RDF) esquema (SHACL) e informes de resultados (ValidationReport) (NoSQL!RDF!)</p>
+    </section>
 
-        Because RDFS schemas and OWL ontologies describe a dataset’s structure by listing classes, properties, and their relationships, many people have thought that these were describing a schema the same way the schema of a relational database or an object-oriented system does — by describing constraints that data must conform to if it will be used in that dataset.
+    <section class="slide">
+        <h2>SHACL vs OWL</h2>
+        <p>Confusion muy comun: OWL como lenguaje de esquema</p>
+        <p>OWL es un lenguaje de inferencia, no de esquema (*): por ejemplo, no dice cuantas relaciones tiene que tener una instancia, si no que si nos encontramos una instancia con esas relaciones, se infiere que pertenece a cierta clase</p>
+        <p>(*) se puede conseguir "cerrar" el mundo en OWL, pero con muchos axiomas y no por defecto</p>
+    </section>
 
-        But, they do not. RDFS schemas and OWL ontologies describe these structures to enable inferencing. For example, if an RDFS schema says that the familyName property has a domain of Person, then we can infer that any resource with a familyName property is an instance of the class Person. Neither RDFS nor OWL give you a way to say that familyName is a required property of Person, so that if an instance of Person lacks a familyName value then it is an invalid instance.
-        
-        This is where SHACL comes in. If you want to say that familyName is a required property for the Person class, or that a Review class’s rating value must be an integer value between 1 and 5, then SHACL lets you do this. This makes SHACL invaluable for ensuring data quality when you manage your RDF knowledge graph using a tool that supports SHACL such as GraphDB.
+    <section class="slide">
+        <h2>SHACL vs OWL</h2>
+        <p>Confusion muy comun: OWL como lenguaje de esquema</p>
+        <p>SHACL si es un lenguaje de esquema: por ejemplo, nos dice cuantas relaciones tiene que tener una instancia, y si esa instancia no las tiene, es invalida</p>
+    </section>
 
+    <section class="slide">
+        <h2>Shape SHACL</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/ejemplo_W3C.svg" alt="Shape SHACL" width="65%"></p>
     </section>
 
     <section class="slide">
         <h2>SHACL en GraphDB</h2>
-        <p>SHACL es un recomendación (Estándar) del W3C: (<a href="https://www.w3.org/TR/shacl/">W3C</a>)</p>
-        <p>El <a href="https://www.w3.org/ns/shacl.ttl">vocabulario SHACL</a>, definido en RDF, contiene todo el lenguaje SHACL</p>
+        <ol>
+            <li>Cargar Shapes (RDF)</li>
+            <li>Cargar datos</li>
+            <li>Si son validos, los datos se cargan</li>
+            <li>Si son invalidos, no se cargan y el por que del fallo aparece en el Validation Report</li>
+        </ol>
+
     </section>
 
     <section class="slide">
         <h2>SHACL en GraphDB</h2>
         <p>Crear repositorio activando opción SHACL</p>
-        <p>Los shapes son RDF, simplemente residen en un grafo específico:
+        <p>Los shapes residen en un grafo específico:
             <ul>
                 <li>Por defecto http://rdf4j.org/schema/rdf4j#SHACLShapeGraph</li>
                 <li>Se pueden definir shapes en cualquier grafo y enlazarlo con los datos: ex:dataGraph sh:shapesGraph ex:GraphConShapes</li>
             </ul>
         </p>
-        <p>GraphDB usa ese grafo para buscar shapes y validar los datos que se importen contra esos shapes: los no validos no seran introducidos y se crea un validation report</p>
 
         <p>[Ejecutar ejemplos ex1, rdf_type]</p>
     </section>
 
 
-
-    <section class="slide">
-        <h2>Triple RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/triple.svg" alt="Triple RDF" width="60%"></p>
-    </section>
 
     
     <!-- FOOTER -->
