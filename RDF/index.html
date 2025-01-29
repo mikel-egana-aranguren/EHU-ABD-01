@@ -207,8 +207,8 @@
 
     <section class="slide">
         <h2>Grafos</h2>
-        <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata.svg" alt="Grafo RDF" width="80%"></p>
+        <p>Default graph</p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata_namedgraph2_default_grap.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -219,23 +219,28 @@
 
     <section class="slide">
         <h2>Grafos RDF: rdf:type</h2>
-        <p>Predicado rdf:type</p>
-        <p>Agrupar recursos en clases</p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="40%"></p>
+        <p>Predicado rdf:type: Agrupar recursos en clases</p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
         <p>[Ejecutar ejemplo - Class hierarchy]</p>
     </section>
 
     <section class="slide">
-        <h2>Vocabularios reservados (Estándares W3C)</h2>
+        <h2>Vocabularios reservados (Estándares W3C - NoSQL!)</h2>
         <p>Definen el lenguaje mismo</p>
         <p>RDF: http://www.w3.org/1999/02/22-rdf-syntax-ns# (Ej. rdf:type = http://www.w3.org/1999/02/22-rdf-syntax-ns#type), definido por RDF (Se define a si mismo), RDFS y OWL</p>
         <p>RDFS: http://www.w3.org/2000/01/rdf-schema# definido por RDF, RDFS (Se define a si mismo) y OWL </p>
-        <p>OWL: http://www.w3.org/2002/07/owl# definido por RDF, RDFS y OWL (Se define a si mismo)</p>
     </section>
 
+
+    <section class="slide">
+        <h2>Vocabularios reservados (Estándares W3C - NoSQL!)</h2>
+        <p>Definen el lenguaje mismo</p>
+        <p>SHACL: https://www.w3.org/ns/shacl.ttl definido por RDF, RDFS y OWL </p>
+        <p>OWL: http://www.w3.org/2002/07/owl# definido por RDF, RDFS y OWL (Se define a si mismo)</p>
+    </section>
     <section class="slide">
         <h2>Vocabularios de dominio (Ontologías)</h2>
-        <p>Describen un dominio concreto</p>
+        <p>Describen un dominio concreto de la realidad: comercio, genes, geografia, instituciones, ...</p>
         <p>Definen propiedades generales de los datos que queremos publicar</p>
         <p>foaf:person, dbpedia-ont:city, dc:book, schema:person, ...</p>
     </section>
