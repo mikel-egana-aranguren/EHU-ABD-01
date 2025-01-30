@@ -193,6 +193,7 @@
     <section class="slide">
         <h2>Comandos</h2>
         <ul>
+            <li>Condicion: {}</li>
             <li>Buscar en la colección libros los libros con editorial “Biblio”: <pre>> db.libros.find({editorial:"Biblio"})</pre></li>
             <li>Buscar en la colección libros los libros con editorial “Biblio” y cantidad de 12: <pre>> db.libros.find({editorial:"Biblio", cantidad: 12})</pre></li>
         </ul>
@@ -206,6 +207,26 @@
             <li>Expresiones regulares: <pre>> db.libros.find({editorial:"Biblio", titulo : /Don.*/})</pre></li>
         </ul>
     </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>AND</li>
+            <li><pre>> db.libros.find({condicion1,condicion2,condicion3})</pre></li>
+            <li><pre>> db.libros.find({$and : [{condicion1},{condicion2},{condicion3}]})</pre></li>
+            <li><pre>> db.libros.find({ precio : {$gt: 25}, cantidad : {$lt : 25}})</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>OR</li>
+            <li><pre>> db.libros.find({ $or : [ {precio : {$gt: 25}}, {cantidad : {$lt : 25}}]})</pre></li>
+        </ul>
+    </section>
+
+
 
 
     <section class="slide">
