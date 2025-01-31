@@ -38,23 +38,29 @@
 
     <section class="slide">
         <h2>Web Semántica</h2>
-        <p>Proyecto utopico para una web inteligente</p>
-        <p>Cada recurso publica sus datos y agentes inteligentes los consumen</p>
-        <p>Stack de tecnologías:
-            <a href="https://datatracker.ietf.org/doc/html/rfc3986">URI</a>: identificadores, 
-            <a href="https://www.w3.org/TR/rdf11-concepts/"><RDF/a>: datos, 
-            <a href="https://www.w3.org/TR/sparql11-overview/">SPARQL</a>: consultas RDF,  
-            <a href="https://www.w3.org/TR/shacl/">SHACL</a>: validacion RDF</p>
-            <a href="https://www.w3.org/TR/owl2-overview/">OWL</a>: vocabularios (ontologias),
-        <p>Se ha implementado parcialmente (Ej. JSON-LD )</p>
+        <p>Proyecto utópico para una nueva World Wide Web</p>
+        <p>Cada recurso publica sus datos y los agentes inteligentes los consumen de manera autónoma</p>
+        <p>Se ha implementado parcialmente (Ej. JSON-LD+Schema)</p>
         <p>LLMs?</p>
+    </section>
+
+    <section class="slide">
+        <h2>Web Semántica</h2>
+        <p>Stack de tecnologías:
+            <ul>
+                <li><a href="https://datatracker.ietf.org/doc/html/rfc3986">URI</a>: identificadores</li>
+                <li><a href="https://www.w3.org/TR/rdf11-concepts/">RDF</a>: datos</li> 
+                <li><a href="https://www.w3.org/TR/sparql11-overview/">SPARQL</a>: consultas RDF</li>  
+                <li><a href="https://www.w3.org/TR/shacl/">SHACL</a>: validación RDF</li>
+                <li><a href="https://www.w3.org/TR/owl2-overview/">OWL</a>: vocabularios (ontologías) para describir datos RDF</li>
+            </ul>
+        </p>
     </section>
 
     <section class="slide">
         <h2>RDF</h2>
         <p>RDF: Resource Description Framework</p>
         <p>Estándar <a href="https://www.w3.org/TR/rdf11-primer/">oficial del W3C</a> para representar recursos en la web</p>
-        <p>Surgió como parte de la iniciativa para desarrollar la <a href="https://es.wikipedia.org/wiki/Web_sem%C3%A1ntica">Web Semántica</a></p>
         <p>Actualmente su uso está creciendo en el entorno empresarial para representar datos en Knowledge Graphs (KGs) para implementar <a href="https://www.ekgf.org/">arquitecturas centradas en datos</a></p>
     </section>
 
@@ -137,16 +143,16 @@
 
     <section class="slide">
         <h2>Triple Stores</h2>
-        <p>RDF es un estandar del W3C (=HTML, !=SQL), dado un archivo RDF:
+        <p>RDF es un estándar del W3C (=HTML, !=SQL), dado un archivo RDF:
             <ul>
                 <li>Modelo de datos: todas las Triple Stores cargan lo mismo</li>
                 <li>Sintaxis (RDF/XML, Turtle, ...): todas las Triple Stores cargan lo mismo</li>
             </ul>
         </p>
-        <p>Las Triple Stores surgieron cuando internet ya existia (NoSQL!): 
+        <p>Las Triple Stores surgieron cuando internet ya existía (NoSQL!): 
             <ul>
                 <li>Todas ofrecen la misma funcionalidad a traves de HTTP(S) SPARQL</li>
-                <li>Federacion</li>
+                <li>Federación</li>
             </ul>
         </p>
     </section>
@@ -156,7 +162,7 @@
         <p><a href="https://aws.amazon.com/neptune/">Amazon Neptune</a>:
             <ul>
                 <li>Amazon AWS</li>
-                <li>Tambien almacena property graphs</li>
+                <li>También almacena Property Graphs</li>
             </ul>
         </p>
     </section>
@@ -171,54 +177,53 @@
     <section class="slide">
         <h2>GraphDB</h2>
         <ul>
-            <li>Razonamiento automatico</li>
+            <li>Razonamiento automático</li>
             <li>Conectores para servicios como Lucene o Kafka</li>
-            <li>Virtualizacion de Bases de Datos relacionales (Ontop)</li>
+            <li>Virtualización de Bases de Datos relacionales (Ontop)</li>
             <li>...</li>
             <li>[Ejecutar ejemplos 1-1, 1-2]</li>
         </ul>
     </section>
 
     <section class="slide">
-        <h2>Grafos</h2>
+        <h2>Grafos RDF</h2>
         <p>Agrupar triples en una "bolsa" identificada por una URI (Diferente de los datos): Named Graphs</p>
         <p>Dependiente de implementación: todas las Triple Stores tienen un Default Graph que contiene todos los triples</p>
         <p>[Ejecutar ejemplo]</p>
     </section>
 
     <section class="slide">
-        <h2>Grafos</h2>
+        <h2>Grafos RDF</h2>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph.svg" alt="Grafo RDF" width="80%"></p>
         <p>[Ejecutar ejemplo]</p>
     </section>
 
     <section class="slide">
-        <h2>Grafos</h2>
+        <h2>Grafos RDF</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
-        <h2>Grafos</h2>
+        <h2>Grafos RDF</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="60%"></p>
     </section>
 
 
     <section class="slide">
-        <h2>Grafos</h2>
-        <p>Default graph</p>
+        <h2>Grafos RDF</h2>
+        <p>Default Graph</p>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata_namedgraph2_default_grap.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
-        <h2>Grafos</h2>
-        <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
+        <h2>Grafos RDF</h2>
         <p>[Ejecutar ejemplos]</p>
     </section>
 
     <section class="slide">
-        <h2>Grafos RDF: rdf:type</h2>
+        <h2>Grafos RDF</h2>
         <p>Predicado rdf:type: Agrupar recursos en clases</p>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
         <p>[Ejecutar ejemplo - Class hierarchy]</p>
