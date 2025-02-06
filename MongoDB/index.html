@@ -226,8 +226,13 @@
         </ul>
     </section>
 
-
-
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Campos a mostrar: <pre>{ campoAMostrar: 1, campoAOcultar: 0}</pre></li>
+            <li><pre>> db.libros.find({editorial: "Planeta"},{titulo:1, _id:0,editorial:1})</pre></li>
+        </ul>
+    </section>
 
     <section class="slide">
 ------------------------------
@@ -247,13 +252,7 @@
 
 
 
-    <section class="slide">
-        <h2>Comandos</h2>
-        <ul>
-            <li>Campos a mostrar: <pre>{ campoAMostrar: 1, campoAOcultar: 0}</pre></li>
-            <li>Recuperar sólo el DNI de los documentos en la colección “clientes”: <pre>> db.clientes.find( {} , {DNI: 1, _id: 0})</pre></li>
-        </ul>
-    </section>
+
 
     <section class="slide">
         <h2>Comandos</h2>
