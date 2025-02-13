@@ -235,6 +235,14 @@
     </section>
 
     <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Modificar documentos en una colección: <pre>> db.[nombre-colección].updateMany([patrón-busq], {$set: [cambios]})</pre></li>
+            <li>Para los clientes cuyo DNI sea 22233, actualizar su nombre a “Nagore”: <pre>> db.clientes.updateMany({ DNI: 22233 }, {$set:{ nombre: "Nagore" } })</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
 ------------------------------
     </section>
 
@@ -263,13 +271,7 @@
         </ul>
     </section>
 
-    <section class="slide">
-        <h2>Comandos</h2>
-        <ul>
-            <li>Modificar documentos en una colección: <pre>> db.[nombre-colección].updateMany([patrón-busq], {$set: [cambios]})</pre></li>
-            <li>Para los clientes cuyo DNI sea 22233, actualizar su nombre a “Nagore”: <pre>> db.clientes.updateMany({ DNI: 22233 }, {$set:{ nombre: "Nagore" } })</pre></li>
-        </ul>
-    </section>
+
 
     <section class="slide">
         <h2>Comandos</h2>
