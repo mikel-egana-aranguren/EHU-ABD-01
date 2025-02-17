@@ -239,8 +239,42 @@
         <ul>
             <li>Modificar documentos en una colección: <pre>> db.[nombre-colección].updateMany([patrón-busq], {$set: [cambios]})</pre></li>
             <li>Para los clientes cuyo DNI sea 22233, actualizar su nombre a “Nagore”: <pre>> db.clientes.updateMany({ DNI: 22233 }, {$set:{ nombre: "Nagore" } })</pre></li>
+            <li>(Aparte de set hay mas operadores)</li>
         </ul>
     </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Reemplazar un documento por otro: <pre>> db.[nombre-colección].replaceOne([patrón-busq], [nuevo-doc] )</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Eliminar el 1er documento que encaje con patrón: <pre>> db.[nombre-colección].deleteOne([patrón])</pre></li>
+            <li>Eliminar los documentos que encajen con patrón: <pre>> db.[nombre-colección].deleteMany([patrón])</pre></li>
+            <li>Eliminar todos los documentos de una colección: <pre>> db.[nombre-colección].deleteMany( {} )</pre></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comandos</h2>
+        <ul>
+            <li>Mostrar colecciones en una BD: <pre>> show collections</pre></li>
+            <li>Eliminar una colección completa: <pre>> db.[nombre-colección].drop()</pre></li>
+            <li>Eliminar una BD: <pre>> db.dropDatabase()</pre></li>
+        </ul>
+    </section>
+
+    
+
+    <section class="slide">
+MongoDB compass
+
+indices
+            </section>
 
     <section class="slide">
 ------------------------------
@@ -262,32 +296,13 @@
 
 
 
-    <section class="slide">
-        <h2>Comandos</h2>
-        <ul>
-            <li>Eliminar el 1er documento que encaje con patrón: <pre>> db.[nombre-colección].deleteOne([patrón])</pre></li>
-            <li>Eliminar los documentos que encajen con patrón: <pre>> db.[nombre-colección].deleteMany([patrón])</pre></li>
-            <li>Eliminar todos los documentos de una colección: <pre>> db.[nombre-colección].deleteMany( {} )</pre></li>
-        </ul>
-    </section>
 
 
 
-    <section class="slide">
-        <h2>Comandos</h2>
-        <ul>
-            <li>Reemplazar un documento por otro: <pre>> db.[nombre-colección].replaceOne([patrón-busq], [nuevo-doc] )</pre></li>
-        </ul>
-    </section>
 
-    <section class="slide">
-        <h2>Comandos</h2>
-        <ul>
-            <li>Mostrar colecciones en una BD: <pre>> show collections</pre></li>
-            <li>Eliminar una colección completa: <pre>> db.[nombre-colección].drop()</pre></li>
-            <li>Eliminar una BD: <pre>> db.dropDatabase()</pre></li>
-        </ul>
-    </section>
+
+
+
 
     <section class="slide">
         <h2>Relaciones</h2>
