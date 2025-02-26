@@ -47,7 +47,7 @@
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="sans-serif" transform="matrix(1,0,0,1,-175,-282)" stroke-linecap="butt">
       <text x="391.3018" xml:space="preserve" y="501.6558" clip-path="url(#clipPath2)" stroke="none">eus: &lt;https://data.euskadi.eus/resource/&gt;</text>
       <text x="391.3018" xml:space="preserve" y="515.6245" clip-path="url(#clipPath2)" stroke="none">ehu: &lt;https://ehu.eus/staff/pdi/&gt;</text>
-      <text x="391.3018" xml:space="preserve" y="529.5933" clip-path="url(#clipPath2)" stroke="none">eustat:&lt;urn:eustat:property:&gt;</text>
+      <text x="391.3018" xml:space="preserve" y="529.5933" clip-path="url(#clipPath2)" stroke="none">eustat: &lt;urn:eustat:property:&gt;</text>
       <text x="391.3018" xml:space="preserve" y="543.562" clip-path="url(#clipPath2)" stroke="none">wikidata: &lt;https://wikidata.org/prop/&gt;</text>
       <path fill="none" d="M328.0164 376.2829 L350.438 366.9274 L372.8596 360.2449 L395.2812 356.2354 L417.7028 354.899 L440.1243 356.2354 L462.5459 360.2449 L484.9675 366.9274 L499.9622 373.184" clip-path="url(#clipPath2)"/>
       <path d="M507.3453 376.2646 L498.196 367.0293 L499.0393 372.7989 L494.3453 376.2581 Z" clip-path="url(#clipPath2)" stroke="none"/>

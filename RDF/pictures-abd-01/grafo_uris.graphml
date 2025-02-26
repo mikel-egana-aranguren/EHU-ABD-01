@@ -13,9 +13,8 @@
   <key attr.name="description" attr.type="string" for="edge" id="d9"/>
   <key for="edge" id="d10" yfiles.type="edgegraphics"/>
   <graph edgedefault="directed" id="G">
-    <data key="d0"/>
+    <data key="d0" xml:space="preserve"/>
     <node id="n0">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="138.0" x="190.01640897895822" y="361.2828688877082"/>
@@ -27,7 +26,6 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="138.0" x="507.3890585927035" y="361.2828688877082"/>
@@ -39,7 +37,6 @@
       </data>
     </node>
     <node id="n2">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="138.0" x="758.1998166746234" y="297.44013046685586"/>
@@ -51,7 +48,6 @@
       </data>
     </node>
     <node id="n3">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="56.70123829937381" x="820.7396420664788" y="423.58116877407065"/>
@@ -63,7 +59,6 @@
       </data>
     </node>
     <node id="n4">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="65.16748664168881" width="314.1532920648455" x="361.7896471410038" y="485.87083637452236"/>
@@ -71,14 +66,13 @@
           <y:BorderStyle color="#000000" raised="false" type="dotted" width="2.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="259.12890625" x="27.512192907422786" xml:space="preserve" y="2.6462433208444054">eus: &lt;https://data.euskadi.eus/resource/&gt;
 ehu: &lt;https://ehu.eus/staff/pdi/&gt;
-eustat:&lt;urn:eustat:property:&gt;
+eustat: &lt;urn:eustat:property:&gt;
 wikidata: &lt;https://wikidata.org/prop/&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:Shape type="rectangle"/>
         </y:ShapeNode>
       </data>
     </node>
     <edge id="e0" source="n0" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="69.0" sy="0.0" tx="-69.0" ty="0.0">
@@ -92,7 +86,6 @@ wikidata: &lt;https://wikidata.org/prop/&gt;<y:LabelModel><y:SmartNodeLabelModel
       </data>
     </edge>
     <edge id="e1" source="n1" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="69.0" sy="0.0" tx="-69.0" ty="0.0">
@@ -106,7 +99,6 @@ wikidata: &lt;https://wikidata.org/prop/&gt;<y:LabelModel><y:SmartNodeLabelModel
       </data>
     </edge>
     <edge id="e2" source="n1" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="69.0" sy="0.0" tx="-28.350619149686906" ty="0.0">
