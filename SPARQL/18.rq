@@ -1,0 +1,5 @@
+SELECT *
+FROM <http://example/bookStore>
+WHERE {
+    ?s ?p  ?o .
+}
