@@ -180,7 +180,8 @@
     <section class="slide">
         <h2>Delete data</h2>
         <p><pre><code>DELETE DATA {
-            <http://gipuzkoa.eus/resource/aitor-labajo> rdf:type foaf:person
+            &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt; 
+                rdf:type foaf:person
           }</code></pre></p>
           <p>DESCRIBE &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt;</p>
     </section>
@@ -203,7 +204,7 @@
         INSERT DATA {
             gip:aitor-labajo rdf:type gip:hiritar
         }
-        DESCRIBE &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt;
+        DESCRIBE gip:aitor-labajo
         </code></pre>
     </section>
 
@@ -245,6 +246,7 @@
 
     <section class="slide">
         <h2>GRAFOS</h2>
+        (<a href="18.rq">18.rq</a>)
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_select_from_graphs_18.png" alt="SPARQL insert graph" width="40%"></p>
     </section>
 
@@ -252,7 +254,7 @@
         <h2>Consultas federadas</h2>
         (<a href="16.rq">16.rq</a>)
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_fed_16.png" alt="SPARQL fed" width="40%"></p>
-        (Ejemplos 1-2, 2-2)
+        (bilbo_wikidata.ttl)
     </section>
 
 
