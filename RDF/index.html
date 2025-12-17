@@ -274,6 +274,83 @@
         <p><a href="https://lov.linkeddata.es/dataset/lov">Linked Open Vocabularies</a></p>
     </section>
 
+    <section class="slide">
+        <h2>Linked Data</h2>
+        <p>Publicación de datos estructurados en la web de forma que puedan ser enlazados e interpretados por máquinas</p>
+        <p>Basado en estándares web: URIs, HTTP, RDF</p>
+        <p>Propuesto por Tim Berners-Lee en 2006</p>
+    </section>
+
+    <section class="slide">
+        <h2>Principios de Linked Data</h2>
+        <ol>
+            <li>Usar URIs para identificar recursos</li>
+            <li>Usar URIs HTTP para que se puedan buscar</li>
+            <li>Proporcionar información útil usando estándares (RDF, SPARQL)</li>
+            <li>Incluir enlaces a otras URIs para descubrir más recursos</li>
+        </ol>
+        <p><a href="https://www.w3.org/DesignIssues/LinkedData.html">https://www.w3.org/DesignIssues/LinkedData.html</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data: Negociación de contenido</h2>
+        <p>Una URI puede devolver diferentes representaciones según el cliente</p>
+        <p>Navegador web → HTML (para humanos)</p>
+        <p>Cliente RDF → RDF/XML, Turtle, JSON-LD (para máquinas)</p>
+        <p>Mediante HTTP Content Negotiation (cabecera Accept)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data: Ejemplo Wikidata</h2>
+        <p>URI del recurso: <a href="http://www.wikidata.org/entity/Q8692">http://www.wikidata.org/entity/Q8692</a></p>
+        <p>Página web (HTML): <a href="https://www.wikidata.org/wiki/Q8692">https://www.wikidata.org/wiki/Q8692</a></p>
+        <p>Datos RDF: Agregar .ttl, .rdf, .json al final de la URI</p>
+        <p>[Ejecutar ejemplo curl]</p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data: Ejemplo DBpedia</h2>
+        <p>URI del recurso: <a href="http://dbpedia.org/resource/Bilbao">http://dbpedia.org/resource/Bilbao</a></p>
+        <p>Página web: <a href="https://dbpedia.org/page/Bilbao">https://dbpedia.org/page/Bilbao</a></p>
+        <p>Datos RDF: <a href="https://dbpedia.org/data/Bilbao">https://dbpedia.org/data/Bilbao</a></p>
+        <p>Endpoints SPARQL públicos permiten consultas federadas</p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data: 5 estrellas</h2>
+        <p>★ Datos disponibles en la web (cualquier formato) con licencia abierta</p>
+        <p>★★ Datos estructurados y legibles por máquina (ej. Excel en vez de imagen)</p>
+        <p>★★★ Formato no propietario (ej. CSV en vez de Excel)</p>
+        <p>★★★★ Usar estándares W3C (RDF, SPARQL) para identificar recursos</p>
+        <p>★★★★★ Enlazar tus datos con otros datos (contexto)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Open Data Cloud</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/lod-cloud.svg" alt="LOD Cloud" width="70%"></p>
+        <p><a href="https://lod-cloud.net/">https://lod-cloud.net/</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data: Aplicaciones</h2>
+        <p>Knowledge Graphs empresariales: integración de datos heterogéneos</p>
+        <p>Open Data: datos públicos gubernamentales (ej. <a href="https://datos.gob.es/">datos.gob.es</a>)</p>
+        <p>Bibliotecas y archivos: catálogos bibliográficos enlazados</p>
+        <p>Ciencia: datos científicos FAIR (Findable, Accessible, Interoperable, Reusable)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data: Herramientas</h2>
+        <p><a href="https://github.com/zazuko/trifid">Trifid</a>: servidor Linked Data ligero</p>
+        <p><a href="https://www.w3.org/wiki/LDP_Implementations">LDP</a> (Linked Data Platform): protocolo W3C para lectura/escritura</p>
+        <p><a href="https://solidproject.org/">Solid</a>: pods descentralizados de datos personales</p>
+    </section>
+
+    <section class="slide">
+        <h2>Linked Data</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/ld_trifid.svg" alt="Linked Data" width="80%"></p>
+    </section>
+
     <!-- FOOTER -->
 
     <footer class="badge">
