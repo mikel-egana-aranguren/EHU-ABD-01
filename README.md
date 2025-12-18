@@ -8,6 +8,4 @@ Clases de la asignatura [Administración de Bases de Datos (ABD)](https://www.eh
   * [SPARQL](SPARQL/index.html).
   * [OWL](OWL/index.html).
   * [SHACL](SHACL/index.html).
-* RAG
-  * Naive RAG.
-  * Graph RAG.
+* [Retrieval Augmented Generation (RAG)](RAG/index.html).

@@ -240,6 +240,263 @@
         <p>...</p>
     </section>
 
+    <section class="slide">
+        <h2>OWL 2: Perfiles</h2>
+        <p>OWL 2 define sublenguajes con diferentes trade-offs expresividad/complejidad:</p>
+        <p><strong>OWL 2 EL</strong>: para ontologías grandes (millones de clases). Razonamiento en tiempo polinomial</p>
+        <p><strong>OWL 2 QL</strong>: optimizado para consultas sobre datos. Reescritura de queries</p>
+        <p><strong>OWL 2 RL</strong>: implementable con motores de reglas. Razonamiento eficiente</p>
+        <p><strong>OWL 2 DL</strong>: expresividad completa, razonamiento decidible</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 EL</h2>
+        <p>Usado en ontologías biomédicas: SNOMED CT (>300,000 clases)</p>
+        <p>Soporta: SubClassOf, equivalentClass, existencial (some)</p>
+        <p>No soporta: universal (only), negación, disyunción</p>
+        <p>Complejidad: PTime para razonamiento de subsunción</p>
+        <p>Razonador: <a href="https://github.com/liveontologies/elk-reasoner">ELK</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 QL</h2>
+        <p>Basado en DL-Lite: query rewriting sobre bases de datos relacionales</p>
+        <p>Permite consultar BBDD relacionales virtualizadas como RDF</p>
+        <p>No soporta: existencial en lado derecho, restricciones de cardinalidad</p>
+        <p>Complejidad: LogSpace para razonamiento</p>
+        <p>Herramienta: <a href="https://ontop-vkg.org/">Ontop</a> (OBDA)</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 RL</h2>
+        <p>Subset implementable con reglas (forward chaining)</p>
+        <p>Compatible con sistemas de producción basados en reglas</p>
+        <p>Soporta la mayoría de constructores OWL pero con restricciones</p>
+        <p>Complejidad: PTime</p>
+        <p>GraphDB usa reglas para implementar razonamiento OWL-Horst (similar a RL)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Lógica Descriptiva: DL</h2>
+        <p>OWL se basa en familias de lógicas descriptivas</p>
+        <p>DL: fragmentos decidibles de lógica de primer orden</p>
+        <p>Nomenclatura: <strong>SROIQ(D)</strong> - OWL 2 DL</p>
+        <ul>
+            <li>S: extensión de ALC con transitividad</li>
+            <li>R: propiedades complejas, reflexividad</li>
+            <li>O: nominals (individuos en expresiones de clase)</li>
+            <li>I: propiedades inversas</li>
+            <li>Q: restricciones de cardinalidad cualificadas</li>
+            <li>(D): datatypes</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Razonadores OWL</h2>
+        <p><a href="https://github.com/owlcs/owlapi">OWL API</a>: librería Java para manipular ontologías</p>
+        <p><a href="https://www.w3.org/2001/sw/wiki/HermiT">HermiT</a>: razonador basado en hypertableau (OWL 2 DL)</p>
+        <p><a href="https://github.com/stardog-union/pellet">Pellet</a>: razonador comercial de Stardog</p>
+        <p><a href="https://github.com/fact-plus-plus/factplusplus">FaCT++</a>: razonador C++, rápido</p>
+        <p><a href="https://github.com/liveontologies/elk-reasoner">ELK</a>: razonador OWL 2 EL ultra-rápido</p>
+    </section>
+
+    <section class="slide">
+        <h2>Protégé</h2>
+        <p>Editor de ontologías OWL de Stanford: <a href="https://protege.stanford.edu/">https://protege.stanford.edu/</a></p>
+        <p>Interfaz gráfica para crear clases, propiedades, axiomas</p>
+        <p>Integración con razonadores (HermiT, Pellet, ELK, ...)</p>
+        <p>Plugins: visualización, validación, documentación</p>
+        <p>Exportación múltiples formatos: RDF/XML, Turtle, Manchester, OWL/XML</p>
+    </section>
+
+    <section class="slide">
+        <h2>Patrones de diseño OWL</h2>
+        <p>Value Partition: clasificar por valores de una propiedad</p>
+        <p>Defined Classes: clases definidas completamente (necessary & sufficient)</p>
+        <p>Closure Axiom: cerrar el mundo para propiedades específicas</p>
+        <p>N-ary Relations: representar relaciones complejas</p>
+        <p><a href="http://ontologydesignpatterns.org/">Ontology Design Patterns</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Value Partition - Ejemplo</h2>
+        <pre><code>Class: Size
+    SubClassOf: owl:Thing
+    DisjointUnionOf: Small, Medium, Large
+
+Class: TShirt
+    SubClassOf: hasSize some Size
+
+Class: LargeTShirt
+    EquivalentTo: TShirt and (hasSize value Large)</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Open World Assumption (OWA)</h2>
+        <p>La ausencia de información no implica falsedad</p>
+        <p>Si no sabemos que Mikel vive en Bilbao, no asumimos que vive en otro sitio</p>
+        <p>Diferente de bases de datos relacionales (Closed World)</p>
+        <p>Consecuencia: las restricciones universales no son restrictivas por defecto</p>
+        <p>Para "cerrar" el mundo: usar propiedades funcionales, closure axioms, SHACL</p>
+    </section>
+
+    <section class="slide">
+        <h2>No Unique Name Assumption (NUNA)</h2>
+        <p>Dos URIs diferentes pueden referirse a la misma entidad</p>
+        <p>ex:Bilbao y ex:Bilbo pueden ser owl:sameAs</p>
+        <p>Útil para integración de datos de diferentes fuentes</p>
+        <p>Permite reconciliación automática mediante razonamiento</p>
+        <p>owl:differentFrom para forzar distinción</p>
+    </section>
+
+    <section class="slide">
+        <h2>Anotaciones OWL</h2>
+        <p>Metadatos sobre la ontología y sus entidades:</p>
+        <p>rdfs:label, rdfs:comment: etiquetas y descripciones</p>
+        <p>dc:creator, dc:date: Dublin Core para autoría</p>
+        <p>owl:versionInfo, owl:priorVersion: versionado</p>
+        <p>rdfs:seeAlso, rdfs:isDefinedBy: referencias</p>
+        <p>Pueden ser multilingües con language tags</p>
+    </section>
+
+    <section class="slide">
+        <h2>Módulos OWL</h2>
+        <p>owl:imports: importar otra ontología completa</p>
+        <p>Modularización: dividir ontologías grandes en módulos</p>
+        <p>Reutilización: importar vocabularios estándar (FOAF, DC, Schema.org)</p>
+        <p>Problema: importar todas las axiomas transitivamente</p>
+        <p>Solución: MIREOT (extracción selectiva de términos)</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL y SPARQL</h2>
+        <p>SPARQL consulta el grafo RDF serializado</p>
+        <p>Por defecto no considera axiomas inferidos</p>
+        <p>GraphDB: materializa inferencias o razona en tiempo de consulta</p>
+        <p>SPARQL 1.1: entailment regimes (RDF, RDFS, OWL)</p>
+        <p>Federated queries: consultar múltiples endpoints con ontologías</p>
+    </section>
+
+    <section class="slide">
+        <h2>Inconsistencias en OWL</h2>
+        <p>Ontología inconsistente: contiene contradicciones lógicas</p>
+        <p>Clase insatisfacible: no puede tener instancias (equivalente a owl:Nothing)</p>
+        <p>Causas comunes:
+            <ul>
+                <li>Clases disjuntas con instancias compartidas</li>
+                <li>Restricciones de cardinalidad contradictorias</li>
+                <li>Propiedades funcionales con múltiples valores</li>
+            </ul>
+        </p>
+        <p>Usar razonador para detectar y explicar inconsistencias</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explicaciones de inferencias</h2>
+        <p>Justification: conjunto mínimo de axiomas que causa una inferencia</p>
+        <p>Herramientas: Protégé plugin de explicación</p>
+        <p>Debugging: identificar axiomas problemáticos</p>
+        <p>Puede haber múltiples justificaciones para una inferencia</p>
+    </section>
+
+    <section class="slide">
+        <h2>Punning en OWL 2</h2>
+        <p>Permitir que la misma URI sea clase, propiedad e individuo simultáneamente</p>
+        <p>Útil para metamodelado: clases que son instancias de otras clases</p>
+        <p>Ejemplo: ex:Mammal rdf:type owl:Class y ex:Mammal rdf:type ex:BiologicalCategory</p>
+        <p>Semántica: tratadas como entidades separadas según contexto</p>
+    </section>
+
+    <section class="slide">
+        <h2>Property Chains</h2>
+        <p>Definir propiedades complejas mediante composición</p>
+        <pre><code>ObjectPropertyChain: 
+    hasPadre o hasPadre → hasAbuelo
+
+ObjectPropertyChain:
+    localizadoEn o localizadoEn → localizadoEn
+    (transitividad indirecta)</code></pre>
+        <p>Inferir relaciones derivadas automáticamente</p>
+    </section>
+
+    <section class="slide">
+        <h2>Keys en OWL 2</h2>
+        <p>Identificar individuos únicamente mediante combinación de propiedades</p>
+        <pre><code>Class: Person
+    HasKey: hasSSN
+    
+Class: Publication
+    HasKey: hasISBN, hasEdition</code></pre>
+        <p>Similar a claves primarias en bases de datos relacionales</p>
+        <p>Permite inferir owl:sameAs automáticamente</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ontologías de alto nivel (Upper Ontologies)</h2>
+        <p>Ontologías genéricas para cualquier dominio:</p>
+        <p><a href="https://basic-formal-ontology.org/">BFO</a> (Basic Formal Ontology): ciencias biomédicas</p>
+        <p><a href="https://www.ontologyportal.org/">SUMO</a> (Suggested Upper Merged Ontology)</p>
+        <p><a href="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl">DOLCE</a>: descriptiva, para integración</p>
+        <p>Proveen categorías básicas: Objeto, Proceso, Cualidad, Rol...</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL en la industria: Casos de uso</h2>
+        <p>Farmacéuticas: descubrimiento de fármacos, modelado de efectos adversos</p>
+        <p>Finanzas: compliance, risk management, FIBO (Financial Industry Business Ontology)</p>
+        <p>Manufactura: PLM (Product Lifecycle Management), IoT</p>
+        <p>E-commerce: catálogos de productos, recomendaciones semánticas</p>
+        <p>Salud: terminologías médicas (SNOMED CT), historiales clínicos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Metodologías para construir ontologías</h2>
+        <p><a href="https://www.oeg-upm.net/ontological-engineering/metodologias/metodologia-methontology/">METHONTOLOGY</a>: metodología clásica de desarrollo</p>
+        <p><a href="http://neon-toolkit.org/wiki/Main_Page">NeOn</a>: escenarios de reutilización y colaboración</p>
+        <p>Agile: desarrollo iterativo, validación continua</p>
+        <p>Competency Questions: requisitos funcionales mediante preguntas</p>
+        <p>Mejores prácticas: modularización, versionado, documentación, testing</p>
+    </section>
+
+    <section class="slide">
+        <h2>Testing de ontologías</h2>
+        <p>Unit tests: verificar axiomas específicos se infieren correctamente</p>
+        <p>Consistency checking: no inconsistencias ni clases insatisfacibles</p>
+        <p>Competency question tests: responder queries esperadas</p>
+        <p>Performance tests: tiempo de razonamiento aceptable</p>
+        <p>Herramientas: <a href="https://github.com/phillord/tawny-owl">Tawny-OWL</a>, <a href="https://robot.obolibrary.org/">ROBOT</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Métricas de calidad de ontologías</h2>
+        <p>Completitud: cobertura del dominio</p>
+        <p>Concisión: sin redundancias o axiomas derivables</p>
+        <p>Coherencia: sin contradicciones lógicas</p>
+        <p>Modularidad: organización en componentes reutilizables</p>
+        <p>Anotaciones: documentación adecuada (labels, comments)</p>
+        <p>Herramienta: <a href="https://oops.linkeddata.es/">OOPS!</a> (Ontology Pitfall Scanner)</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL y Machine Learning</h2>
+        <p>Knowledge Graph Embeddings: representar entidades en espacio vectorial</p>
+        <p>Neuro-symbolic AI: combinar razonamiento simbólico con redes neuronales</p>
+        <p>Explicabilidad: ontologías proporcionan contexto interpretable</p>
+        <p>Transfer learning: conocimiento previo codificado en ontologías</p>
+        <p>Ejemplo: <a href="https://arxiv.org/abs/1607.00653">OWL2Vec</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Recursos para aprender OWL</h2>
+        <p><a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Web Ontology Language Primer</a></p>
+        <p><a href="https://www.michaeldebellis.com/post/new-protege-pizza-tutorial">Pizza Tutorial (Protégé)</a></p>
+        <p><a href="https://www.inf.unibz.it/~calvanese/teaching/11-12-TC/material/OWL-QL-Web.pdf">OWL 2 Profiles Tutorial</a></p>
+        <p><a href="https://arxiv.org/abs/0807.1583">A Practical Guide To Building OWL Ontologies</a></p>
+        <p><a href="https://obofoundry.org/">OBO Foundry</a>: ontologías biomédicas de alta calidad</p>
+    </section>
+
+    
+
     <!-- FOOTER -->
 
     <footer class="badge">

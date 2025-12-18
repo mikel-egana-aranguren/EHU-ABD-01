@@ -275,6 +275,187 @@
     </section>
 
     <section class="slide">
+        <h2>RDF: Blank Nodes</h2>
+        <p>Nodos anónimos sin URI: recursos sin identificador global</p>
+        <p>Se usan cuando no necesitamos referenciar el recurso desde fuera</p>
+        <p>Sintaxis Turtle: _:b1, _:b2, ... o []</p>
+        <p>Problema: no se pueden enlazar desde otros grafos (≠ Linked Data)</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Blank Nodes - Ejemplo</h2>
+        <pre><code>@prefix ex: &lt;http://example.org/&gt; .
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+
+ex:Mikel foaf:knows [
+    foaf:name "Jon" ;
+    foaf:mbox &lt;mailto:jon@example.org&gt;
+] .</code></pre>
+        <p>El recurso "Jon" no tiene URI propia</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Reificación</h2>
+        <p>Hacer afirmaciones sobre afirmaciones (meta-triples)</p>
+        <p>Necesario para expresar: confianza, procedencia, temporalidad</p>
+        <p>Tradicionalmente: rdf:Statement, rdf:subject, rdf:predicate, rdf:object</p>
+        <p>RDF 1.1: Named Graphs (más eficiente)</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Reificación - Ejemplo clásico</h2>
+        <pre><code>@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix ex: &lt;http://example.org/&gt; .
+
+ex:statement1 rdf:type rdf:Statement ;
+    rdf:subject ex:Mikel ;
+    rdf:predicate ex:livesIn ;
+    rdf:object ex:Bilbao ;
+    ex:confidence "0.9"^^xsd:float .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Colecciones</h2>
+        <p>Listas ordenadas: rdf:List, rdf:first, rdf:rest, rdf:nil</p>
+        <p>Sintaxis Turtle abreviada: ( elemento1 elemento2 elemento3 )</p>
+        <p>Contenedores desordenados: rdf:Bag, rdf:Seq, rdf:Alt</p>
+        <p>Uso moderno: usar predicados específicos del dominio</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Colecciones - Ejemplo</h2>
+        <pre><code>@prefix ex: &lt;http://example.org/&gt; .
+
+ex:Mikel ex:favoriteColors (
+    ex:Blue
+    ex:Green
+    ex:Red
+) .</code></pre>
+        <p>Equivale a una lista enlazada en RDF</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Internacionalización</h2>
+        <p>Literales con etiquetas de idioma (BCP 47)</p>
+        <p>"Hello"@en, "Hola"@es, "Kaixo"@eu</p>
+        <p>Permite datos multilingües en el mismo grafo</p>
+        <p>Fundamental para datos globales y open data</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Internacionalización - Ejemplo</h2>
+        <pre><code>@prefix ex: &lt;http://example.org/&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+ex:Bilbao rdfs:label "Bilbao"@es ;
+    rdfs:label "Bilbo"@eu ;
+    rdfs:label "Bilbao"@en .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: IRIs vs URIs</h2>
+        <p>IRI: Internationalized Resource Identifier</p>
+        <p>Extensión de URI que permite caracteres Unicode</p>
+        <p>http://example.org/东京 (Tokio en chino)</p>
+        <p>RDF 1.1 usa IRIs, no solo URIs ASCII</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Vocabulario RDFS</h2>
+        <p>rdfs:Class - definir clases</p>
+        <p>rdfs:subClassOf - jerarquías de clases</p>
+        <p>rdfs:Property - definir propiedades</p>
+        <p>rdfs:subPropertyOf - jerarquías de propiedades</p>
+        <p>rdfs:domain, rdfs:range - restricciones de propiedades</p>
+        <p>rdfs:label, rdfs:comment - anotaciones</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: RDFS - Ejemplo</h2>
+        <pre><code>@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix ex: &lt;http://example.org/&gt; .
+
+ex:Person rdfs:subClassOf ex:Agent .
+ex:Student rdfs:subClassOf ex:Person .
+
+ex:estudiaEn rdfs:domain ex:Student ;
+    rdfs:range ex:Universidad .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>RDF Star (RDF-star)</h2>
+        <p>Extensión reciente de RDF: permitir triples como sujetos u objetos</p>
+        <p>Sintaxis: &lt;&lt; sujeto predicado objeto &gt;&gt;</p>
+        <p>Simplifica la reificación (más intuitivo que Named Graphs)</p>
+        <p>Estándar W3C en desarrollo (2024)</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF Star - Ejemplo</h2>
+        <pre><code>@prefix ex: &lt;http://example.org/&gt; .
+
+&lt;&lt; ex:Mikel ex:livesIn ex:Bilbao &gt;&gt; 
+    ex:since "2020"^^xsd:gYear ;
+    ex:confidence "high" .</code></pre>
+        <p>Triple anidado con metadatos directos</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Buenas prácticas</h2>
+        <p>Usar URIs HTTP dereferenciales (303 redirect o Hash URIs)</p>
+        <p>Reutilizar vocabularios existentes antes de crear nuevos</p>
+        <p>Proporcionar labels en múltiples idiomas (rdfs:label)</p>
+        <p>Documentar vocabularios con rdfs:comment</p>
+        <p>Evitar blank nodes en datos Linked Open Data</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Patrones de diseño</h2>
+        <p>N-ary relations: usar recursos intermedios para relaciones complejas</p>
+        <p>Qualified relations: añadir contexto a relaciones</p>
+        <p>Versioning: usar Named Graphs para versiones temporales</p>
+        <p><a href="https://www.w3.org/TR/swbp-n-aryRelations/">W3C: Defining N-ary Relations</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Validación de datos</h2>
+        <p>SHACL (Shapes Constraint Language): validar estructura de grafos RDF</p>
+        <p>ShEx (Shape Expressions): alternativa a SHACL, más concisa</p>
+        <p>Necesario para garantizar calidad de datos en producción</p>
+        <p>Diferente de OWL: validación vs inferencia</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Serialización N-Quads</h2>
+        <p>Extensión de N-Triples para Named Graphs</p>
+        <p>Cada línea: &lt;sujeto&gt; &lt;predicado&gt; &lt;objeto&gt; &lt;grafo&gt; .</p>
+        <p>Formato simple para exportar/importar múltiples grafos</p>
+        <p>Usado en dumps de grandes bases de datos (DBpedia, Wikidata)</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: JSON-LD</h2>
+        <p>Serialización RDF en JSON: fácil para desarrolladores web</p>
+        <p>Usado por Schema.org para metadatos en páginas web</p>
+        <p>Google, Bing, Yahoo lo procesan para mejorar búsquedas</p>
+        <p>@context define el mapeo de claves JSON a URIs RDF</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: JSON-LD - Ejemplo</h2>
+        <pre><code>{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mikel Egaña",
+  "jobTitle": "Profesor",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "UPV/EHU"
+  }
+}</code></pre>
+    </section>
+
+    <section class="slide">
         <h2>Linked Data</h2>
         <p>Publicación de datos estructurados en la web de forma que puedan ser enlazados e interpretados por máquinas</p>
         <p>Basado en estándares web: URIs, HTTP, RDF</p>

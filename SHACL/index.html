@@ -92,9 +92,216 @@
         <p>[Ejecutar ejemplos ex1, rdf_type]</p>
     </section>
 
+    <section class="slide">
+        <h2>SHACL: Componentes Core</h2>
+        <p>sh:NodeShape: define restricciones sobre nodos del grafo</p>
+        <p>sh:PropertyShape: define restricciones sobre propiedades</p>
+        <p>sh:targetClass, sh:targetNode, sh:targetSubjectsOf, sh:targetObjectsOf: qué nodos validar</p>
+        <p>sh:path: qué propiedad validar</p>
+    </section>
 
+    <section class="slide">
+        <h2>SHACL: Restricciones de cardinalidad</h2>
+        <p>sh:minCount: número mínimo de valores (≥ 0)</p>
+        <p>sh:maxCount: número máximo de valores (≥ 0)</p>
+        <p>Ejemplo: una persona debe tener exactamente un nombre</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:property [
+        sh:path ex:name ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] .</code></pre>
+    </section>
 
-    
+    <section class="slide">
+        <h2>SHACL: Restricciones de tipo</h2>
+        <p>sh:class: el valor debe ser instancia de una clase</p>
+        <p>sh:datatype: el valor debe tener un datatype específico</p>
+        <p>sh:nodeKind: tipo de nodo (IRI, Literal, BlankNode)</p>
+        <pre><code>sh:property [
+    sh:path ex:birthDate ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1
+] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de valor</h2>
+        <p>sh:in: el valor debe estar en una lista específica</p>
+        <p>sh:hasValue: debe existir un valor específico</p>
+        <p>sh:minExclusive, sh:maxExclusive: rangos numéricos</p>
+        <p>sh:minInclusive, sh:maxInclusive: rangos numéricos inclusivos</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de cadenas</h2>
+        <p>sh:minLength, sh:maxLength: longitud de strings</p>
+        <p>sh:pattern: expresión regular que debe cumplir</p>
+        <p>sh:languageIn: idiomas permitidos para literales</p>
+        <p>sh:uniqueLang: cada idioma solo puede aparecer una vez</p>
+        <pre><code>sh:property [
+    sh:path rdfs:label ;
+    sh:uniqueLang true
+] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones lógicas</h2>
+        <p>sh:not: negación de una shape</p>
+        <p>sh:and: conjunción (todas las shapes deben cumplirse)</p>
+        <p>sh:or: disyunción (al menos una shape debe cumplirse)</p>
+        <p>sh:xone: disyunción exclusiva (exactamente una debe cumplirse)</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de forma</h2>
+        <p>sh:node: el valor debe cumplir otra shape</p>
+        <p>sh:property: define restricciones anidadas</p>
+        <p>sh:qualifiedValueShape + sh:qualifiedMinCount/MaxCount: cuántos valores deben cumplir una shape</p>
+        <p>Permite validaciones complejas y composición de shapes</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Closed Shapes</h2>
+        <p>sh:closed true: solo se permiten las propiedades declaradas</p>
+        <p>sh:ignoredProperties: lista de propiedades que se ignoran</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path ex:name
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Severity Levels</h2>
+        <p>sh:severity: nivel de gravedad de una violación</p>
+        <p>sh:Violation (por defecto): error crítico</p>
+        <p>sh:Warning: advertencia</p>
+        <p>sh:Info: información</p>
+        <p>Permite diferenciar validaciones obligatorias de recomendaciones</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Mensajes personalizados</h2>
+        <p>sh:message: mensaje descriptivo para violaciones</p>
+        <p>Puede ser multilingüe usando language tags</p>
+        <pre><code>sh:property [
+    sh:path ex:age ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive 0 ;
+    sh:message "La edad debe ser un entero no negativo"@es ;
+    sh:message "Age must be a non-negative integer"@en
+] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Property Paths</h2>
+        <p>sh:path soporta caminos complejos:</p>
+        <p>Secuencia: ( ex:parent ex:age ) - padre.edad</p>
+        <p>Alternativa: [ sh:alternativePath ( ex:email ex:phone ) ]</p>
+        <p>Inverso: [ sh:inversePath ex:knows ]</p>
+        <p>Zero o más: [ sh:zeroOrMorePath ex:parent ]</p>
+        <p>Uno o más: [ sh:oneOrMorePath ex:subClassOf ]</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Targets avanzados</h2>
+        <p>sh:target con SPARQL queries personalizadas</p>
+        <pre><code>ex:CustomShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this ex:score ?score .
+                FILTER (?score > 90)
+            }
+        """
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL-SPARQL</h2>
+        <p>Extensión avanzada: validaciones con queries SPARQL</p>
+        <p>sh:sparql permite restricciones arbitrariamente complejas</p>
+        <p>Más expresivo que SHACL Core pero menos eficiente</p>
+        <p>Útil para validaciones que requieren razonamiento complejo</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL-SPARQL: Ejemplo</h2>
+        <pre><code>ex:UniqueEmailShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:sparql [
+        sh:message "Email must be unique" ;
+        sh:select """
+            SELECT $this ?email WHERE {
+                $this ex:email ?email .
+                ?other ex:email ?email .
+                FILTER ($this != ?other)
+            }
+        """
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Validation Report</h2>
+        <p>Resultado de validación en RDF:</p>
+        <p>sh:ValidationReport con sh:conforms (true/false)</p>
+        <p>sh:ValidationResult para cada violación:</p>
+        <ul>
+            <li>sh:focusNode: nodo que viola la restricción</li>
+            <li>sh:resultPath: propiedad violada</li>
+            <li>sh:value: valor problemático</li>
+            <li>sh:resultMessage: descripción del error</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL vs ShEx</h2>
+        <p>ShEx (Shape Expressions): alternativa a SHACL</p>
+        <p>Sintaxis más concisa, inspirada en RELAX NG</p>
+        <p>SHACL: estándar W3C, más adoptado en industria</p>
+        <p>ShEx: más usado en academia, investigación biomédica</p>
+        <p>Ambos permiten validar grafos RDF</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Casos de uso</h2>
+        <p>Validación de calidad de datos en Knowledge Graphs</p>
+        <p>Definir contratos de datos entre sistemas</p>
+        <p>Documentación ejecutable de esquemas de datos</p>
+        <p>Generación automática de formularios de entrada</p>
+        <p>Testing de transformaciones de datos</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Herramientas</h2>
+        <p><a href="https://www.topquadrant.com/products/shacl-playground/">SHACL Playground</a>: editor online</p>
+        <p><a href="https://github.com/TopQuadrant/shacl">pySHACL</a>: validador Python</p>
+        <p><a href="https://github.com/apache/jena/tree/main/jena-shacl">Apache Jena SHACL</a>: Java</p>
+        <p>GraphDB, Stardog: soporte SHACL integrado</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Buenas prácticas</h2>
+        <p>Usar sh:message descriptivos en múltiples idiomas</p>
+        <p>Organizar shapes en módulos reutilizables</p>
+        <p>Separar validaciones críticas (Violation) de recomendaciones (Warning)</p>
+        <p>Documentar shapes con rdfs:label y rdfs:comment</p>
+        <p>Preferir SHACL Core sobre SHACL-SPARQL cuando sea posible</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Recursos</h2>
+        <p><a href="https://www.w3.org/TR/shacl/">Especificación W3C SHACL</a></p>
+        <p><a href="https://book.validatingrdf.com/">Validating RDF Data (libro online)</a></p>
+        <p><a href="https://datashapes.org/">Data Shapes Working Group</a></p>
+        <p><a href="https://github.com/w3c/data-shapes">Repositorio GitHub W3C</a></p>
+    </section>
+
     <!-- FOOTER -->
 
     <footer class="badge">
