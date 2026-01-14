@@ -40,7 +40,8 @@
         <h2>Web Semántica</h2>
         <p>Proyecto utópico para una nueva World Wide Web: cada recurso publica sus datos y los agentes inteligentes los consumen de manera autónoma</p>
         <p>Se ha implementado parcialmente (Ej. <a href="https://json-ld.org/">JSON-LD</a> + <a href="https://schema.org/">Schema</a>: <a href="https://cloud.google.com/enterprise-knowledge-graph/docs/search-api">Google Knowledge Graph</a>)</p>
-        <p>LLMs?</p>
+        <p>LLMs como clientes universales basados en lenguaje natural (Agentes)</p>
+        <p>Arquitecturas GraphRAG: LLM + Knowledge Graph</p>
     </section>
 
     <section class="slide">
@@ -54,6 +55,58 @@
                 <li><a href="https://www.w3.org/TR/owl2-overview/">OWL</a>: vocabularios (ontologías) para describir datos RDF</li>
             </ul>
         </p>
+    </section>
+
+    <section class="slide">
+        <h2>Pila Web Semántica</h2>
+        <p>Capas y roles principales:</p>
+        <ul>
+            <li><b>URIs/IRIs</b>: identifican recursos de forma global.</li>
+            <li><b>RDF</b>: modelo de datos (triple/ grafo).</li>
+            <li><b>RDFS/OWL</b>: vocabularios/ontologías publicados como datos RDF.</li>
+            <li><b>SPARQL</b>: consultas sobre grafos RDF.</li>
+            <li><b>SHACL</b>: validación de grafos RDF.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Compatibilidad hacia abajo</h2>
+        <p>Cómo encajan y por qué interoperan:</p>
+        <ul>
+            <li><b>Todo es RDF</b>: axiomas OWL y shapes SHACL son grafos RDF.</li>
+            <li><b>URIs en todas las capas</b>: misma base de identificación.</li>
+            <li><b>Consumo descendente</b>: un grafo con OWL/SHACL se carga como RDF y se consulta con SPARQL.</li>
+            <li><b>Herramientas reutilizables</b>: loaders, stores y APIs RDF sirven para OWL/SHACL.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Ejemplos prácticos</h2>
+        <ul>
+            <li><b>SPARQL sobre OWL</b>: consultar clases/propiedades definidas en OWL (como triples).</li>
+            <li><b>Validación SHACL</b>: validar los mismos datos RDF sin cambiar el almacenamiento.</li>
+            <li><b>Serializaciones</b>: JSON-LD, Turtle, RDF/XML representan las mismas URIs y triples.</li>
+        </ul>
+        <pre><code>PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
+SELECT ?c WHERE { ?c a owl:Class }
+LIMIT 5</code></pre>
+    </section>
+
+        <section class="slide">
+        <h2>Pila: Diagrama</h2>
+        <pre><code>+-------------------------+
+        <h2>RDF: Internacionalización</h2>
+-------------------------+
+        <p>Literales con etiquetas de idioma (BCP 47)</p>
+-------------------------+
+        <p>"Hello"@en, "Hola"@es, "Kaixo"@eu</p>
+-------------------------+
+        <p>Permite datos multilingües en el mismo grafo</p>
+-------------------------+
+        <p>Fundamental para datos globales y open data</p>
+-------------------------+
+    </section>
+        <p>Compatibilidad hacia abajo: todas las capas se serializan y consumen como RDF basado en URIs.</p>
     </section>
 
     <section class="slide">
@@ -295,6 +348,37 @@ ex:Mikel foaf:knows [
     </section>
 
     <section class="slide">
+        <h2>RDF*: Afirmaciones sobre afirmaciones</h2>
+        <p>Permite usar triples como sujetos u objetos.</p>
+        <p>Sintaxis Turtle*: &lt;&lt; sujeto predicado objeto &gt;&gt;</p>
+        <p>Simplifica la reificación y la procedencia.</p>
+        <p>Soporte creciente en Triple Stores y SPARQL*.</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF*: Ejemplo</h2>
+        <pre><code>@prefix ex: &lt;http://example.org/&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+&lt;&lt; ex:Mikel ex:livesIn ex:Bilbao &gt;&gt; 
+    ex:since "2020"^^xsd:gYear ;
+    ex:confidence "0.9"^^xsd:float .</code></pre>
+        <p>Metadatos directamente sobre un triple.</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL*: Consultar RDF*</h2>
+        <pre><code>PREFIX ex: &lt;http://example.org/&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+SELECT ?year ?conf WHERE {
+  &lt;&lt; ex:Mikel ex:livesIn ex:Bilbao &gt;&gt; ex:since ?year ;
+                                         ex:confidence ?conf .
+}</code></pre>
+        <p>Extensión de SPARQL para triples anidados.</p>
+    </section>
+
+    <section class="slide">
         <h2>RDF: Reificación</h2>
         <p>Hacer afirmaciones sobre afirmaciones (meta-triples)</p>
         <p>Necesario para expresar: confianza, procedencia, temporalidad</p>
@@ -335,12 +419,10 @@ ex:Mikel ex:favoriteColors (
     </section>
 
     <section class="slide">
-        <h2>RDF: Internacionalización</h2>
-        <p>Literales con etiquetas de idioma (BCP 47)</p>
-        <p>"Hello"@en, "Hola"@es, "Kaixo"@eu</p>
-        <p>Permite datos multilingües en el mismo grafo</p>
-        <p>Fundamental para datos globales y open data</p>
     </section>
+
+
+
 
     <section class="slide">
         <h2>RDF: Internacionalización - Ejemplo</h2>
