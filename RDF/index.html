@@ -36,25 +36,52 @@
         <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
     </section>
 
+    
+    <section class="slide">
+        <h2>IA simbólica vs IA estadística</h2>
+        <ul>
+            <li><b>IA simbólica</b>: conocimiento explícito (lógica, reglas, ontologías/KGs), razonamiento determinista, alta explicabilidad, funciona con menos datos pero es frágil ante el ruido.</li>
+            <li><b>IA estadística</b>: aprende de datos; incluye <b>modelos probabilísticos</b> (redes bayesianas/PGMs) y <b>redes neuronales</b> (deep learning, LLMs). Alto rendimiento con muchos datos/cómputo, menor explicabilidad nativa.</li>
+            <li><b>Diferencias clave</b>: representación (simbólica vs parámetros), inferencia (lógica vs aproximación), requisitos (conocimiento experto vs datos/GPUs).</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Historia e “inviernos” de la IA</h2>
+        <ul>
+            <li><b>1956 Dartmouth</b>: arranque del campo; optimismo temprano (perceptrón, planificación).</li>
+            <li><b>Primer invierno (1974-1980)</b>: expectativas no cumplidas, hardware limitado y algoritmos inmaduros; recortes de financiación.</li>
+            <li><b>Años 80</b>: auge de <b>sistemas expertos</b> (IA simbólica); alto coste de desarrollo y mantenimiento.</li>
+            <li><b>Segundo invierno (finales 80-mediados 90)</b>: fatiga por costes/fragilidad; surge el enfoque estadístico (SVM, PGMs).</li>
+            <li><b>Renacimiento 2000s-2010s</b>: datos masivos + GPUs; <b>Deep Learning</b> (2012) y, más tarde, <b>LLMs</b>.</li>
+        </ul>
+    </section>
+
     <section class="slide">
         <h2>Web Semántica</h2>
         <p>Proyecto utópico para una nueva World Wide Web: cada recurso publica sus datos y los agentes inteligentes los consumen de manera autónoma</p>
+        <p>Basado en IA simbólica</p>
         <p>Se ha implementado parcialmente (Ej. <a href="https://json-ld.org/">JSON-LD</a> + <a href="https://schema.org/">Schema</a>: <a href="https://cloud.google.com/enterprise-knowledge-graph/docs/search-api">Google Knowledge Graph</a>)</p>
-        <p>LLMs como clientes universales basados en lenguaje natural (Agentes)</p>
-        <p>Arquitecturas GraphRAG: LLM + Knowledge Graph</p>
+        <p>Convergencia neuro-simbólica: LLMs como clientes universales basados en lenguaje natural (Agentes)</p>
+        <p>Convergencia neuro-simbólica: Arquitecturas GraphRAG (LLM + Knowledge Graph)</p>
     </section>
 
     <section class="slide">
         <h2>Web Semántica</h2>
         <p>Stack de tecnologías:
             <ul>
-                <li><a href="https://datatracker.ietf.org/doc/html/rfc3986">URI</a>: identificadores</li>
-                <li><a href="https://www.w3.org/TR/rdf11-concepts/">RDF</a>: datos</li> 
-                <li><a href="https://www.w3.org/TR/sparql11-overview/">SPARQL</a>: consultas RDF</li>  
-                <li><a href="https://www.w3.org/TR/shacl/">SHACL</a>: validación RDF</li>
-                <li><a href="https://www.w3.org/TR/owl2-overview/">OWL</a>: vocabularios (ontologías) para describir datos RDF</li>
+                <li><a href="https://datatracker.ietf.org/doc/html/rfc3986">URI</a> (IETF)</li>
+                <li><a href="https://www.w3.org/TR/rdf11-concepts/">RDF</a> (W3C)</li> 
+                <li><a href="https://www.w3.org/TR/sparql11-overview/">SPARQL</a> (W3C)</li>  
+                <li><a href="https://www.w3.org/TR/shacl/">SHACL</a> (W3C)</li>
+                <li><a href="https://www.w3.org/TR/owl2-overview/">OWL</a> (W3C)</li>
             </ul>
         </p>
+    </section>
+
+        <section class="slide">
+        <h2>Triple RDF</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/sw_stack.svg" alt="SW stack" width="60%"></p>
     </section>
 
     <section class="slide">
@@ -92,23 +119,7 @@ SELECT ?c WHERE { ?c a owl:Class }
 LIMIT 5</code></pre>
     </section>
 
-        <section class="slide">
-        <h2>Pila: Diagrama</h2>
-        <pre><code>+-------------------------+
-        <h2>RDF: Internacionalización</h2>
--------------------------+
-        <p>Literales con etiquetas de idioma (BCP 47)</p>
--------------------------+
-        <p>"Hello"@en, "Hola"@es, "Kaixo"@eu</p>
--------------------------+
-        <p>Permite datos multilingües en el mismo grafo</p>
--------------------------+
-        <p>Fundamental para datos globales y open data</p>
--------------------------+
-    </section>
-        <p>Compatibilidad hacia abajo: todas las capas se serializan y consumen como RDF basado en URIs.</p>
-    </section>
-
+        
     <section class="slide">
         <h2>RDF</h2>
         <p>RDF: Resource Description Framework</p>
