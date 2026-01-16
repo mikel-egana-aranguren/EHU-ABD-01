@@ -27,7 +27,7 @@
         <p>Mikel Egaña Aranguren</p>
         <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
         <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
-        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" style="border: 1px solid #555;">
+        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" >
     </section>
 
     <section class="slide">
@@ -36,25 +36,28 @@
         <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
     </section>
 
-    
     <section class="slide">
         <h2>IA simbólica vs IA estadística</h2>
-        <ul>
-            <li><b>IA simbólica</b>: conocimiento explícito (lógica, reglas, ontologías/KGs), razonamiento determinista, alta explicabilidad, funciona con menos datos pero es frágil ante el ruido.</li>
-            <li><b>IA estadística</b>: aprende de datos; incluye <b>modelos probabilísticos</b> (redes bayesianas/PGMs) y <b>redes neuronales</b> (deep learning, LLMs). Alto rendimiento con muchos datos/cómputo, menor explicabilidad nativa.</li>
-            <li><b>Diferencias clave</b>: representación (simbólica vs parámetros), inferencia (lógica vs aproximación), requisitos (conocimiento experto vs datos/GPUs).</li>
-        </ul>
+        <p>IA simbólica: se aplica un modelo pre-existente construido por expertos que contiene conocimiento explícito codificado en símbolos (lógica)</p>
+        <p>IA estadística: el modelo aprende de datos de manera (semi)autónoma mediante procesos probabilísticos</p>
     </section>
 
     <section class="slide">
-        <h2>Historia e “inviernos” de la IA</h2>
-        <ul>
-            <li><b>1956 Dartmouth</b>: arranque del campo; optimismo temprano (perceptrón, planificación).</li>
-            <li><b>Primer invierno (1974-1980)</b>: expectativas no cumplidas, hardware limitado y algoritmos inmaduros; recortes de financiación.</li>
-            <li><b>Años 80</b>: auge de <b>sistemas expertos</b> (IA simbólica); alto coste de desarrollo y mantenimiento.</li>
-            <li><b>Segundo invierno (finales 80-mediados 90)</b>: fatiga por costes/fragilidad; surge el enfoque estadístico (SVM, PGMs).</li>
-            <li><b>Renacimiento 2000s-2010s</b>: datos masivos + GPUs; <b>Deep Learning</b> (2012) y, más tarde, <b>LLMs</b>.</li>
-        </ul>
+        <h2>Razonamiento</h2>
+        <p>IA simbólica: lógico, determinista. Explicabilidad completa</p>
+        <p>IA estadística: aproximado, probabilístico. Baja explicabilidad</p>
+    </section>
+
+    <section class="slide">
+        <h2>Datos</h2>
+        <p>IA simbólica: necesita menos datos pero frágil ante el ruido</p>
+        <p>IA estadística: necesita muchos datos de alta calidad, más robusta ante el ruido</p>
+    </section>
+
+        <section class="slide">
+        <h2>Requisitos</h2>
+        <p>IA simbólica: expertos en el dominio</p>
+        <p>IA estadística: datos y alta capacidad de cómputo (GPUs)</p>
     </section>
 
     <section class="slide">
@@ -62,8 +65,13 @@
         <p>Proyecto utópico para una nueva World Wide Web: cada recurso publica sus datos y los agentes inteligentes los consumen de manera autónoma</p>
         <p>Basado en IA simbólica</p>
         <p>Se ha implementado parcialmente (Ej. <a href="https://json-ld.org/">JSON-LD</a> + <a href="https://schema.org/">Schema</a>: <a href="https://cloud.google.com/enterprise-knowledge-graph/docs/search-api">Google Knowledge Graph</a>)</p>
+    </section>
+
+        <section class="slide">
+        <h2>Web Semántica</h2>
         <p>Convergencia neuro-simbólica: LLMs como clientes universales basados en lenguaje natural (Agentes)</p>
         <p>Convergencia neuro-simbólica: Arquitecturas GraphRAG (LLM + Knowledge Graph)</p>
+        <p>Convergencia neuro-simbólica: ...</p>
     </section>
 
     <section class="slide">
@@ -80,45 +88,9 @@
     </section>
 
         <section class="slide">
-        <h2>Triple RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/sw_stack.svg" alt="SW stack" width="60%"></p>
+        <h2>Web Semántica</h2>
+        <p><img src="pictures-abd-01/sw_stack.svg" alt="SW stack" width="90%"></p>
     </section>
-
-    <section class="slide">
-        <h2>Pila Web Semántica</h2>
-        <p>Capas y roles principales:</p>
-        <ul>
-            <li><b>URIs/IRIs</b>: identifican recursos de forma global.</li>
-            <li><b>RDF</b>: modelo de datos (triple/ grafo).</li>
-            <li><b>RDFS/OWL</b>: vocabularios/ontologías publicados como datos RDF.</li>
-            <li><b>SPARQL</b>: consultas sobre grafos RDF.</li>
-            <li><b>SHACL</b>: validación de grafos RDF.</li>
-        </ul>
-    </section>
-
-    <section class="slide">
-        <h2>Compatibilidad hacia abajo</h2>
-        <p>Cómo encajan y por qué interoperan:</p>
-        <ul>
-            <li><b>Todo es RDF</b>: axiomas OWL y shapes SHACL son grafos RDF.</li>
-            <li><b>URIs en todas las capas</b>: misma base de identificación.</li>
-            <li><b>Consumo descendente</b>: un grafo con OWL/SHACL se carga como RDF y se consulta con SPARQL.</li>
-            <li><b>Herramientas reutilizables</b>: loaders, stores y APIs RDF sirven para OWL/SHACL.</li>
-        </ul>
-    </section>
-
-    <section class="slide">
-        <h2>Ejemplos prácticos</h2>
-        <ul>
-            <li><b>SPARQL sobre OWL</b>: consultar clases/propiedades definidas en OWL (como triples).</li>
-            <li><b>Validación SHACL</b>: validar los mismos datos RDF sin cambiar el almacenamiento.</li>
-            <li><b>Serializaciones</b>: JSON-LD, Turtle, RDF/XML representan las mismas URIs y triples.</li>
-        </ul>
-        <pre><code>PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-SELECT ?c WHERE { ?c a owl:Class }
-LIMIT 5</code></pre>
-    </section>
-
         
     <section class="slide">
         <h2>RDF</h2>
@@ -129,17 +101,17 @@ LIMIT 5</code></pre>
 
     <section class="slide">
         <h2>Triple RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/triple.svg" alt="Triple RDF" width="60%"></p>
+        <p><img src="pictures-abd-01/triple.svg" alt="Triple RDF" width="60%"></p>
     </section>
 
     <section class="slide">
         <h2>Grafo RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo.svg" alt="Grafo RDF" width="80%"></p>
+        <p><img src="pictures-abd-01/grafo.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
         <h2>Grafo RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo2.svg" alt="Grafo RDF" width="60%"></p>
+        <p><img src="pictures-abd-01/grafo2.svg" alt="Grafo RDF" width="60%"></p>
     </section>
 
     <section class="slide">
@@ -154,12 +126,12 @@ LIMIT 5</code></pre>
     <section class="slide">
         <h2>Grafo RDF: URIs</h2>
         <p><img   src="pictures-abd-01/ld_bilbo_crop.svg" alt="Grafo RDF: URIs" width="90%"></p>
-        <p>(Ejecutar ejemplo)</p>
+        <p>[<a href="ejemplos/curl_wikidata.sh">ejemplos/curl_wikidata.sh</a>]</p>
     </section>
 
     <section class="slide">
         <h2>Grafo RDF: URIs</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo_uris.svg" alt="Grafo RDF: URIs" width="80%"></p>
+        <p><img src="pictures-abd-01/grafo_uris.svg" alt="Grafo RDF: URIs" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -171,7 +143,7 @@ LIMIT 5</code></pre>
 
     <section class="slide">
         <h2>Grafo RDF: datatypes</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/grafo_datatypes.svg" alt="Grafo RDF: datatypes" width="80%"></p>
+        <p><img src="pictures-abd-01/grafo_datatypes.svg" alt="Grafo RDF: datatypes" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -184,30 +156,41 @@ LIMIT 5</code></pre>
 
     <section class="slide">
         <h2>Serializar RDF</h2>
-        <p>RDF/XML (http://www.w3.org/TR/rdf-syntax-grammar/)</p>
-        <p>RDFa (http://www.w3.org/TR/rdfa-core/)</p>
-        <p>Turtle (http://www.w3.org/TR/turtle/)</p>
-        <p>N3 (http://www.w3.org/DesignIssues/Notation3.html)</p>
-        <p>JSON-LD (https://www.w3.org/TR/json-ld11/)</p>
+        <p>RDF/XML: <a href="http://www.w3.org/TR/rdf-syntax-grammar/">http://www.w3.org/TR/rdf-syntax-grammar/</a></p>
+        <p>Turtle: <a href="http://www.w3.org/TR/turtle/">http://www.w3.org/TR/turtle/</a></p>
+        <p>JSON-LD: <a href="https://www.w3.org/TR/json-ld11/">https://www.w3.org/TR/json-ld11/</a></p>
+        <p>NQuads: <a href="https://www.w3.org/TR/n-quads/">https://www.w3.org/TR/n-quads/</a></p>
     </section>
 
     <section class="slide">
         <h2>Serializar RDF: RDF/XML</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_xml.png" alt="RDF/XML" width="60%"></p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_xml_graph.png" alt="RDF/XML" width="60%"></p>
+        <p><img src="pictures-abd-01/rdf_xml.png" alt="RDF/XML" width="40%"></p>
+        <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="40%"></p>
     </section>
 
     <section class="slide">
         <h2>Serializar RDF: Turtle</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_ttl.png" alt="Turtle" width="60%"></p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_xml_graph.png" alt="Turtle" width="60%"></p>
+        <p><img src="pictures-abd-01/rdf_turtle.png" alt="Turtle" width="40%"></p>
+        <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="40%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Serializar RDF: JSON-LD</h2>
+        <p><img src="pictures-abd-01/rdf_jsonld.png" alt="JSON-LD" width="30%"></p>
+        <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="40%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Serializar RDF: NQuads</h2>
+        <p><img src="pictures-abd-01/rdf_nq.png" alt="NQuads" width="80%"></p>
+        <p><img src="pictures-abd-01/jon_bilbo_graph.svg" alt="Jon bilbo" width="40%"></p>
     </section>
 
     <section class="slide">
         <h2>Herramientas útiles</h2>
-        <p><a href="https://www.w3.org/RDF/Validator/">http://www.w3.org/RDF/Validator/</a></p>
-        <p><a href="https://rdf-translator.appspot.com/">http://rdf-translator.appspot.com/</a></p>
-        <p><a href="https://www.easyrdf.org/converter">https://www.easyrdf.org/converter</a></p>
+        <p><a href="https://www.w3.org/RDF/Validator/">RDF Validator</a></p>
+        <p><a href="https://www.easyrdf.org/converter">RDF converter</a></p>
+        <p><a href="https://json-ld.org/playground/">JSON-LD playground</a></p>
     </section>
 
     <section class="slide">
@@ -228,20 +211,21 @@ LIMIT 5</code></pre>
 
     <section class="slide">
         <h2>Triple Stores</h2>
-        <p><a href="https://aws.amazon.com/neptune/">Amazon Neptune</a>:
-            <ul>
-                <li>Amazon AWS</li>
-                <li>También almacena Property Graphs</li>
-            </ul>
-        </p>
-    </section>
+        <p>
+            Comerciales: <a href="https://graphdb.ontotext.com/">GraphDB</a>, 
+            <a href="https://virtuoso.openlinksw.com/">Virtuoso</a>, 
+            <a href="https://www.stardog.com/">Stardog</a>, 
+            <a href="https://aws.amazon.com/neptune/">Amazon Neptune</a>, 
+            <a href="https://www.oxfordsemantic.tech/rdfox">RDFox</a>, 
+            <a href="https://allegrograph.com">AllegroGraph</a>,
+            <a href="https://www.progress.com/marklogic">MarkLogic</a></p>
 
-    <section class="slide">
-        <h2>Triple Stores</h2>
-        <p><a href="https://virtuoso.openlinksw.com/">Virtuoso</a></p>
-        <p><a href="https://www.stardog.com/">Stardog</a></p>
-        <p><a href="https://graphdb.ontotext.com/">GraphDB</a></p>
-        <p><a href="https://www.oxfordsemantic.tech/rdfox">RDFox</a></p>
+        <p>Open Source:
+            <a href="https://jena.apache.org/">Apache Jena</a>,
+            <a href="https://rdf4j.org/">Eclipse RDF4J</a>,
+            <a href="https://docs.rs/oxigraph/latest/oxigraph/">Oxigraph</a>,
+            <a href="https://docs.qlever.dev">QLever</a>
+        </p>
     </section>
 
     <section class="slide">
@@ -250,8 +234,18 @@ LIMIT 5</code></pre>
             <li>Razonamiento automático</li>
             <li>Conectores para servicios como Lucene o Kafka</li>
             <li>Virtualización de Bases de Datos relacionales (Ontop)</li>
+            <li>GraphRAG</li>
             <li>...</li>
-            <li>[Ejecutar ejemplos 1-1, 1-2]</li>
+        </ul>
+    </section>
+
+        <section class="slide">
+        <h2>GraphDB</h2>
+        <ul>
+            <li>[ejemplos/./graphdb]</li>
+            <li>[jon_bilbo.ttl]</li>
+            <li>[mikel_bilbo.ttl]</li>
+            <li>A tener en cuenta: archivos (tabla) vs grafos, conciliación de entidades con la misma URIs, recursos vs literales</li>
         </ul>
     </section>
 
@@ -264,27 +258,27 @@ LIMIT 5</code></pre>
 
     <section class="slide">
         <h2>Grafos RDF</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph.svg" alt="Grafo RDF" width="80%"></p>
+        <p><img src="pictures-abd-01/namedgraph.svg" alt="Grafo RDF" width="80%"></p>
         <p>[Ejecutar ejemplo]</p>
     </section>
 
     <section class="slide">
         <h2>Grafos RDF</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata.svg" alt="Grafo RDF" width="80%"></p>
+        <p><img src="pictures-abd-01/namedgraph_metadata.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
         <h2>Grafos RDF</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="60%"></p>
+        <p><img src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="60%"></p>
     </section>
 
 
     <section class="slide">
         <h2>Grafos RDF</h2>
         <p>Default Graph</p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/namedgraph_metadata_namedgraph2_default_grap.svg" alt="Grafo RDF" width="80%"></p>
+        <p><img src="pictures-abd-01/namedgraph_metadata_namedgraph2_default_grap.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -293,9 +287,9 @@ LIMIT 5</code></pre>
     </section>
 
     <section class="slide">
-        <h2>Grafos RDF</h2>
-        <p>Predicado rdf:type: Agrupar recursos en clases</p>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
+        <h2>RDF type</h2>
+        <p>Predicado rdf:type - instancias y clases</p>
+        <p><img src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
         <p>[Ejecutar ejemplo - Class hierarchy]</p>
     </section>
 
@@ -329,7 +323,7 @@ LIMIT 5</code></pre>
 
     <section class="slide">
         <h2>Ontologías</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/ontologia.svg" alt="Ontologia" width="80%"></p>
+        <p><img src="pictures-abd-01/ontologia.svg" alt="Ontologia" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -601,7 +595,7 @@ ex:estudiaEn rdfs:domain ex:Student ;
 
     <section class="slide">
         <h2>Linked Open Data Cloud</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/lod-cloud.svg" alt="LOD Cloud" width="70%"></p>
+        <p><img src="pictures-abd-01/lod-cloud.svg" alt="LOD Cloud" width="70%"></p>
         <p><a href="https://lod-cloud.net/">https://lod-cloud.net/</a></p>
     </section>
 
@@ -622,7 +616,7 @@ ex:estudiaEn rdfs:domain ex:Student ;
 
     <section class="slide">
         <h2>Linked Data</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/ld_trifid.svg" alt="Linked Data" width="80%"></p>
+        <p><img src="pictures-abd-01/ld_trifid.svg" alt="Linked Data" width="80%"></p>
     </section>
 
     <!-- FOOTER -->
