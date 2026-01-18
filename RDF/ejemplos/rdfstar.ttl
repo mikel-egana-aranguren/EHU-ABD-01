@@ -1,0 +1,18 @@
+# RDF* (Turtle*) representation of named graph quads from named_graph.nq
+# Mapping: each quad (s p o g) becomes an annotated triple: <<s p o>> ex:inGraph g .
+@prefix ex: <https://ehu.eus/vocab#> .
+
+<< <https://ehu.eus/staff/pdi/mikel> <urn:eustat:property:vive_en> <https://data.euskadi.eus/resource/bilbo> >> ex:inGraph <urn:data:graph:euskadi> .
+<< <https://data.euskadi.eus/resource/bilbo> <https://wikidata.org/prop/parte_de> <https://data.euskadi.eus/resource/bizkaia> >> ex:inGraph <urn:data:graph:euskadi> .
+<< <https://data.euskadi.eus/resource/bilbo> <https://wikidata.org/prop/poblacion> "400000" >> ex:inGraph <urn:data:graph:euskadi> .
+
+
+  :man :hasSpouse :woman .
+  <<:man :hasSpouse :woman>> :startDate "2020-02-11"^^xsd:date .
+
+
+# List all metadata for the given reference to a statement
+SELECT *
+WHERE {
+    <<:man :hasSpouse :woman>> ?p ?o
+}
