@@ -6,11 +6,27 @@
 ehu:jon ehu:vive_en eus:bilbo .
 << ehu:mikel eustat:amigo_de ehu:jon >> eustat:since "1997"^^xsd:gYear .
 
-# SELECT *
+# PREFIX eustat: <urn:eustat:property:>
+# PREFIX ehu: <https://ehu.eus/staff/pdi/>
+# SELECT ?year
 # WHERE {
-#     <<:man :hasSpouse :woman>> ?p ?o
+#    << ehu:mikel eustat:amigo_de ehu:jon >> eustat:since ?year
 # }
 
+# PREFIX eustat: <urn:eustat:property:>
+# PREFIX ehu: <https://ehu.eus/staff/pdi/>
+# SELECT ?year ?bizileku
+# WHERE {
+#    ehu:jon ehu:vive_en ?bizileku .
+#    << ehu:mikel eustat:amigo_de ehu:jon >> eustat:since ?year
+# }
+
+# PREFIX eustat: <urn:eustat:property:>
+# PREFIX ehu: <https://ehu.eus/staff/pdi/>
+# SELECT ?amigo ?year
+# WHERE {
+#    << ?amigo eustat:amigo_de ehu:jon >> eustat:since ?year
+# }
 
 
 

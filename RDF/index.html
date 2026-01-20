@@ -345,35 +345,24 @@
         <p>Extensión reciente de RDF: permitir triples como sujetos u objetos</p>
         <p>Sintaxis: &lt;&lt; sujeto predicado objeto &gt;&gt;</p>
         <p>Estándar W3C en desarrollo</p>
-        <p>[rdfstar.ttl]</p>
+        <p>[rdfstar.ttl - consultas]</p>
     </section>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-    
-
 
     <section class="slide">
         <h2>RDF type</h2>
-        <p>Predicado rdf:type - instancias y clases</p>
+        <p>Predicado rdf:type - instancias (RDF) y clases (RDFS)</p>
         <p><img src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
-        <p>[Ejecutar ejemplo - Class hierarchy]</p>
+        <p>[rdf_type.ttl - Class hierarchy]</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Vocabulario RDFS</h2>
+        <p>rdfs:Class - definir clases</p>
+        <p>rdfs:subClassOf - jerarquías de clases</p>
+        <p>rdfs:Property - definir propiedades</p>
+        <p>rdfs:subPropertyOf - jerarquías de propiedades</p>
+        <p>rdfs:domain, rdfs:range - restricciones de propiedades</p>
+        <p>rdfs:label, rdfs:comment - anotaciones</p>
     </section>
 
     <section class="slide">
@@ -415,59 +404,6 @@
         <p><a href="https://lov.linkeddata.es/dataset/lov">Linked Open Vocabularies</a></p>
     </section>
 
-    
-
-
-
-
-
-    
-    
-
-
-
-
-    <section class="slide">
-        <h2>RDF: Vocabulario RDFS</h2>
-        <p>rdfs:Class - definir clases</p>
-        <p>rdfs:subClassOf - jerarquías de clases</p>
-        <p>rdfs:Property - definir propiedades</p>
-        <p>rdfs:subPropertyOf - jerarquías de propiedades</p>
-        <p>rdfs:domain, rdfs:range - restricciones de propiedades</p>
-        <p>rdfs:label, rdfs:comment - anotaciones</p>
-    </section>
-
-    <section class="slide">
-        <h2>RDF: RDFS - Ejemplo</h2>
-        <pre><code>@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix ex: &lt;http://example.org/&gt; .
-
-ex:Person rdfs:subClassOf ex:Agent .
-ex:Student rdfs:subClassOf ex:Person .
-
-ex:estudiaEn rdfs:domain ex:Student ;
-    rdfs:range ex:Universidad .</code></pre>
-    </section>
-
-
-
-    <section class="slide">
-        <h2>RDF: Buenas prácticas</h2>
-        <p>Usar URIs HTTP dereferenciales (303 redirect o Hash URIs)</p>
-        <p>Reutilizar vocabularios existentes antes de crear nuevos</p>
-        <p>Proporcionar labels en múltiples idiomas (rdfs:label)</p>
-        <p>Documentar vocabularios con rdfs:comment</p>
-        <p>Evitar blank nodes en datos Linked Open Data</p>
-    </section>
-
-
-
-
-
-
-
-
-
     <section class="slide">
         <h2>Linked Data</h2>
         <p>Publicación de datos estructurados en la web de forma que puedan ser enlazados e interpretados por máquinas</p>
@@ -479,8 +415,8 @@ ex:estudiaEn rdfs:domain ex:Student ;
         <h2>Principios de Linked Data</h2>
         <ol>
             <li>Usar URIs para identificar recursos</li>
-            <li>Usar URIs HTTP para que se puedan buscar</li>
-            <li>Proporcionar información útil usando estándares (RDF, SPARQL)</li>
+            <li>Usar URIs HTTP(S) para acceder a esos recursos</li>
+            <li>Cuando se accede a un recurso, proporcionar sus datos usando estándares (RDF, SPARQL)</li>
             <li>Incluir enlaces a otras URIs para descubrir más recursos</li>
         </ol>
         <p><a href="https://www.w3.org/DesignIssues/LinkedData.html">https://www.w3.org/DesignIssues/LinkedData.html</a></p>
@@ -498,8 +434,9 @@ ex:estudiaEn rdfs:domain ex:Student ;
         <h2>Linked Data: Ejemplo Wikidata</h2>
         <p>URI del recurso: <a href="http://www.wikidata.org/entity/Q8692">http://www.wikidata.org/entity/Q8692</a></p>
         <p>Página web (HTML): <a href="https://www.wikidata.org/wiki/Q8692">https://www.wikidata.org/wiki/Q8692</a></p>
-        <p>Datos RDF: Agregar .ttl, .rdf, .json al final de la URI</p>
-        <p>[Ejecutar ejemplo curl]</p>
+        <p>Datos RDF: Agregar .ttl, .rdf, .json al final de la URI del recurso</p>
+        <p>[curl_wikidata.sh]</p>
+        <p>SPARQL endpoint: <a href="https://query.wikidata.org/">https://query.wikidata.org/</a></p>
     </section>
 
     <section class="slide">
@@ -507,7 +444,7 @@ ex:estudiaEn rdfs:domain ex:Student ;
         <p>URI del recurso: <a href="http://dbpedia.org/resource/Bilbao">http://dbpedia.org/resource/Bilbao</a></p>
         <p>Página web: <a href="https://dbpedia.org/page/Bilbao">https://dbpedia.org/page/Bilbao</a></p>
         <p>Datos RDF: <a href="https://dbpedia.org/data/Bilbao">https://dbpedia.org/data/Bilbao</a></p>
-        <p>Endpoints SPARQL públicos permiten consultas federadas</p>
+        <p>SPARQL endpoint: <a href="https://query.wikidata.org/">https://query.wikidata.org/</a></p>
     </section>
 
     <section class="slide">
