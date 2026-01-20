@@ -111,7 +111,7 @@
 
     <section class="slide">
         <h2>Grafo RDF</h2>
-        <p><img src="pictures-abd-01/grafo2.svg" alt="Grafo RDF" width="60%"></p>
+        <p><img src="pictures-abd-01/grafo2.svg" alt="Grafo RDF" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -143,7 +143,7 @@
 
     <section class="slide">
         <h2>Grafo RDF: datatypes</h2>
-        <p><img src="pictures-abd-01/grafo_datatypes.svg" alt="Grafo RDF: datatypes" width="80%"></p>
+        <p><img src="pictures-abd-01/grafo_datatypes.svg" alt="Grafo RDF: datatypes" width="90%"></p>
     </section>
 
     <section class="slide">
@@ -151,7 +151,7 @@
         <p>RDF es un modelo de datos</p>
         <p>Ese modelo abstracto se puede representar con diferentes sintaxis: "Serializar" (escribir) en un archivo</p>
         <p>Una de esas sintaxis es RDF/XML</p>
-        <p>No confundir el modelo con la sintaxis: ¡RDF es mucho más que un archivo XML!</p>
+        <p>No confundir el modelo con la sintaxis: RDF es más que un archivo XML (o JSON)</p>
     </section>
 
     <section class="slide">
@@ -164,20 +164,26 @@
 
     <section class="slide">
         <h2>Serializar RDF: RDF/XML</h2>
-        <p><img src="pictures-abd-01/rdf_xml.png" alt="RDF/XML" width="40%"></p>
-        <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="40%"></p>
+        <div class="columns two" style="display:flex; justify-content:space-between; align-items:center;">
+            <p><img src="pictures-abd-01/rdf_xml.png" alt="RDF/XML" width="100%"></p>
+            <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="100%"></p>
+        </div>
     </section>
 
     <section class="slide">
         <h2>Serializar RDF: Turtle</h2>
-        <p><img src="pictures-abd-01/rdf_turtle.png" alt="Turtle" width="40%"></p>
-        <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="40%"></p>
+        <div class="columns two" style="display:flex; justify-content:space-between; align-items:center;">
+            <p><img src="pictures-abd-01/rdf_turtle.png" alt="Turtle" width="100%"></p>
+            <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="100%"></p>
+        </div>
     </section>
 
     <section class="slide">
         <h2>Serializar RDF: JSON-LD</h2>
-        <p><img src="pictures-abd-01/rdf_jsonld.png" alt="JSON-LD" width="30%"></p>
-        <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="40%"></p>
+        <div class="columns two" style="display:flex; justify-content:space-between; align-items:center;">
+            <p><img src="pictures-abd-01/rdf_jsonld.png" alt="JSON-LD" width="80%"></p>
+            <p><img src="pictures-abd-01/jon_bilbo.svg" alt="Jon bilbo" width="100%"></p>
+        </div>
     </section>
 
         <section class="slide">
@@ -186,26 +192,13 @@
         <p>Usado por Schema.org para metadatos en páginas web</p>
         <p>Google, Bing, Yahoo lo procesan para mejorar búsquedas</p>
         <p>@context define el mapeo de claves JSON a URIs RDF</p>
-    </section>
-
-    <section class="slide">
-        <h2>RDF: JSON-LD - Ejemplo</h2>
-        <pre><code>{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Mikel Egaña",
-  "jobTitle": "Profesor",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "UPV/EHU"
-  }
-}</code></pre>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/mikel.jsonld]</p>
     </section>
 
     <section class="slide">
         <h2>Serializar RDF: NQuads</h2>
         <p><img src="pictures-abd-01/rdf_nq.png" alt="NQuads" width="80%"></p>
-        <p><img src="pictures-abd-01/jon_bilbo_graph.svg" alt="Jon bilbo" width="40%"></p>
+        <p><img src="pictures-abd-01/jon_bilbo_graph.svg" alt="Jon bilbo" width="60%"></p>
     </section>
 
         <section class="slide">
@@ -274,7 +267,7 @@
             <p style="font-size:10px;font-family: monospace">[ejemplos/./graphdb]</p>
             <p style="font-size:10px;font-family: monospace">[ejemplos/jon_bilbo.ttl]</p>
             <p style="font-size:10px;font-family: monospace">[ejemplos/mikel_bilbo.ttl]</p>
-            <p>A tener en cuenta: archivos (tabla) vs grafos, concipación de entidades con la misma URIs, recursos vs literales</li>
+            <p>A tener en cuenta: archivos (tabla) vs grafos, conciliación de entidades con la misma URIs, recursos vs literales</li>
     </section>
 
     <section class="slide">
@@ -299,7 +292,7 @@
     <section class="slide">
         <h2>Grafos RDF</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
-        <p><img src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="40%"></p>
+        <p><img src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="60%"></p>
         <p style="font-size:10px;font-family: monospace">[ejemplos/seguridad_social.nq]</p>
     </section>
 
@@ -314,13 +307,8 @@
         <p>Nodos anónimos sin URI: recursos sin identificador global</p>
         <p>Se usan cuando no necesitamos referenciar el recurso desde fuera. Problema para Linked Data: no se pueden enlazar desde grafos en servidores externos</p>
         <p>Sintaxis Turtle: _:b1, _:b2, ... o []</p>
-    </section>
-
-    <section class="slide">
-        <h2>Blank Nodes - Ejemplo</h2>
-        <p></p>
         <p>El recurso "Jon" no tiene URI propia</p>
-        <p>[jon_bilbo.ttl >> jon_bilbo_blank.ttl]</p>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/jon_bilbo.ttl >> jon_bilbo_blank.ttl]</p>
     </section>
 
     <section class="slide">
@@ -330,12 +318,12 @@
     </section>
 
     <section class="slide">
-        <h2>Reificación Named Graphs</h2>
+        <h2>Reificación: Named Graphs</h2>
         <p><img src="pictures-abd-01/reificacion_namedgraph.svg" alt="Reificación Named Graphs" width="80%"></p>
     </section>
 
     <section class="slide">
-        <h2>Reificación nodo intermedio</h2>
+        <h2>Reificación: nodo intermedio</h2>
         <p><img src="pictures-abd-01/reificacion_nodo.svg" alt="Reificación Nodo Intermedio" width="80%"></p>
     </section>
 
@@ -345,14 +333,14 @@
         <p>Extensión reciente de RDF: permitir triples como sujetos u objetos</p>
         <p>Sintaxis: &lt;&lt; sujeto predicado objeto &gt;&gt;</p>
         <p>Estándar W3C en desarrollo</p>
-        <p>[rdfstar.ttl - consultas]</p>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/rdfstar.ttl - consultas]</p>
     </section>
 
     <section class="slide">
         <h2>RDF type</h2>
         <p>Predicado rdf:type - instancias (RDF) y clases (RDFS)</p>
         <p><img src="pictures-abd-01/rdf_type.svg" alt="Grafo RDF: RDF type: agrupar recursos en clases" width="60%"></p>
-        <p>[rdf_type.ttl - Class hierarchy]</p>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/rdf_type.ttl - Class hierarchy]</p>
     </section>
 
     <section class="slide">
@@ -361,6 +349,10 @@
         <p>rdfs:subClassOf - jerarquías de clases</p>
         <p>rdfs:Property - definir propiedades</p>
         <p>rdfs:subPropertyOf - jerarquías de propiedades</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: Vocabulario RDFS</h2>
         <p>rdfs:domain, rdfs:range - restricciones de propiedades</p>
         <p>rdfs:label, rdfs:comment - anotaciones</p>
     </section>
@@ -407,8 +399,8 @@
     <section class="slide">
         <h2>Linked Data</h2>
         <p>Publicación de datos estructurados en la web de forma que puedan ser enlazados e interpretados por máquinas</p>
-        <p>Basado en estándares web: URIs, HTTP, RDF</p>
-        <p>Propuesto por Tim Berners-Lee en 2006</p>
+        <p>Basado en estándares web: URI, HTTP(S), RDF, SPARQL</p>
+        <p>Propuesto por Tim Berners-Lee (Inventor de la Web) en 2006</p>
     </section>
 
     <section class="slide">
@@ -431,24 +423,29 @@
     </section>
 
     <section class="slide">
-        <h2>Linked Data: Ejemplo Wikidata</h2>
+        <h2>Linked Data: Wikidata</h2>
         <p>URI del recurso: <a href="http://www.wikidata.org/entity/Q8692">http://www.wikidata.org/entity/Q8692</a></p>
-        <p>Página web (HTML): <a href="https://www.wikidata.org/wiki/Q8692">https://www.wikidata.org/wiki/Q8692</a></p>
-        <p>Datos RDF: Agregar .ttl, .rdf, .json al final de la URI del recurso</p>
-        <p>[curl_wikidata.sh]</p>
-        <p>SPARQL endpoint: <a href="https://query.wikidata.org/">https://query.wikidata.org/</a></p>
+        <p>Página web (Humanos - HTML): <a href="https://www.wikidata.org/wiki/Q8692">https://www.wikidata.org/wiki/Q8692</a></p>
+        <p>Datos RDF (Agentes): [curl_wikidata.sh]</p>
+        <p>SPARQL endpoint (Humanos y agentes): <a href="https://query.wikidata.org/">https://query.wikidata.org/</a></p>
     </section>
 
     <section class="slide">
-        <h2>Linked Data: Ejemplo DBpedia</h2>
+        <h2>Linked Data: DBpedia</h2>
         <p>URI del recurso: <a href="http://dbpedia.org/resource/Bilbao">http://dbpedia.org/resource/Bilbao</a></p>
-        <p>Página web: <a href="https://dbpedia.org/page/Bilbao">https://dbpedia.org/page/Bilbao</a></p>
-        <p>Datos RDF: <a href="https://dbpedia.org/data/Bilbao">https://dbpedia.org/data/Bilbao</a></p>
-        <p>SPARQL endpoint: <a href="https://query.wikidata.org/">https://query.wikidata.org/</a></p>
+        <p>Página web (Humanos - HTML): <a href="https://dbpedia.org/page/Bilbao">https://dbpedia.org/page/Bilbao</a></p>
+        <p>Datos RDF (Agentes): <a href="https://dbpedia.org/data/Bilbao">https://dbpedia.org/data/Bilbao</a></p>
+        <p>SPARQL endpoint (Humanos y agentes): <a href="https://dbpedia.org/sparql">https://dbpedia.org/sparql</a></p>
     </section>
 
     <section class="slide">
-        <h2>Linked Data: 5 estrellas</h2>
+        <h2>Linked Open Data Cloud</h2>
+        <p><img src="pictures-abd-01/lod-cloud.png" alt="LOD Cloud" width="40%"></p>
+        <p style="font-size:10px;"><a href="https://lod-cloud.net/">https://lod-cloud.net/</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>5 star Open Data</h2>
         <p>★ Datos disponibles en la web (cualquier formato) con licencia abierta</p>
         <p>★★ Datos estructurados y legibles por máquina (ej. Excel en vez de imagen)</p>
         <p>★★★ Formato no propietario (ej. CSV en vez de Excel)</p>
@@ -457,9 +454,8 @@
     </section>
 
     <section class="slide">
-        <h2>Linked Open Data Cloud</h2>
-        <p><img src="pictures-abd-01/lod-cloud.svg" alt="LOD Cloud" width="70%"></p>
-        <p><a href="https://lod-cloud.net/">https://lod-cloud.net/</a></p>
+        <h2>5 star Open Data</h2>
+        <p><img src="pictures-abd-01/5-star-steps.png" alt="5 star Open Data" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -473,7 +469,6 @@
     <section class="slide">
         <h2>Linked Data: Herramientas</h2>
         <p><a href="https://github.com/zazuko/trifid">Trifid</a>: servidor Linked Data ligero</p>
-        <p><a href="https://www.w3.org/wiki/LDP_Implementations">LDP</a> (Linked Data Platform): protocolo W3C para lectura/escritura</p>
         <p><a href="https://solidproject.org/">Solid</a>: pods descentralizados de datos personales</p>
     </section>
 
