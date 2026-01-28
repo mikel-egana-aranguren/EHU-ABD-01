@@ -624,18 +624,15 @@ WHERE  {
 }
         </pre>
         <p>Idea: borrar valores previos de los sujetos afectados e insertar el nuevo.</p>
+
+        Como detectar que hay que actualizar? En SQL se asume que cada fila tiene un solo valor
+        para cada columna, pero en RDF un sujeto puede tener múltiples valores para una propiedad
+        OWL functional property para detectar
+        SHACL para detectar
+        RDF-star para marcar el triple como de "valor unico"
     </section>
 
-    <section class="slide">
-        <h2>Recap</h2>
-        <ul>
-            <li><strong>Importar</strong>: aditivo; no sustituye por defecto.</li>
-            <li><strong>Valor único</strong>: no está garantizado por el modelo.</li>
-            <li><strong>Mundo abierto</strong>: ausencia no implica borrado.</li>
-            <li><strong>UPSERT</strong> en RDF: SPARQL DELETE/INSERT o reemplazo de grafo.</li>
-        </ul>
-        <p style="font-size:12px">Referencia: artículo en Medium (enlace arriba).</p>
-    </section>
+
 
     <section class="slide">
         <h2>Recursos para aprender SPARQL</h2>
