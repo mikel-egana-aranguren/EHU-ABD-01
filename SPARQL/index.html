@@ -597,6 +597,47 @@ results = sparql.query().convert()</code></pre>
     </section>
 
     <section class="slide">
+        <h2>Cómo lograr un UPSERT en triplestores</h2>
+        <ol>
+            <li>Carga el delta en un grafo de “staging”.</li>
+            <li>Ejecuta SPARQL Update: DELETE de valores antiguos + INSERT de los nuevos.</li>
+        </ol>
+        <p>Patrón común: GraphDB, Fuseki/Jena, Virtuoso, Stardog, etc.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ejemplo: DELETE/INSERT dirigido</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+PREFIX ex: <http://www.example.com/>
+
+# 1) Delta en grafo de staging con el nuevo color
+# GRAPH &lt;staging&gt;:  ex:mi_mascota ex:color "negro"
+
+# 2) Update dirigido sobre el grafo objetivo
+WITH &lt;mascotas&gt;
+DELETE { ?s ex:color ?old }
+INSERT { ?s ex:color "negro" }
+WHERE  {
+  GRAPH &lt;staging&gt; { ?s ex:color "negro" }
+  OPTIONAL { ?s ex:color ?old }
+  FILTER( !bound(?old) || ?old != "negro" )
+}
+        </pre>
+        <p>Idea: borrar valores previos de los sujetos afectados e insertar el nuevo.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Recap</h2>
+        <ul>
+            <li><strong>Importar</strong>: aditivo; no sustituye por defecto.</li>
+            <li><strong>Valor único</strong>: no está garantizado por el modelo.</li>
+            <li><strong>Mundo abierto</strong>: ausencia no implica borrado.</li>
+            <li><strong>UPSERT</strong> en RDF: SPARQL DELETE/INSERT o reemplazo de grafo.</li>
+        </ul>
+        <p style="font-size:12px">Referencia: artículo en Medium (enlace arriba).</p>
+    </section>
+
+    <section class="slide">
         <h2>Recursos para aprender SPARQL</h2>
         <p><a href="https://www.w3.org/TR/sparql11-query/">SPARQL 1.1 Specification</a></p>
         <p><a href="https://www.learningsparql.com/">Learning SPARQL (libro)</a></p>

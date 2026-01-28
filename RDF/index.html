@@ -336,6 +336,40 @@
         <p style="font-size:10px;font-family: monospace">[ejemplos/rdfstar.ttl - consultas]</p>
     </section>
 
+
+    <section class="slide">
+        <h2>UPSERT (UPDATE INSERT)</h2>
+        <p>Operación en SQL que actualiza si existe, inserta si no</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+INSERT INTO mascotas (id, nombre, color)
+VALUES (2, "Fluffy", "negro")
+ON DUPLICATE KEY UPDATE color = VALUES(color);
+        </pre>
+        <p>Objetivo: mantener un único valor actualizado para una fila</p>
+                <p style="font-size:12px">Basado en: <a href="https://medium.com/@skontopo2009/upsert-vs-rdf-same-goal-different-rules-ac503ff4f8ed" target="_blank">Stratos Kontopoulos (Medium)</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>En RDF cargar datos es aditivo</h2>
+        <p>Al cargar datos las nuevas tripletas se añaden</p>
+        <p>Ejemplo: añadir <em>ex:color "negro"</em> no elimina <em>ex:color "marrón"</em></p>
+        <p>Resultado: el recurso puede tener múltiples valores para la misma propiedad</p>
+    </section>
+
+    <section class="slide">
+        <h2>Sin semántica de "valor único"</h2>
+        <p>El modelo RDF permite varios valores por propiedad en un recurso</p>
+        <p>Incluso con <em>owl:FunctionalProperty</em> (OWL), la restricción es lógica: la Triple Store no borra automáticamente</p>
+        <p>Los triplestores pueden permitir, avisar (SHACL) o inferir (OWL); no borran automáticamente</p>
+    </section>
+
+    <section class="slide">
+        <h2>Open World Assumption (OWA)</h2>
+        <p>En RDF (y OWL), que falte un dato no implica que sea falso u obsoleto (No tener información no implica negación, ya que puede haber información en otro lugar o en el futuro en internet)</p>
+        <p>Para sustituir un valor, hay que indicar el borrado explícito</p>
+        <p>Opciones: SPARQL Update (DELETE/INSERT) o reemplazar el grafo completo</p>
+    </section>
+
     <section class="slide">
         <h2>RDF type</h2>
         <p>Predicado rdf:type - instancias (RDF) y clases (RDFS)</p>
@@ -475,6 +509,11 @@
     <section class="slide">
         <h2>Linked Data</h2>
         <p><img src="pictures-abd-01/ld_trifid.svg" alt="Linked Data" width="80%"></p>
+    </section>
+
+        <section class="slide">
+        <h2>Linked Data</h2>
+        <p><img src="pictures-abd-01/ld_trifid_URI.svg" alt="Linked Data" width="90%"></p>
     </section>
 
     <!-- FOOTER -->
