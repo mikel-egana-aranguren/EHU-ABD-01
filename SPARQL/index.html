@@ -72,10 +72,28 @@
     </section>
 
     <section class="slide">
-        <h2>Estructura de la consulta (Cambiar dataset a labo RDF - describir )</h2>
-        (Subir <a href="Museoak.rdf">museoak.rdf</a> a GraphDB)
-        (<a href="1.rq">1.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_basic.png" alt="SPARQL basic" width="40%"></p>
+        <h2>Dataset museos</h2>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/Museoak.rdf]</p>
+        <p><img src="pictures-abd-01/Museoak-graph.png" alt="Grafo museos" width="70%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de la consulta</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Prefixes<br>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;<br>
+PREFIX gip_prop: &lt;http://gipuzkoa.eus/prop/&gt;<br>
+PREFIX gip: &lt;http://gipuzkoa.eus/resource/&gt;<br>
+<br>
+# Variables que queremos recibir<br>
+SELECT ?sujeto ?clase<br>
+<br>
+# Patrón del grafo que queremos extraer del grafo mayor<br>
+WHERE {<br>
+&nbsp;&nbsp;?sujeto gip_prop:bizilekua gip:donostia .<br>
+&nbsp;&nbsp;?sujeto rdf:type ?clase<br>
+}<br>
+        </pre>
     </section>
 
     <section class="slide">
