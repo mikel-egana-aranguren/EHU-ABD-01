@@ -78,14 +78,25 @@
     </section>
 
     <section class="slide">
-        <h2>Estructura de la consulta</h2>
+        <h2>Dataset museos</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 # Prefixes<br>
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;<br>
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;<br>
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;<br>
 PREFIX gip_prop: &lt;http://gipuzkoa.eus/prop/&gt;<br>
 PREFIX gip: &lt;http://gipuzkoa.eus/resource/&gt;<br>
-<br>
-# Variables que queremos recibir<br>
+PREFIX gov: &lt;http://vocab.data.gov/def/drm#&gt;<br>
+PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;<br>
+
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Estructura de la consulta</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+
+# Variables que queremos recibir (Todas = "*")<br>
 SELECT ?sujeto ?clase<br>
 <br>
 # Patrón del grafo que queremos extraer del grafo mayor<br>
@@ -97,33 +108,61 @@ WHERE {<br>
     </section>
 
     <section class="slide">
-        <h2>Estructura de la consulta</h2>
-        (<a href="2.rq">2.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_basic_2.png" alt="SPARQL basic 2" width="40%"></p>
+        <h2>Optional</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT ?langile ?bizilekua<br>
+<br><br>
+WHERE {<br>
+&nbsp;&nbsp;# Tiene que ser una persona<br>
+&nbsp;&nbsp;?langile rdf:type foaf:person .<br>
+<br><br>
+&nbsp;&nbsp;# Tiene que vivir en algun sitio<br>
+&nbsp;&nbsp;?langile gip_prop:bizilekua ?bizilekua<br>
+}<br>
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Optional</h2>
-        (<a href="3.rq">3.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_optional_3.png" alt="SPARQL optional" width="40%"></p>
-    </section>
-
-    <section class="slide">
-        <h2>Optional</h2>
-        (<a href="4.rq">4.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_optional_4.png" alt="SPARQL optional" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        SELECT ?langile ?bizilekua<br>
+<br><br>
+WHERE {<br>
+&nbsp;&nbsp;# Tiene que ser una persona<br>
+&nbsp;&nbsp;?langile rdf:type foaf:person .<br>
+<br><br>
+&nbsp;&nbsp;# Puede vivir en un sitio o no<br>
+&nbsp;&nbsp;OPTIONAL {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?langile gip_prop:bizilekua ?bizilekua<br>
+&nbsp;&nbsp;}<br>
+}<br>
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Union</h2>
-        (<a href="5.rq">5.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_union_5.png" alt="SPARQL optional" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT ?entitatea ?izena<br>
+<br><br>
+WHERE {<br>
+&nbsp;&nbsp;{ ?entitatea rdfs:label ?izena }<br>
+&nbsp;&nbsp;UNION<br>
+&nbsp;&nbsp;{ ?entitatea foaf:name ?izena }<br>
+}<br>
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Ordenar resultados</h2>
-        (<a href="6.rq">6.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_order_6.png" alt="SPARQL order" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT ?pertsona ?izena<br>
+<br><br>
+WHERE {<br><br>
+&nbsp;&nbsp;?pertsona foaf:name ?izena <br>
+}<br>
+ <br><br>
+ORDER BY DESC (?izena) # Puede ser DESC o ASC
+        </pre>
     </section>
 
     <section class="slide">
@@ -133,27 +172,54 @@ WHERE {<br>
     </section>
 
     <section class="slide">
-        <h2>Paginación</h2>
-        (<a href="8.rq">8.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_pages_8.png" alt="SPARQL pages" width="40%"></p>
+        <h2>Limitar resultados</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        SELECT ?pertsona ?izena<br>
+<br><br>
+WHERE {<br>
+&nbsp;&nbsp;?pertsona foaf:name ?izena <br>
+}<br>
+ORDER BY DESC (?izena) <br>
+LIMIT 3<br>
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Paginación</h2>
-        (<a href="9.rq">9.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_pages_9.png" alt="SPARQL pages" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        SELECT ?pertsona ?izena<br>
+  <br><br>          
+WHERE {<br>
+&nbsp;&nbsp;?pertsona foaf:name ?izena <br>
+}<br>
+ORDER BY DESC (?izena) <br>
+LIMIT 3<br>
+OFFSET 3 # OFFSET 6<br>
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Filtrar resultados</h2>
-        (<a href="10.rq">10.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_filter_10.png" alt="SPARQL filter" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        SELECT ?museoa ?langile_kop<br>
+<br><br> 
+WHERE {<br>
+&nbsp;&nbsp;?museoa gip_prop:kopurua ?langile_kop .<br>
+&nbsp;&nbsp;FILTER (?langile_kop > "800"^^xsd:int)<br>
+}<br>
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Filtrar resultados</h2>
-        (<a href="11.rq">11.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_filter_11.png" alt="SPARQL filter" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        SELECT ?langile ?izena<br>
+<br><br>
+WHERE {<br>
+&nbsp;&nbsp;?langile foaf:name ?izena .<br>
+&nbsp;&nbsp;FILTER regex(?izena,'Mi.*')<br>
+}<br>
+        </pre>
     </section>
 
     <section class="slide">
@@ -171,20 +237,31 @@ WHERE {<br>
     </section>
 
     <section class="slide">
-        <h2>Evitar duplicados EJEMPLO con graficos!!!!!</h2>
-        (<a href="12.rq">12.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_duplicate_12.png" alt="SPARQL duplicate" width="40%"></p>
+        <h2>Evitar duplicados</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT ?lantokia # DISTINCT<br>
+WHERE {<br>
+&nbsp;&nbsp;?person rdf:type foaf:person .<br>
+&nbsp;&nbsp;?person <http://vocab.data.gov/def/drm#worksFor> ?lantokia      <br>
+}
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Ask</h2>
-        (<a href="13.rq">13.rq</a>)
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_ask_13.png" alt="SPARQL ask" width="40%"></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        ASK <br>
+WHERE {<br>
+&nbsp;&nbsp;?person gov:worksFor gip:gugenheim <br>    
+}
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Describe</h2>
-        <p><pre><code>DESCRIBE &lt;http://gipuzkoa.eus/resource/mikel-aranguren&gt;</code></pre></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        DESCRIBE &lt;http://gipuzkoa.eus/resource/mikel-aranguren&gt;
+        </pre>
     </section>
 
     <section class="slide">
@@ -194,12 +271,26 @@ WHERE {<br>
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>Delete data</h2>
         <p><pre><code>DELETE DATA {
             &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt; 
                 rdf:type foaf:person
           }</code></pre></p>
           <p>DESCRIBE &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt;</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -214,6 +305,13 @@ WHERE {<br>
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>INSERT DATA</h2>
         <pre><code>
         PREFIX gip:&lt;http://gipuzkoa.eus/resource/&gt;
@@ -225,10 +323,24 @@ WHERE {<br>
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>INSERT</h2>
         (<a href="15.rq">15.rq</a>)
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_insert_15.png" alt="SPARQL insert" width="40%"></p>
         <p>DESCRIBE &lt;http://gipuzkoa.eus/resource/jon-alfaro&gt;</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -261,9 +373,23 @@ WHERE {<br>
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>GRAFOS</h2>
         (<a href="18.rq">18.rq</a>)
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_select_from_graphs_18.png" alt="SPARQL insert graph" width="40%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -271,6 +397,13 @@ WHERE {<br>
         (<a href="16.rq">16.rq</a>)
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/SPARQL_fed_16.png" alt="SPARQL fed" width="40%"></p>
         (bilbo_wikidata.ttl)
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -296,6 +429,13 @@ WHERE {
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>GROUP BY</h2>
         <p>Agrupar resultados por valores de una variable</p>
         <pre><code>SELECT ?ciudad (COUNT(?museo) AS ?numMuseos)
@@ -306,6 +446,13 @@ WHERE {
 GROUP BY ?ciudad
 ORDER BY DESC(?numMuseos)</code></pre>
         <p>Cuenta museos por ciudad</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -323,6 +470,13 @@ ORDER BY DESC(?numMuseos)</code></pre>
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>BIND</h2>
         <p>Asignar valores a variables dentro de la consulta</p>
         <pre><code>SELECT ?person ?fullName
@@ -332,6 +486,13 @@ WHERE {
     BIND(CONCAT(?first, " ", ?last) AS ?fullName)
 }</code></pre>
         <p>Combina nombre y apellido en una variable</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -357,6 +518,13 @@ WHERE {
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>Funciones numéricas</h2>
         <p>ABS: valor absoluto</p>
         <p>ROUND / CEIL / FLOOR: redondeo</p>
@@ -369,6 +537,13 @@ WHERE {
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>Funciones de fecha/hora</h2>
         <p>NOW(): fecha y hora actual</p>
         <p>YEAR / MONTH / DAY: extraer componentes</p>
@@ -378,6 +553,13 @@ WHERE {
     ?event ex:date ?date .
     FILTER (YEAR(?date) = 2025)
 }</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -395,6 +577,13 @@ WHERE {
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>MINUS</h2>
         <p>Excluir resultados que coinciden con un patrón</p>
         <pre><code>SELECT ?person
@@ -409,6 +598,13 @@ WHERE {
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>NOT EXISTS</h2>
         <p>Filtrar basándose en la no existencia de un patrón</p>
         <pre><code>SELECT ?person
@@ -419,6 +615,13 @@ WHERE {
     }
 }</code></pre>
         <p>Personas sin email registrado</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -451,6 +654,13 @@ WHERE {
     </section>
 
     <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
+    </section>
+
+    <section class="slide">
         <h2>Negated Property Sets</h2>
         <p>Excluir propiedades específicas en property paths</p>
         <pre><code>SELECT ?subject ?object
@@ -458,6 +668,13 @@ WHERE {
     ?subject !rdf:type ?object
 }</code></pre>
         <p>Cualquier relación excepto rdf:type</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
@@ -481,6 +698,13 @@ WHERE {
     BIND("mikel@new.com" AS ?newEmail)
 }</code></pre>
         <p>Actualizar email de manera transaccional</p>
+    </section>
+
+    <section class="slide">
+        <h2>....</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+        .....
+        </pre>
     </section>
 
     <section class="slide">
