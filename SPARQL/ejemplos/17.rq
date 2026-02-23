@@ -1,5 +1,0 @@
-INSERT DATA{
-  GRAPH <http://example/bookStore> {
-    <http://example/book1>  ns:price  42
-  }
-} 
