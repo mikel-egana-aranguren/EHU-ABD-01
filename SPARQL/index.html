@@ -39,7 +39,17 @@
     <section class="slide">
         <h2>SPARQL</h2>
         <p><b>S</b>PARQL <b>P</b>rotocol and <b>R</b>DF <b>Q</b>uery <b>L</b>anguage</p>
-        <p>Estándar <a href="https://www.w3.org/TR/sparql11-overview/">oficial del W3C</a></p>
+        <p><a href="https://www.w3.org/TR/sparql11-overview/">Recomendación oficial del W3C</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL</h2>
+        <a href="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/">SPARQL 1.1 Query Language</a>: consultas sobre grafos RDF en SPARQL<br>
+        <a href="https://www.w3.org/TR/2013/REC-sparql11-update-20130321/">SPARQL 1.1 Update</a>: modificar RDF mediante SPARQL<br>
+        <a href="https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/">SPARQL 1.1 Protocol</a>: ejecutar consultas SPARQL sobre HTTP<br>
+        <a href="https://www.w3.org/TR/2013/REC-sparql11-service-description-20130321/">SPARQL 1.1 Service Description</a>: describir endpoints SPARQL en RDF<br>
+        <a href="https://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321/">SPARQL 1.1 Federated Query</a>: combinar endpoints en una consulta SPARQL<br>
+        <a href="https://www.w3.org/TR/2013/REC-sparql11-http-rdf-update-20130321/">SPARQL 1.1 Graph Store HTTP Protocol: modificar grafos RDF mediante HTTP</a><br>
     </section>
 
     <section class="slide">
@@ -49,7 +59,7 @@
         <p>Ejecutar SPARQL <a href="https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/">sobre HTTP</a></p>
     </section>
 
-        <section class="slide">
+    <section class="slide">
         <h2>SPARQL</h2>
         <p><a href="https://www.w3.org/TR/2013/REC-sparql11-service-description-20130321/">Describir</a> SPARQL endpoints en RDF y por lo tanto descubrirlos</p>
         <p><a href="https://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321/">Federar distintos SPARQL endpoints</a></p>
@@ -503,7 +513,7 @@ WHERE {<br>
         </pre>
     </section>
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>SPARQL UPDATE</h2>
         <p>Operaciones de modificación de grafos</p>
         <p>INSERT DATA: insertar triples directamente</p>
@@ -512,19 +522,7 @@ WHERE {<br>
         <p>LOAD: cargar RDF desde URI</p>
         <p>CLEAR: eliminar todo un grafo</p>
         <p>CREATE / DROP: gestionar grafos</p>
-    </section>
-
-        <section class="slide">
-        <h2>CONSTRUCT</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-CONSTRUCT {<br>
-&nbsp;&nbsp;?langile rdf:type gip:gugenheim_langilea<br>
-}<br>
-WHERE {<br>
-&nbsp;&nbsp;?langile gov:worksFor gip:gugenheim<br>
-}
-        </pre>
-    </section>
+    </section> -->
 
     <section class="slide">
         <h2>DELETE DATA</h2>
@@ -542,9 +540,10 @@ DELETE DATA {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 DELETE {?person rdf:type foaf:person}<br>
 WHERE {?person foaf:name ?name}<br>
-SELECT * WHERE {<br>
-&nbsp;&nbsp;?person rdf:type foaf:person<br>
-}
+<br>
+#SELECT * WHERE {<br>
+#&nbsp;&nbsp;?person rdf:type foaf:person<br>
+#}
         </pre>
     </section>
 
@@ -580,76 +579,80 @@ INSERT { ?person ex:email ?newEmail } <br>
 WHERE { <br>
 &nbsp;&nbsp;?person foaf:name "Mikel" ; <br>
 &nbsp;&nbsp;&nbsp;&nbsp;ex:email ?oldEmail . <br>
-&nbsp;&nbsp;BIND("mikel@new.com" AS ?newEmail) 
+&nbsp;&nbsp;BIND("mikel@new.com" AS ?newEmail) <br>
+}
+        </pre>
+    </section>
+
+        <section class="slide">
+        <h2>CONSTRUCT</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+CONSTRUCT {<br>
+&nbsp;&nbsp;?langile rdf:type gip:gugenheim_langilea<br>
+}<br>
+WHERE {<br>
+&nbsp;&nbsp;?langile gov:worksFor gip:gugenheim<br>
 }
         </pre>
     </section>
 
     <section class="slide">
         <h2>LOAD</h2>
-        <p>Cargar RDF desde una URI a un grafo específico:</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-LOAD &lt;http://example.org/data.rdf&gt;<br>
-INTO GRAPH &lt;http://example.org/myGraph&gt;<br>
-<br>
-# O sin especificar grafo (va al grafo por defecto):<br>
-LOAD &lt;http://example.org/data.rdf&gt;
+LOAD &lt;https://rest.uniprot.org/uniprotkb/P01308.rdf&gt;<br>
+INTO GRAPH &lt;urn:uniprot&gt;
         </pre>
     </section>
 
     <section class="slide">
         <h2>CLEAR</h2>
-        <p>Eliminar todo el contenido de un grafo:</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-CLEAR GRAPH &lt;http://example.org/myGraph&gt;<br>
+CLEAR GRAPH &lt;urn:uniprot&gt;<br>
 <br>
-# Limpiar el grafo por defecto:<br>
 CLEAR DEFAULT<br>
 <br>
-# Limpiar todos los grafos:<br>
 CLEAR ALL
         </pre>
     </section>
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>CREATE</h2>
-        <p>Crear un nuevo grafo con nombre:</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 CREATE GRAPH &lt;http://example.org/newGraph&gt;<br>
 <br>
 # Crear solo si no existe:<br>
 CREATE SILENT GRAPH &lt;http://example.org/newGraph&gt;
         </pre>
-    </section>
+    </section> -->
 
     <section class="slide">
         <h2>DROP</h2>
-        <p>Eliminar un grafo completamente:</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 DROP GRAPH &lt;http://example.org/myGraph&gt;<br>
 <br>
-# Eliminar sin errores si no existe:<br>
-DROP SILENT GRAPH &lt;http://example.org/myGraph&gt;<br>
-<br>
-# Eliminar todos los grafos:<br>
 DROP ALL
         </pre>
     </section>
 
     <section class="slide">
-        <h2>COPY</h2>
-        <p>Copiar el contenido de un grafo a otro:</p>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-COPY &lt;http://example.org/sourceGraph&gt;<br>
-TO &lt;http://example.org/targetGraph&gt;<br>
-<br>
-# Copiar grafo por defecto a uno nombrado:<br>
-COPY DEFAULT<br>
-TO &lt;http://example.org/backup&gt;
-        </pre>
+        <h2>COPY / MOVE / ADD</h2>
+        <p>COPY: copiar un grafo a otro (sobreescribe destino)</p>
+        <p>MOVE: mover grafo (copia + elimina origen)</p>
+        <p>ADD: añadir triples al destino (sin sobreescribir)</p>
     </section>
 
     <section class="slide">
+        <h2>COPY / MOVE / ADD</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+COPY &lt;urn:name-surname&gt;<br>
+TO &lt;urn:nombre-apellidos&gt;<br>
+<br>
+COPY DEFAULT<br>
+TO &lt;urn:backup&gt;
+        </pre>
+    </section>
+
+    <!-- <section class="slide">
         <h2>MOVE</h2>
         <p>Mover el contenido de un grafo a otro (borra el origen):</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
@@ -673,9 +676,9 @@ TO &lt;http://example.org/targetGraph&gt;<br>
 ADD &lt;http://example.org/toMerge&gt;<br>
 TO DEFAULT
         </pre>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>Graph Management: Operaciones Conjuntas</h2>
         <p>Ejemplo: Crear, cargar, copiar y limpiar grafos:</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
@@ -693,7 +696,7 @@ TO &lt;http://example.org/production&gt;;<br>
 # 4. Limpiar staging<br>
 CLEAR GRAPH &lt;http://example.org/staging&gt;
         </pre>
-    </section>
+    </section> -->
 
 
 
@@ -734,66 +737,54 @@ WHERE  {
     </section> -->
 
     <section class="slide">
-        <h2>COPY / MOVE / ADD</h2>
-        <p>COPY: copiar un grafo a otro (sobreescribe destino)</p>
-        <p>MOVE: mover grafo (copia + elimina origen)</p>
-        <p>ADD: añadir triples al destino (sin sobreescribir)</p>
-        <pre><code>COPY GRAPH &lt;http://example.org/graph1&gt; 
-TO GRAPH &lt;http://example.org/graph2&gt;</code></pre>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL Endpoints públicos</h2>
-        <p><a href="https://query.wikidata.org/">Wikidata Query Service</a>: millones de entidades</p>
-        <p><a href="https://dbpedia.org/sparql">DBpedia SPARQL</a>: Wikipedia estructurada</p>
-        <p><a href="https://sparql.uniprot.org/">UniProt SPARQL</a>: proteínas y genes</p>
-        <p><a href="https://www.ebi.ac.uk/rdf/services/sparql">EBI RDF Platform</a>: bioinformática</p>
-        <p><a href="https://datos.gob.es/es/sparql">datos.gob.es</a>: open data España Open Data euskadi</p>
-    </section>
-
-    <section class="slide">
         <h2>SPARQL 1.1 Protocol</h2>
-        <p>HTTP GET con parámetro query:</p>
-        <p><code>GET /sparql?query=SELECT...</code></p>
-        <p>HTTP POST (para queries largas):</p>
-        <p><code>POST /sparql</code> con body URL-encoded</p>
-        <p>Content negotiation: Accept header</p>
-        <p>Formatos: application/sparql-results+json, text/csv, application/rdf+xml, text/turtle</p>
+        <p>HTTP GET con parámetro query: <code>GET /sparql?query=SELECT...</code></p>
+        <p>HTTP POST (para queries largas): <code>POST /sparql</code> con body URL-encoded</p>
+        <p>Content negotiation (Accept header): application/sparql-results+json, text/csv, application/rdf+xml, text/turtle</p>
     </section>
 
     <section class="slide">
         <h2>SPARQL desde código</h2>
-        <p>Python: <a href="https://rdflib.readthedocs.io/">RDFLib</a>, <a href="https://sparqlwrapper.readthedocs.io/">SPARQLWrapper</a></p>
+        <p>Python: <a href="https://rdflib.readthedocs.io/">RDFLib</a>, <a href="https://sparqlwrapper.readthedocs.io/">SPARQLWrapper</a> (ejemplos/sparql.py)</p>
         <p>Java: <a href="https://jena.apache.org/">Apache Jena</a>, <a href="https://rdf4j.org/">RDF4J</a></p>
-        <p>JavaScript: <a href="https://github.com/RubenVerborgh/SPARQL.js">SPARQL.js</a></p>
-        <p>R: <a href="https://github.com/cran/SPARQL">SPARQL package</a></p>
     </section>
 
     <section class="slide">
-        <h2>SPARQLWrapper - Ejemplo Python</h2>
-        <pre><code>from SPARQLWrapper import SPARQLWrapper, JSON
-
-sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-sparql.setQuery("""
-    SELECT ?city ?cityLabel WHERE {
-        ?city wdt:P31 wd:Q515 .
-        SERVICE wikibase:label { 
-            bd:serviceParam wikibase:language "en" 
-        }
-    } LIMIT 10
-""")
-sparql.setReturnFormat(JSON)
-results = sparql.query().convert()</code></pre>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL Performance: Buenas prácticas</h2>
+        <h2>SPARQL Performance</h2>
         <p>Usar LIMIT para pruebas y desarrollo</p>
         <p>Poner filtros más restrictivos primero</p>
         <p>Evitar OPTIONAL innecesarios (costosos)</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL Performance</h2>
         <p>Usar FILTER lo más pronto posible en WHERE</p>
         <p>Aprovechar índices: triple patterns específicos</p>
         <p>Evitar regex complejos si es posible</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL Debugging</h2>
+        <p>Construir query incrementalmente</p>
+        <p>Usar SELECT * para ver todas las variables</p>
+        <p>Comentar cláusulas (#)</p>
+        <p>LIMIT pequeño durante desarrollo</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL Debugging</h2>
+        <p>Explicar plan de ejecución (Específico de producto): <a href="https://graphdb.ontotext.com/documentation/10.8/explain-plan.html">GraphDB Explain Plan</a></p>
+                <p><pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
+SELECT * FROM onto:explain<br>
+WHERE {<br>
+&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
+&nbsp;&nbsp;MINUS {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?museo gip_prop:kopurua ?obras .<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FILTER (?obras > 300)<br>
+&nbsp;&nbsp;}<br>
+}<br>
+        </pre></p>
     </section>
 
     <section class="slide">
@@ -802,34 +793,10 @@ results = sparql.query().convert()</code></pre>
         <p>Razonamiento en tiempo de consulta: inferencia dinámica</p>
         <p>GraphDB: soporta ambos modos</p>
         <p>SPARQL puede consultar triples inferidos por OWL/RDFS</p>
-        <p>Entailment regimes: RDF, RDFS, OWL Direct, OWL RDF-Based</p>
     </section>
 
     <section class="slide">
         <h2>SPARQL 1.1 Service Description</h2>
-        <p>Metadatos sobre el endpoint SPARQL</p>
-        <p>Descubrir capacidades del servidor</p>
-        <pre><code>SELECT * WHERE {
-    &lt;http://example.org/sparql&gt; ?p ?o
-}</code></pre>
-        <p>Información: datasets, grafos, extensiones, límites</p>
-    </section>
-
-    <section class="slide">
-        <h2>Consultas Federadas (SERVICE)</h2>
-        <p>Permiten consultar múltiples endpoints SPARQL en una sola query</p>
-        <p>Combinar datos de fuentes distribuidas usando la palabra clave <code>SERVICE</code></p>
-        <pre><code>SELECT ?persona ?interes
-WHERE {
-  ?persona foaf:name "Alice" .
-  SERVICE &lt;http://endpoint-remoto.example/sparql&gt; {
-    ?persona foaf:interest ?interes .
-  }
-}</code></pre>
-    </section>
-
-    <section class="slide">
-        <h2>Service Description: Propósito</h2>
         <p>Proporciona metadatos sobre endpoints SPARQL para ayudar a los clientes:</p>
         <ul>
             <li><b>Descubrir capacidades</b>: ¿Qué funcionalidades soporta? (agregaciones, property paths, negación, etc.)</li>
@@ -840,58 +807,17 @@ WHERE {
     </section>
 
     <section class="slide">
-        <h2>Relación: Service Description + Federación</h2>
-        <p>Service Description permite la <b>construcción inteligente de consultas federadas</b></p>
-        <p>Antes de enviar queries federadas mediante <code>SERVICE</code>, se puede:</p>
-        <ul>
-            <li>Consultar la descripción para verificar si el endpoint remoto soporta las funcionalidades necesarias</li>
-            <li>Evitar errores en tiempo de ejecución descubriendo limitaciones previamente</li>
-            <li>Optimizar consultas según los datasets disponibles en cada endpoint</li>
-            <li>Descubrir y seleccionar dinámicamente endpoints apropiados para la federación</li>
-        </ul>
+        <h2>SPARQL 1.1 Service Description</h2>
+        <p><code>curl -H "Accept: text/turtle" https://dbpedia.org/sparql/</code></p>
+        <p><p style="font-size:10px;font-family: monospace">[ejemplos/dbpedia_service_description.ttl]</p></p>
     </section>
 
     <section class="slide">
-        <h2>Service Description + Federación: Ejemplo</h2>
-        <p>Descubrir capacidades antes de federar:</p>
-        <pre style="font-size:14px; line-height:1.4;"><code># 1. Consultar Service Description
-SELECT ?feature WHERE {
-  &lt;http://ejemplo.org/sparql&gt; sd:feature ?feature
-}
+        <h2>Consultas Federadas (NoSQL!SPARQL!)</h2>
+        <p>Permiten consultar múltiples endpoints SPARQL en una sola query</p>
+        <p>Combinar datos de fuentes distribuidas usando la palabra clave <code>SERVICE</code></p>
 
-# 2. Si soporta agregaciones, ejecutar consulta federada
-SELECT ?ciudad (COUNT(?museo) AS ?total)
-WHERE {
-  ?ciudad a ex:Ciudad .
-  SERVICE &lt;http://ejemplo.org/sparql&gt; {
-    ?museo ex:ubicadoEn ?ciudad
-  }
-}
-GROUP BY ?ciudad</code></pre>
     </section>
-
-    <section class="slide">
-        <h2>Ventajas de combinar ambas</h2>
-        <ul>
-            <li><b>Robustez</b>: Verificar compatibilidad antes de ejecutar</li>
-            <li><b>Eficiencia</b>: Seleccionar el mejor endpoint según capacidades</li>
-            <li><b>Adaptabilidad</b>: Ajustar consultas según los recursos disponibles</li>
-            <li><b>Descubrimiento dinámico</b>: Encontrar automáticamente endpoints adecuados</li>
-        </ul>
-        <p style="margin-top:20px;">En resumen: <b>Service Description responde "¿qué puedo hacer?"</b>, haciendo las consultas federadas más fiables y eficientes</p>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL GeoSPARQL</h2>
-        <p>Extensión para consultas geoespaciales</p>
-        <p>Funciones: geof:distance, geof:within, geof:intersects</p>
-        <pre><code>SELECT ?place ?location WHERE {
-    ?place geo:hasGeometry/geo:asWKT ?location .
-    FILTER(geof:distance(?location, "POINT(2.17 41.39)"^^geo:wktLiteral) < 10)
-}</code></pre>
-        <p>Encuentra lugares a menos de 10km de Barcelona</p>
-    </section>
-
 
     <section class="slide">
         <h2>Consultas federadas</h2>
@@ -915,6 +841,175 @@ WHERE {<br>
         </pre>
     </section>
 
+    
+
+    <section class="slide">
+        <h2>SPARQL 1.1 Graph Store HTTP Protocol</h2>
+        <p>Protocolo estándar W3C para <b>gestionar grafos RDF</b> en un repositorio SPARQL</p>
+        <p>Complementa las operaciones de consulta con operaciones de <b>manipulación de datos</b></p>
+        <ul>
+            <li><b>GET</b>: Recuperar un grafo específico</li>
+            <li><b>PUT</b>: Reemplazar un grafo completo</li>
+            <li><b>DELETE</b>: Eliminar un grafo</li>
+            <li><b>POST</b>: Añadir triples a un grafo</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: Operaciones</h2>
+        <p><b>Endpoint base</b>: <code>/sparql/graph</code> o similar según configuración</p>
+        <p><b>Parámetros</b>:</p>
+        <ul>
+            <li><code>graph=&lt;URI&gt;</code>: Especifica el grafo con nombre</li>
+            <li>Sin <code>graph</code>: Operación sobre el grafo por defecto</li>
+        </ul>
+        <p><b>Content-Type</b>: RDF/XML, Turtle, N-Triples, etc.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: GET</h2>
+        <p>Recuperar un grafo completo o sus metadatos</p>
+        <pre style="font-size:14px;"><code># Recuperar grafo con nombre
+curl -H "Accept: text/turtle" \
+  "http://localhost:7200/sparql/graph?graph=http://ejemplo.org/datos"
+
+# Recuperar grafo por defecto
+curl -H "Accept: text/turtle" \
+  "http://localhost:7200/sparql/graph"
+
+# Solo metadatos del grafo
+curl -H "Accept: application/rdf+xml" \
+  "http://localhost:7200/sparql/graph?graph=http://ejemplo.org/datos"</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: PUT</h2>
+        <p>Reemplazar completamente un grafo (destructiva)</p>
+        <pre style="font-size:14px;"><code># Crear o reemplazar grafo con nombre
+curl -X PUT \
+  -H "Content-Type: text/turtle" \
+  -d @datos.ttl \
+  "http://localhost:7200/sparql/graph?graph=http://ejemplo.org/datos"
+
+# Reemplazar grafo por defecto
+curl -X PUT \
+  -H "Content-Type: application/rdf+xml" \
+  -d @datos.rdf \
+  "http://localhost:7200/sparql/graph"</code></pre>
+        <p><b>Cuidado</b>: Elimina el contenido anterior del grafo</p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: POST</h2>
+        <p>Añadir triples a un grafo (no destructiva)</p>
+        <pre style="font-size:14px;"><code># Añadir triples al grafo con nombre
+curl -X POST \
+  -H "Content-Type: text/turtle" \
+  -d @nuevos_datos.ttl \
+  "http://localhost:7200/sparql/graph?graph=http://ejemplo.org/datos"
+
+# Crear un nuevo recurso con nombre único
+curl -X POST \
+  -H "Content-Type: application/n-triples" \
+  -d "&lt;http://ejemplo.org/personas/juan&gt; &lt;http://xmlns.com/foaf/0.1/name&gt; \"Juan\" ." \
+  "http://localhost:7200/sparql/graph"</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: DELETE</h2>
+        <p>Eliminar un grafo completamente</p>
+        <pre style="font-size:14px;"><code># Eliminar grafo con nombre
+curl -X DELETE \
+  "http://localhost:7200/sparql/graph?graph=http://ejemplo.org/datos"
+
+# Eliminar grafo por defecto
+curl -X DELETE \
+  "http://localhost:7200/sparql/graph"</code></pre>
+        <p><b>Advertencia</b>: Operación irreversible, elimina todos los triples del grafo</p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: Ventajas</h2>
+        <ul>
+            <li><b>RESTful</b>: Interfaz simple basada en HTTP estándar</li>
+            <li><b>Automatización</b>: Integración con scripts y herramientas CLI</li>
+            <li><b>Actualizaciones sin SPARQL UPDATE</b>: Alternativa a INSERT/DELETE</li>
+            <li><b>Gestión de versiones</b>: Reemplazar versiones completas de grafos</li>
+            <li><b>Interoperabilidad</b>: Estándar W3C, soportado por múltiples motores (GraphDB, Virtuoso, etc.)</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Comparación: Graph Store vs SPARQL UPDATE</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 8px;"><b>Aspecto</b></th>
+                <th style="border: 1px solid #ccc; padding: 8px;"><b>Graph Store HTTP</b></th>
+                <th style="border: 1px solid #ccc; padding: 8px;"><b>SPARQL UPDATE</b></th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Granularidad</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Grafo completo</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Triples individuales</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Interfaz</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">REST/HTTP</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">SPARQL query</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Uso típico</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Reemplazar versiones enteras</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Modificaciones precisas</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Formato</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">RDF (TTL, RDF/XML, etc.)</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">SPARQL INSERT/DELETE</td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store HTTP Protocol: Caso de uso</h2>
+        <p><b>Escenario</b>: Mantener versiones de catálogos de datos</p>
+        <pre style="font-size:12px; line-height:1.3;"><code># Descargar versión actual
+curl "http://localhost:7200/sparql/graph?graph=http://datos.org/v1" > v1.ttl
+
+# Actualizar a nueva versión (reemplazar completamente)
+curl -X PUT -H "Content-Type: text/turtle" -d @v2.ttl \
+  "http://localhost:7200/sparql/graph?graph=http://datos.org/v2"
+
+# Mantener ambas versiones disponibles simultáneamente
+# Las aplicaciones pueden elegir qué versión consultar</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Graph Store: Activación en GraphDB</h2>
+        <p>GraphDB activa el Graph Store Protocol por defecto en:</p>
+        <p><code>http://localhost:7200/repositories/&lt;repositorio&gt;/statements</code></p>
+        <p>Verificar configuración en GraphDB Workbench:</p>
+        <ul>
+            <li>Administration → Repositories → Edit</li>
+            <li>Buscar opción "Enable update operations" o "Enable SPARQL Update"</li>
+            <li>Asegurar que el usuario tiene permisos de escritura</li>
+        </ul>
+    </section>
+        </ul>
+        <p style="margin-top:20px;">En resumen: <b>Service Description responde "¿qué puedo hacer?"</b>, haciendo las consultas federadas más fiables y eficientes</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL GeoSPARQL</h2>
+        <p>Extensión para consultas geoespaciales</p>
+        <p>Funciones: geof:distance, geof:within, geof:intersects</p>
+        <pre><code>SELECT ?place ?location WHERE {
+    ?place geo:hasGeometry/geo:asWKT ?location .
+    FILTER(geof:distance(?location, "POINT(2.17 41.39)"^^geo:wktLiteral) < 10)
+}</code></pre>
+        <p>Encuentra lugares a menos de 10km de Barcelona</p>
+    </section>
+
     <section class="slide">
         <h2>SPARQL Full-Text Search</h2>
         <p>Extensión para búsqueda de texto (no estándar)</p>
@@ -929,16 +1024,6 @@ WHERE {<br>
     </section>
 
     <section class="slide">
-        <h2>SPARQL Debugging</h2>
-        <p>Construir query incrementalmente</p>
-        <p>Usar SELECT * para ver todas las variables</p>
-        <p>Comentar cláusulas (# comentario)</p>
-        <p>LIMIT pequeño durante desarrollo</p>
-        <p>Herramientas: <a href="https://yasgui.triply.cc/">YASGUI</a> (editor online)</p>
-        <p>Explicar plan de ejecución (vendor-specific)</p>
-    </section>
-
-    <section class="slide">
         <h2>SPARQL vs SQL</h2>
         <p>Similitudes: SELECT, WHERE, FILTER (WHERE), ORDER BY, LIMIT</p>
         <p>Diferencias:
@@ -949,6 +1034,15 @@ WHERE {<br>
                 <li>SPARQL: URIs globales; SQL: IDs locales</li>
             </ul>
         </p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL Endpoints públicos</h2>
+        <p><a href="https://query.wikidata.org/">Wikidata Query Service</a></p>
+        <p><a href="https://dbpedia.org/sparql">DBpedia SPARQL</a></p>
+        <p><a href="https://sparql.uniprot.org/">UniProt SPARQL</a></p>
+        <p><a href="https://opendata.euskadi.eus/lod/-/linked-open-data/">Open Data Euskadi</a></p>
+        <p><a href="https://datos.gob.es/es/sparql">datos.gob.es</a></p>
     </section>
 
     <section class="slide">
