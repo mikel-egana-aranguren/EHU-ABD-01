@@ -991,6 +991,109 @@ WHERE {<br>
     </section>
 
     <section class="slide">
+        <h2>GraphDB Ontop: Virtualización de datos relacionales</h2>
+        <p><a href="https://graphdb.ontotext.com/documentation/10.8/ontop.html">Ontop</a> es un plugin de GraphDB que permite consultar bases de datos relacionales (SQL) mediante SPARQL</p>
+        <p>Los datos <strong>no se copian</strong> al triplestore: se acceden en tiempo real (virtualización)</p>
+        <p>Ontop traduce las consultas SPARQL a SQL automáticamente</p>
+    </section>
+
+    <section class="slide">
+        <h2>GraphDB Ontop: Arquitectura</h2>
+        <p>Componentes necesarios:</p>
+        <ul>
+            <li><strong>Base de datos relacional</strong>: la fuente de datos SQL existente</li>
+            <li><strong>Ontología</strong>: define el vocabulario RDF (clases y propiedades)</li>
+            <li><strong>Mapping R2RML</strong>: mapeo entre tablas/columnas SQL y el grafo RDF</li>
+            <li><strong>Ontop/GraphDB</strong>: motor que traduce SPARQL → SQL en tiempo real</li>
+        </ul>
+        <p>El usuario consulta con SPARQL sin saber que los datos están en SQL</p>
+    </section>
+
+    <section class="slide">
+        <h2>R2RML: RDB to RDF Mapping Language</h2>
+        <p><a href="https://www.w3.org/TR/r2rml/">R2RML</a> es un estándar del W3C para definir mapeos de bases de datos relacionales a RDF</p>
+        <ul>
+            <li><strong>Triples Map</strong>: define cómo generar triples RDF a partir de una tabla o consulta SQL</li>
+            <li><strong>Logical Table</strong>: la tabla SQL o consulta SQL de origen</li>
+            <li><strong>Subject Map</strong>: cómo generar la URI del sujeto</li>
+            <li><strong>Predicate-Object Map</strong>: cómo generar predicados y objetos</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>R2RML: Ejemplo de mapeo</h2>
+        <p>Tabla SQL: <code>empleados(id, nombre, dept_id)</code></p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+&lt;#TriplesMap1&gt; a rr:TriplesMap ; <br/>
+&nbsp;&nbsp;rr:logicalTable [ rr:tableName "empleados" ] ; <br/>
+&nbsp;&nbsp;rr:subjectMap [ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;rr:template "http://ejemplo.org/empleado/{id}" ; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;rr:class ex:Empleado <br/>
+&nbsp;&nbsp;] ; <br/>
+&nbsp;&nbsp;rr:predicateObjectMap [ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;rr:predicate ex:nombre ; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;rr:objectMap [ rr:column "nombre" ] <br/>
+&nbsp;&nbsp;] ; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;rr:predicateObjectMap [ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rr:predicate ex:departamento ; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rr:objectMap [ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rr:template "http://ejemplo.org/dept/{dept_id}" ] <br/>
+&nbsp;&nbsp;] . <br/>
+</pre>
+    </section>
+
+    <section class="slide">
+        <h2>R2RML: Resultado del mapeo</h2>
+        <table>
+            <tr><th>id</th><th>nombre</th><th>dept_id</th></tr>
+            <tr><td>1</td><td>Ana</td><td>10</td></tr>
+            <tr><td>2</td><td>Luis</td><td>20</td></tr>
+        </table>
+    </section>
+
+    <section class="slide">
+        <h2>R2RML: Resultado del mapeo</h2>
+        <!-- <pre><code>ex:empleado/1 a ex:Empleado ;
+  ex:nombre "Ana" ;
+  ex:departamento ex:dept/10 .
+ex:empleado/2 a ex:Empleado ;
+  ex:nombre "Luis" ;
+  ex:departamento ex:dept/20 .</code></pre> -->
+        <p><img src="pictures-abd-01/r2rml_result.svg" alt="R2RML Grafo RDF" width="60%"></p>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>GraphDB Ontop: Consulta SPARQL</h2>
+        <pre><code>PREFIX ex: &lt;http://ejemplo.org/&gt;
+SELECT ?nombre ?dept WHERE {
+  ?emp a ex:Empleado ;
+       ex:nombre ?nombre ;
+       ex:departamento ?dept .
+}</code></pre>
+        <p>Ontop traduce internamente esta consulta a:</p>
+        <pre><code>SELECT nombre, dept_id
+FROM empleados</code></pre>
+    </section> -->
+
+    <section class="slide">
+        <h2>GraphDB Ontop: Ventajas</h2>
+        <ul>
+            <li>No se duplican datos: los datos siguen en la BD relacional</li>
+            <li>Datos siempre actualizados (acceso en tiempo real)</li>
+            <li>Se puede combinar con datos RDF nativos del triplestore</li>
+            <li>Estándar W3C (R2RML): portable entre motores</li>
+        </ul>
+    </section>
+
+        <section class="slide">
+        <h2>GraphDB Ontop: Limitaciones</h2>
+        <ul>
+            <li>Rendimiento depende de la BD relacional subyacente</li>
+            <li>No todas las funciones SPARQL tienen traducción directa a SQL</li>
+        </ul>
+    </section>
+
+    <section class="slide">
         <h2>SPARQL Endpoints públicos</h2>
         <p><a href="https://query.wikidata.org/">Wikidata Query Service</a></p>
         <p><a href="https://dbpedia.org/sparql">DBpedia SPARQL</a></p>
