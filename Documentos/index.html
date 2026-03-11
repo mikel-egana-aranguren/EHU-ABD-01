@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Documentos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../ShowerTemplate/shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+        pre code {
+            font-size: 0.72em;
+            line-height: 1.2;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body class="shower list">
+
+    <header class="caption">
+        <h1>Documentos</h1>
+        <p>Mikel Egaña Aranguren</p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>Documentos</h2>
+        <p>Mikel Egaña Aranguren</p>
+        <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
+        <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
+        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" style="border: 1px solid #555;">
+    </section>
+
+    <section class="slide">
+        <h2>Documentos</h2>
+        <p><a href="https://github.com/mikel-egana-aranguren/ABD">https://github.com/mikel-egana-aranguren/ABD</a></p>
+        <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
+    </section>
+
+    <section class="slide">
+        <h2>MongoDB</h2>
+    </section>
+
+    <section class="slide">
+        <h2>BBDD documentales</h2>
+        <p>La unidad básica de almacenamiento es el documento completo, normalmente JSON o BSON</p>
+        <p>Los documentos se agrupan en colecciones</p>
+        <p>El esquema es flexible: dos documentos de la misma colección pueden tener atributos distintos</p>
+        <p>MongoDB es la BBDD documental más popular</p>
+    </section>
+
+    <section class="slide">
+        <h2>Idea principal</h2>
+        <p>En relacional modelamos tablas y relaciones</p>
+        <p>En documental modelamos objetos completos que la aplicación necesita leer y escribir</p>
+        <p>Se priorizan consultas simples y rápidas sobre estructuras cercanas al dominio</p>
+        <p>Esto reduce joins, aunque puede introducir redundancia</p>
+    </section>
+
+    <section class="slide">
+        <h2>Documento de ejemplo</h2>
+        <pre><code>{
+  "_id": 101,
+  "titulo": "El nombre de la rosa",
+  "autores": ["Umberto Eco"],
+  "anio": 1980,
+  "genero": "novela historica",
+  "stock": 12,
+  "editorial": {
+    "nombre": "Lumen",
+    "pais": "ES"
+  }
+}</code></pre>
+        <p>Un mismo documento puede mezclar valores simples, listas y subdocumentos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ventajas</h2>
+        <p>Modelo natural para datos semi-estructurados</p>
+        <p>Evolución rápida del esquema cuando cambia la aplicación</p>
+        <p>Buena escalabilidad horizontal y replicación</p>
+        <p>Muy útil para catálogos, eventos, perfiles, CMS y datos JSON de APIs</p>
+    </section>
+
+    <section class="slide">
+        <h2>Costes y límites</h2>
+        <p>La flexibilidad no elimina la necesidad de diseñar bien el modelo</p>
+        <p>Puede haber duplicación de datos</p>
+        <p>Las transacciones multi-documento existen, pero no son el caso ideal de uso</p>
+        <p>Si el problema depende de joins complejos y consistencia estricta, relacional puede encajar mejor</p>
+    </section>
+
+    <section class="slide">
+        <h2>Embebido vs referencia</h2>
+        <p>Embebido: guardar juntos datos que se leen juntos</p>
+        <p>Referencia: separar datos grandes, compartidos o con ciclo de vida propio</p>
+        <p>Regla práctica: modelar según las consultas más frecuentes</p>
+        <p>En MongoDB el diseño empieza por el patrón de acceso, no por la normalización</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ejemplo embebido</h2>
+        <pre><code>{
+  "_id": 9001,
+  "cliente": "Ane",
+  "fecha": "2026-03-11",
+  "lineas": [
+    { "producto": "SSD 1TB", "unidades": 1, "precio": 89 },
+    { "producto": "RAM 32GB", "unidades": 2, "precio": 95 }
+  ],
+  "total": 279
+}</code></pre>
+        <p>El pedido se recupera completo con una sola lectura</p>
+    </section>
+
+    <section class="slide">
+        <h2>CRUD básico en MongoDB</h2>
+        <pre><code>use biblioteca
+
+db.libros.insertOne({
+  titulo: "Dune",
+  autores: ["Frank Herbert"],
+  anio: 1965,
+  stock: 8
+})
+
+db.libros.find({ stock: { $gt: 0 } })</code></pre>
+        <p>Colección: <code>libros</code>. Base de datos: <code>biblioteca</code></p>
+    </section>
+
+    <section class="slide">
+        <h2>Consultas frecuentes</h2>
+        <pre><code>db.libros.find(
+  { anio: { $gte: 2000 }, genero: "ciencia ficcion" },
+  { titulo: 1, autores: 1, _id: 0 }
+)
+
+db.libros.find({ "editorial.pais": "ES" })
+
+db.libros.find({ autores: "Umberto Eco" })</code></pre>
+        <p>Podemos filtrar por campos simples, campos anidados y elementos de arrays</p>
+    </section>
+
+    <section class="slide">
+        <h2>Actualización y borrado</h2>
+        <pre><code>db.libros.updateOne(
+  { titulo: "Dune" },
+  {
+    $set: { stock: 7 },
+    $push: { autores: "Brian Herbert" }
+  }
+)
+
+db.libros.deleteMany({ stock: 0 })</code></pre>
+        <p>Las operaciones usan operadores como <code>$set</code>, <code>$push</code>, <code>$inc</code> o <code>$unset</code></p>
+    </section>
+
+    <section class="slide">
+        <h2>Agregación</h2>
+        <pre><code>db.pedidos.aggregate([
+  { $unwind: "$lineas" },
+  {
+    $group: {
+      _id: "$lineas.producto",
+      unidadesTotales: { $sum: "$lineas.unidades" }
+    }
+  },
+  { $sort: { unidadesTotales: -1 } }
+])</code></pre>
+        <p>La pipeline de agregación permite transformar y resumir colecciones</p>
+    </section>
+
+    <section class="slide">
+        <h2>Índices</h2>
+        <p>Sin índices, MongoDB debe recorrer muchos documentos</p>
+        <p>Los índices aceleran consulta y ordenación, pero ocupan espacio y encarecen escrituras</p>
+        <pre><code>db.libros.createIndex({ titulo: 1 })
+db.libros.createIndex({ genero: 1, anio: -1 })</code></pre>
+        <p>Hay que indexar según consultas reales, no por intuición</p>
+    </section>
+
+    <section class="slide">
+        <h2>Cuándo usar MongoDB</h2>
+        <p>Catálogos de productos con atributos variables</p>
+        <p>Perfiles de usuario y preferencias</p>
+        <p>Eventos, logs, contenidos JSON y prototipos rápidos</p>
+        <p>No es la mejor opción si la integridad entre muchas entidades es el requisito central</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ejercicio 1</h2>
+        <p>Diseñar una colección <code>peliculas</code> para una plataforma de streaming</p>
+        <p>Cada película debe guardar título, año, géneros, director y valoración media</p>
+        <p>Decidir si las reseñas de usuarios se embeben o se referencian y justificarlo</p>
+        <p>Escribir un <code>insertOne()</code> con un documento de ejemplo</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ejercicio 2</h2>
+        <p>Sobre una colección <code>pedidos</code>:</p>
+        <p>Obtener los pedidos del cliente "Ane"</p>
+        <p>Actualizar el total del pedido con <code>_id = 9001</code></p>
+        <p>Calcular con agregación qué producto ha vendido más unidades</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ejercicio 3</h2>
+        <p>Comparar el modelo relacional y el documental para una tienda online</p>
+        <p>¿Qué entidades embebes y cuáles separas?</p>
+        <p>¿Qué consultas quieres optimizar?</p>
+        <p>¿Qué redundancias aceptas para simplificar lectura?</p>
+    </section>
+
+
+
+
+
+    
+    <!-- FOOTER -->
+
+    <footer class="badge">
+        <a href="https://github.com/mikel-egana-aranguren/ShowerTemplate">Fork me on GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="../ShowerTemplate/shower/shower.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+
+</body>
+</html>

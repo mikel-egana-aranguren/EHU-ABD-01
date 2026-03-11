@@ -508,14 +508,20 @@ sh:property [
     <section class="slide">
         <h2>SHACL 1.2 Rules</h2>
         <p>Nueva especificación para <b>inferencia basada en reglas</b></p>
-        <p>Introduce el <b>Shape Rules Language (SRL)</b>: un lenguaje dedicado con extensión de fichero ".srl"</p>
+        <p>Introduce el <b>Shape Rules Language (SRL)</b></p>
         <p>Las reglas se pueden adjuntar a shapes para generar nuevos triples</p>
-        <p>Soporta <b>recursión</b> y <b>negación como fallo</b> (negation as failure)</p>
+        <p>Soporta <b>recursión</b> y <b>negation as failure</b></p>
     </section>
 
     <section class="slide">
         <h2>Rules: Sintaxis SRL</h2>
         <p>Las reglas usan sintaxis <b>RULE/WHERE</b>:</p>
+        <p>La cláusula WHERE define condiciones; la cláusula RULE define los triples a generar</p>
+</code></pre>    
+    </section>
+
+        <section class="slide">
+        <h2>Rules: Sintaxis SRL</h2>
         <pre><code>PREFIX ex: &lt;http://example.com/ns#&gt;
 
 RULE {
@@ -525,27 +531,25 @@ WHERE {
     ?person ex:firstName ?first .
     ?person ex:lastName ?last .
     BIND(CONCAT(?first, " ", ?last) AS ?fullName)
-}</code></pre>
-        <p>La cláusula WHERE define condiciones; la cláusula RULE define los triples a generar</p>
+}</code></pre>    
     </section>
 
     <section class="slide">
         <h2>Rules: Negación y recursión</h2>
-        <p><b>Negación como fallo</b>: se pueden definir reglas que aplican cuando algo NO existe</p>
-        <pre><code>RULE {
+        <p><b>Negation as failure</b>: reglas para cuando algo NO existe</p>
+        <!-- <pre><code>RULE {
     ?person ex:status "Sin email" .
 }
 WHERE {
     ?person a ex:Person .
     NOT EXISTS { ?person ex:email ?email }
-}</code></pre>
+}</code></pre> -->
         <p><b>Recursión</b>: las reglas pueden generar triples que activan otras reglas, con <b>estratificación</b> para garantizar resultados consistentes</p>
     </section>
 
     <section class="slide">
         <h2>Rules: Adjuntar reglas a Shapes</h2>
-        <p>Las reglas se pueden vincular a shapes específicas</p>
-        <p>Esto permite que las reglas solo apliquen a los focus nodes de la shape</p>
+        <p>Las reglas se pueden vincular a shapes específicas, para que solo se apliquen a los focus nodes de la shape</p>
         <pre><code>ex:PersonShape a sh:NodeShape ;
     sh:targetClass ex:Person ;
     sh:rule [
@@ -569,10 +573,10 @@ WHERE {
             <li>Las reglas que dependen de negaciones de otras se colocan en capas superiores</li>
             <li>Cada capa se evalúa completamente antes de pasar a la siguiente</li>
         </ol>
-        <p>Garantiza un modelo semántico único y consistente, similar a Datalog estratificado</p>
+        <p>Garantiza un modelo semántico único y consistente</p>
     </section>
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>Rules: Sintaxis RDF alternativa</h2>
         <p>Las reglas SRL también se pueden expresar directamente en <b>RDF</b> (sintaxis RDF Rules)</p>
         <p>Útil cuando se quieren almacenar las reglas dentro del mismo grafo RDF</p>
@@ -590,14 +594,11 @@ WHERE {
             [ sh:path ex:firstName ] " "
             [ sh:path ex:lastName ] ) ]
     ] .</code></pre>
-    </section>
-
-    <!-- ===================== SHACL 1.2 SPARQL ===================== -->
+    </section> -->
 
     <section class="slide">
         <h2>SHACL 1.2 SPARQL Extensions</h2>
         <p>Define extensiones de SHACL basadas en <b>SPARQL 1.2</b></p>
-        <p>Tres pilares principales:</p>
         <ul>
             <li><b>Restricciones basadas en SPARQL</b> (sh:sparql)</li>
             <li><b>Componentes de restricción</b> reutilizables (sh:ConstraintComponent)</li>
@@ -609,6 +610,11 @@ WHERE {
     <section class="slide">
         <h2>SPARQL: Restricciones con sh:sparql</h2>
         <p>Permiten restricciones <b>arbitrariamente complejas</b> usando SELECT queries</p>
+        <p>La variable <b>$this</b> se pre-asocia al focus node actual</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL: Restricciones con sh:sparql</h2>
         <pre><code>ex:LanguageShape a sh:NodeShape ;
     sh:targetClass ex:Country ;
     sh:sparql [
@@ -621,13 +627,16 @@ WHERE {
             }
         """
     ] .</code></pre>
-        <p>La variable <b>$this</b> se pre-asocia al focus node actual</p>
     </section>
 
     <section class="slide">
         <h2>SPARQL: Componentes de restricción</h2>
         <p>Permiten <b>abstraer y reutilizar</b> lógica de validación SPARQL</p>
         <p>Se declaran con sh:ConstraintComponent + sh:parameter + validador</p>
+    </section>
+
+        <section class="slide">
+        <h2>SPARQL: Componentes de restricción</h2>
         <pre><code>ex:LangComponent a sh:ConstraintComponent ;
     sh:parameter [ sh:path ex:lang ] ;
     sh:validator [
@@ -644,13 +653,13 @@ WHERE {
         <h2>SPARQL: Validadores ASK vs SELECT</h2>
         <p>Dos tipos de validadores SPARQL:</p>
         <ul>
-            <li><b>ASK</b> (sh:SPARQLAskValidator): devuelve true si el valor <b>cumple</b> la restricción — lógica directa</li>
-            <li><b>SELECT</b> (sh:SPARQLSelectValidator): devuelve los valores que <b>NO cumplen</b> — lógica inversa</li>
+            <li><b>ASK</b> (sh:SPARQLAskValidator): devuelve true si el valor <b>cumple</b> la restricción</li>
+            <li><b>SELECT</b> (sh:SPARQLSelectValidator): devuelve los valores que <b>NO cumplen</b></li>
         </ul>
         <p>Selección de validador: sh:nodeValidator (para NodeShape), sh:propertyValidator (para PropertyShape), sh:validator (para ambos, solo ASK)</p>
     </section>
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>SPARQL: Annotation Properties</h2>
         <p>Novedad en SHACL 1.2: permite <b>inyectar propiedades adicionales</b> en los resultados de validación</p>
         <pre><code>ex:AuditShape a sh:NodeShape ;
@@ -667,9 +676,9 @@ WHERE {
         """
     ] .</code></pre>
         <p>El resultado de validación incluirá ex:timestamp con el valor de ?time</p>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>SPARQL: Node Expressions SPARQL</h2>
         <p>Dos nuevas funciones de expresión de nodo basadas en SPARQL:</p>
         <p><b>sh:SelectExpression</b>: computa valores usando un SELECT completo</p>
@@ -684,9 +693,9 @@ WHERE {
             }
         """
     ] .</code></pre>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>SPARQL: sh:SPARQLExprExpression</h2>
         <p><b>sh:sparqlExpr</b>: expresión SPARQL compacta para computar un valor</p>
         <pre><code>ex:Resource-uriLength a sh:PropertyShape ;
@@ -697,9 +706,9 @@ WHERE {
     sh:datatype xsd:integer .</code></pre>
         <p>Más conciso que un SELECT completo para expresiones simples</p>
         <p>Se ha eliminado el soporte para las variables pre-asociadas opcionales <b>$shapesGraph</b> y <b>$currentShape</b></p>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>SPARQL: Prefijos para queries</h2>
         <p>Se pueden declarar <b>prefijos reutilizables</b> en el shapes graph:</p>
         <pre><code>ex:
@@ -714,9 +723,7 @@ WHERE {
             "http://schema.org/"^^xsd:anyURI
     ] .</code></pre>
         <p>Las restricciones SPARQL referencian estos prefijos con sh:prefixes</p>
-    </section>
-
-    <!-- ===================== SHACL 1.2 UI ===================== -->
+    </section> -->
 
     <section class="slide">
         <h2>SHACL 1.2 UI (User Interfaces)</h2>
@@ -727,8 +734,7 @@ WHERE {
     </section>
 
     <section class="slide">
-        <h2>UI: Widgets (Editores y Visores)</h2>
-        <p>Los widgets se dividen en:</p>
+        <h2>UI: Widgets</h2>
         <ul>
             <li><b>Editores</b> (shui:Editor): para modificar datos — TextFieldEditor, DatePickerEditor, BooleanSelectEditor, AutoCompleteEditor, EnumSelectEditor...</li>
             <li><b>Visores</b> (shui:Viewer): para mostrar datos — LabelViewer, LiteralViewer, HTMLViewer, ImageViewer, URIViewer...</li>
@@ -819,8 +825,6 @@ ex:ValueWithWeight a sh:NodeShape ;
     sh:node ex:ConceptTableShape .</code></pre>
     </section>
 
-    <!-- ===================== RESUMEN Y RECURSOS ===================== -->
-
     <section class="slide">
         <h2>Resumen: Cambios clave en SHACL 1.2</h2>
         <ul>
@@ -829,16 +833,6 @@ ex:ValueWithWeight a sh:NodeShape ;
             <li><b>SPARQL</b>: annotation properties, SelectExpression, SPARQLExprExpression</li>
             <li><b>UI</b>: SHACL Renderer, widgets con puntuación, property roles, formularios anidados</li>
         </ul>
-    </section>
-
-    <section class="slide">
-        <h2>Recursos SHACL 1.2</h2>
-        <p><a href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2 Core (W3C Working Draft)</a></p>
-        <p><a href="https://www.w3.org/TR/shacl12-rules/">SHACL 1.2 Rules (W3C Working Draft)</a></p>
-        <p><a href="https://www.w3.org/TR/shacl12-sparql/">SHACL 1.2 SPARQL Extensions (W3C Working Draft)</a></p>
-        <p><a href="https://w3c.github.io/data-shapes/shacl12-ui/">SHACL 1.2 UI (Editor's Draft)</a></p>
-        <p><a href="https://github.com/w3c/data-shapes">Repositorio GitHub W3C Data Shapes</a></p>
-        <p><a href="https://github.com/w3c/data-shapes/tree/gh-pages/shacl12-test-suite">SHACL 1.2 Test Suite</a></p>
     </section>
 
     <!-- FOOTER -->
