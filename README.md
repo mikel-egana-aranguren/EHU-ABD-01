@@ -4,9 +4,11 @@ Clases de la asignatura [Administración de Bases de Datos (ABD)](https://www.eh
 
 * [NoSQL](NoSQL/index.html).
 * [Grafos](Grafos/index.html).
-  * [RDF](RDF/index.html).
-  * [SPARQL](SPARQL/index.html).
-  * [OWL](OWL/index.html).
-  * [SHACL](SHACL/index.html).
+  * Web Semantica.
+    * [RDF](RDF/index.html).
+    * [SPARQL](SPARQL/index.html).
+    * [OWL](OWL/index.html).
+    * [SHACL](SHACL/index.html).
+  * [Labelled Property Graphs](LPG/index.html).
 * [Vectorial - Retrieval Augmented Generation (RAG)](VectorialRAG/index.html).
 * [Documentos](Documentos/index.html).

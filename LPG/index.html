@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Labelled Property Graphs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../ShowerTemplate/shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+
+        .two-col {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .two-col > div {
+            flex: 1;
+        }
+
+        .compare-block {
+            text-align: center;
+        }
+
+        .compare-block img {
+            border: 1px solid #555;
+            max-width: 100%;
+            max-height: 320px;
+            background: #fff;
+        }
+
+        .compact li {
+            margin-bottom: 0.35em;
+        }
+
+        .slide pre {
+            font-size: 0.56em;
+            line-height: 1.3;
+            white-space: pre-wrap;
+            background: #f5f5f5;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .slide code {
+            font-family: "Courier New", monospace;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body class="shower list">
+
+    <header class="caption">
+        <h1>Labelled Property Graphs</h1>
+        <p>Mikel Egaña Aranguren</p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>Labelled Property Graphs</h2>
+        <p>Mikel Egaña Aranguren</p>
+        <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
+        <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
+        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" >
+    </section>
+
+    <section class="slide">
+        <h2>Labelled Property Graphs</h2>
+        <p><a href="https://github.com/mikel-egana-aranguren/ABD">https://github.com/mikel-egana-aranguren/ABD</a></p>
+        <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
+    </section>
+
+    <section class="slide">
+        <h2>Labelled Property Graphs</h2>
+        <p>Representación de datos en forma de grafos con etiquetas y propiedades</p>
+        <p>Usados en bases de datos de grafos, análisis de redes sociales, sistemas de recomendación, etc.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Modelo LPG</h2>
+        <ul class="compact">
+            <li>Los nodos representan entidades del dominio.</li>
+            <li>Las relaciones son dirigidas y tienen un tipo, por ejemplo <code>FRIEND_OF</code> o <code>LIVES_IN</code>.</li>
+            <li>Los nodos pueden tener etiquetas, por ejemplo <code>Person</code> o <code>City</code>.</li>
+            <li>Los nodos y las relaciones pueden almacenar propiedades clave-valor.</li>
+            <li>El modelo esta pensado para recorrer caminos y detectar patrones en el grafo.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>RDF frente a LPG</h2>
+        <div class="two-col">
+            <div class="compare-block">
+                <p>RDF: triples homogéneos</p>
+                <p><img src="pictures-abd-01/triple.svg" alt="Modelo RDF basado en triples" width="95%"></p>
+            </div>
+            <div class="compare-block">
+                <p>LPG: nodos, aristas y propiedades</p>
+                <p><img src="pictures-abd-01/grafo.svg" alt="Modelo property graph" width="95%"></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>Neo4j</h2>
+        <ul class="compact">
+            <li>Es la base de datos property graph mas extendida en docencia e industria.</li>
+            <li>Implementa un motor orientado a recorridos sobre nodos y relaciones.</li>
+            <li>Su lenguaje de consulta es <a href="https://neo4j.com/docs/cypher-manual/current/">Cypher</a>.</li>
+            <li>Ofrece herramientas graficas como Browser y despliegue gestionado mediante AuraDB.</li>
+            <li>Es una referencia practica para entender el paradigma LPG, aunque no sea un estandar abierto como RDF.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Modelo de datos en Neo4j</h2>
+        <p>Ejemplo de patron tipico en Neo4j:</p>
+        <pre><code>(alice:Person {name: 'Alice', age: 24})
+-[:FRIEND_OF {since: 2023}]-&gt;
+(bob:Person {name: 'Bob', age: 27})
+
+(alice)-[:LIVES_IN]-&gt;
+(:City {name: 'Bilbo'})</code></pre>
+        <p>Las etiquetas clasifican nodos y las propiedades añaden contexto sin tener que crear nuevos nodos para cada dato simple.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Cypher: creación de datos</h2>
+        <pre><code>CREATE (Alice:Person {name: 'Alice', age: 24})
+CREATE (Bob:Person {name: 'Bob', age: 27})
+CREATE (Carol:Person {name: 'Carol', age: 22})
+CREATE (Dave:Person {name: 'Dave', age: 25})
+CREATE (Alice)-[:FRIEND_OF]-&gt;(Bob)
+CREATE (Alice)-[:FRIEND_OF]-&gt;(Carol)
+CREATE (Bob)-[:FRIEND_OF]-&gt;(Dave)
+CREATE (Carol)-[:FRIEND_OF]-&gt;(Dave)</code></pre>
+        <p>Cypher describe patrones del grafo de forma declarativa, muy cercana al dibujo mental del dominio.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Cypher: consulta de patrones</h2>
+        <pre><code>MATCH (alice:Person {name: 'Alice'})-[:FRIEND_OF]-&gt;(friends)
+RETURN friends.name</code></pre>
+        <pre><code>MATCH (person:Person)-[:FRIEND_OF]-&gt;(friend)
+RETURN person.name, count(friend) AS total_friends
+ORDER BY total_friends DESC</code></pre>
+        <p>La idea central es buscar subgrafos que encajan con un patron y devolver nodos, relaciones o agregados.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Cypher: caminos</h2>
+        <pre><code>MATCH p = shortestPath(
+  (:Person {name: 'Alice'})-[:FRIEND_OF*..5]-&gt;(:Person {name: 'Dave'})
+)
+RETURN p</code></pre>
+        <ul class="compact">
+            <li>Muy util para redes sociales, fraude, rutas logisticas o dependencias.</li>
+            <li>La consulta se formula como un patron de camino, no como una cascada de joins.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Cuando encaja Neo4j</h2>
+        <ul class="compact">
+            <li>Consultas con muchos saltos entre entidades relacionadas.</li>
+            <li>Recomendacion, deteccion de comunidades, fraude, rutas y conocimiento conectado.</li>
+            <li>Dominios donde el esquema evoluciona y aparecen nuevas relaciones con frecuencia.</li>
+            <li>Casos donde interesa explorar visualmente el grafo y combinar consultas con algoritmos de grafos.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>PageRank en Neo4j</h2>
+        <pre><code>MATCH (source:Page)-[:LINKS_TO]-&gt;(target:Page)
+RETURN source, target
+
+CALL gds.graph.project(
+  'webGraph',
+  'Page',
+  'LINKS_TO'
+)
+
+CALL gds.pageRank.stream('webGraph')
+YIELD nodeId, score
+RETURN gds.util.asNode(nodeId).name AS page, score
+ORDER BY score DESC</code></pre>
+        <ul class="compact">
+            <li>PageRank estima la importancia de un nodo segun los enlaces que recibe desde otros nodos relevantes.</li>
+            <li>Es util en recomendacion, analisis web, influencia en redes sociales y deteccion de entidades centrales.</li>
+            <li>Neo4j lo ofrece dentro de Graph Data Science junto con muchos otros algoritmos de grafos.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Limites de Neo4j</h2>
+        <ul class="compact">
+            <li>No ofrece la interoperabilidad abierta de RDF ni sus estandares W3C.</li>
+            <li>El razonamiento semantico y la integracion web de datos no son su objetivo principal.</li>
+            <li>Conviene distinguir entre analisis de grafos conectados y publicacion/integracion semantica de datos.</li>
+            <li>En la practica: Neo4j para traversal y analitica; RDF para intercambio, semantica e interoperabilidad.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Buenas practicas de modelado</h2>
+        <ul class="compact">
+            <li>Usar etiquetas estables y expresivas, por ejemplo <code>Person</code>, <code>City</code>, <code>Company</code>.</li>
+            <li>Guardar como propiedades solo los atributos simples; convertir en nodos las entidades con vida propia.</li>
+            <li>Nombrar las relaciones como verbos o roles claros: <code>WORKS_AT</code>, <code>LOCATED_IN</code>, <code>FRIEND_OF</code>.</li>
+            <li>Crear indices y restricciones sobre identificadores naturales o tecnicos.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>MERGE, restricciones e indices</h2>
+        <pre><code>CREATE CONSTRAINT person_name IF NOT EXISTS
+FOR (person:Person) REQUIRE person.name IS UNIQUE;
+
+MERGE (alice:Person {name: 'Alice'})
+ON CREATE SET alice.age = 24
+ON MATCH SET alice.last_seen = date();
+
+CREATE INDEX city_name IF NOT EXISTS
+FOR (city:City) ON (city.name);</code></pre>
+        <ul class="compact">
+            <li><code>MERGE</code> evita duplicados cuando queremos asegurar la existencia de un patron.</li>
+            <li>Las restricciones protegen la integridad de identificadores clave.</li>
+            <li>Los indices aceleran busquedas frecuentes por propiedades.</li>
+        </ul>
+    </section>
+
+    
+
+    <!-- FOOTER -->
+
+    <footer class="badge">
+        <a href="https://github.com/mikel-egana-aranguren/ShowerTemplate">Fork me on GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="../ShowerTemplate/shower/shower.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+
+</body>
+</html>
