@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>RAG</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../ShowerTemplate/shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body class="shower list">
+
+    <header class="caption">
+        <h1>RAG</h1>
+        <p>Mikel Egaña Aranguren</p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>RAG</h2>
+        <p>Mikel Egaña Aranguren</p>
+        <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
+        <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
+        <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" style="border: 1px solid #555;">
+    </section>
+
+    <section class="slide">
+        <h2>RAG</h2>
+        <p><a href="https://github.com/mikel-egana-aranguren/ABD">https://github.com/mikel-egana-aranguren/ABD</a></p>
+        <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
+    </section>
+
+    <section class="slide">
+        <h2>¿Qué es RAG?</h2>
+        <p>RAG: Retrieval-Augmented Generation</p>
+        <p>Técnica para mejorar respuestas de LLMs mediante recuperación de información externa</p>
+        <p>Combina: búsqueda de información (Retrieval) + generación de texto (Generation)</p>
+        <p>Objetivo: respuestas más precisas, actualizadas y verificables</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG CFAA</h2>
+        <p><img src="pictures-abd-01/RAG-CFAA.png" alt="RAG CFAA" width="60%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>Problema de los LLMs puros</h2>
+        <p>Conocimiento estático: limitado a datos de entrenamiento. Dominios específicos no cubiertos</p>
+        <p>Alucinaciones: generan información incorrecta con confianza</p>
+        <p>Sin fuentes: no citan de dónde viene la información</p>
+        <p>Contexto limitado: ventana de tokens finita</p>
+        <p>Actualización costosa: reentrenar es caro y lento</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG: Solución</h2>
+        <p>Recuperar documentos relevantes de una base de conocimiento</p>
+        <p>Incluir esos documentos en el contexto del prompt</p>
+        <p>El LLM genera respuesta basada en información recuperada</p>
+        <p>Beneficios: respuestas actualizadas, trazabilidad, menor alucinación</p>
+    </section>
+
+    <section class="slide">
+        <h2>Arquitectura RAG básica</h2>
+        <ol>
+            <li><strong>Indexación</strong>: procesar y almacenar documentos</li>
+            <li><strong>Recuperación</strong>: buscar documentos relevantes para la query</li>
+            <li><strong>Generación</strong>: LLM genera respuesta usando documentos recuperados</li>
+        </ol>
+        <p>Pipeline offline (indexación) + online (recuperación + generación)</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG vs Fine-tuning</h2>
+        <p><strong>Fine-tuning</strong>:
+            <ul>
+                <li>Modifica pesos del modelo</li>
+                <li>Costoso computacionalmente</li>
+                <li>Difícil actualizar conocimiento</li>
+            </ul>
+        </p>
+        <p><strong>RAG</strong>:
+            <ul>
+                <li>Modelo sin cambios</li>
+                <li>Actualización fácil (añadir documentos)</li>
+                <li>Trazabilidad de fuentes</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Naive RAG (RAG Vectorial)</h2>
+        <p>Enfoque más común y básico de RAG</p>
+        <p>Basado en embeddings vectoriales y similitud semántica</p>
+        <p>Pasos:
+            <ol>
+                <li>Chunking: dividir documentos en fragmentos</li>
+                <li>Embedding: convertir chunks a vectores</li>
+                <li>Almacenar en vector database</li>
+                <li>Query embedding + búsqueda por similitud</li>
+                <li>Recuperar top-k chunks más similares</li>
+            </ol>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Naive RAG: Chunking</h2>
+        <p>Dividir documentos largos en fragmentos manejables</p>
+        <p>Estrategias:
+            <ul>
+                <li>Fixed-size: tamaño fijo (ej. 512 tokens)</li>
+                <li>Sentence-based: por oraciones</li>
+                <li>Paragraph-based: por párrafos</li>
+                <li>Semantic chunking: dividir por cambios semánticos</li>
+            </ul>
+        </p>
+        <p>Trade-off: chunks pequeños (precisos) vs grandes (contexto completo)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Naive RAG: Embeddings</h2>
+        <p>Convertir texto a representación vectorial densa</p>
+        <p>Modelos populares:
+            <ul>
+                <li>OpenAI text-embedding-3</li>
+                <li>Sentence-BERT (SBERT)</li>
+                <li>Cohere embeddings</li>
+                <li>BGE (Beijing Academy of AI)</li>
+            </ul>
+        </p>
+        <p>Vectores capturan significado semántico</p>
+        <p>Similitud coseno para medir relevancia</p>
+    </section>
+
+    <section class="slide">
+        <h2>Vector Databases</h2>
+        <p>Bases de datos optimizadas para búsqueda vectorial</p>
+        <p>Algoritmos ANN (Approximate Nearest Neighbors):
+            <ul>
+                <li>FAISS (Facebook)</li>
+                <li>Pinecone (cloud)</li>
+                <li>Weaviate</li>
+                <li>Milvus</li>
+                <li>Chroma</li>
+                <li>Qdrant</li>
+            </ul>
+        </p>
+        <p>Búsqueda eficiente en millones de vectores</p>
+    </section>
+
+    <section class="slide">
+        <h2>Naive RAG: Limitaciones</h2>
+        <p>Pierde estructura y relaciones entre información</p>
+        <p>Chunks independientes sin conexión</p>
+        <p>Difícil responder preguntas que requieren múltiples saltos</p>
+        <p>No captura conocimiento implícito ni razonamiento</p>
+        <p>Sensible a calidad de embeddings y chunking</p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph RAG</h2>
+        <p>RAG basado en grafos de conocimiento (Knowledge Graphs)</p>
+        <p>Mantiene estructura y relaciones entre entidades</p>
+        <p>Ventajas sobre Naive RAG:
+            <ul>
+                <li>Preserva contexto y relaciones</li>
+                <li>Razonamiento sobre múltiples saltos</li>
+                <li>Conocimiento explícito y verificable</li>
+                <li>Trazabilidad completa</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph RAG: Arquitectura</h2>
+        <ol>
+            <li>Extraer entidades y relaciones de documentos</li>
+            <li>Construir Knowledge Graph (RDF/OWL)</li>
+            <li>Query: traducir pregunta a consulta estructurada (SPARQL)</li>
+            <li>Recuperar subgrafo relevante</li>
+            <li>Serializar grafo a texto para LLM</li>
+            <li>LLM genera respuesta usando grafo como contexto</li>
+        </ol>
+    </section>
+
+    <section class="slide">
+        <h2>Graph RAG con RDF/OWL</h2>
+        <p>Knowledge Graphs semánticos con estándares W3C</p>
+        <p>Ventajas:
+            <ul>
+                <li>Ontologías para definir estructura del dominio</li>
+                <li>Razonamiento automático (OWL)</li>
+                <li>Consultas complejas (SPARQL)</li>
+                <li>Validación de datos (SHACL)</li>
+                <li>Interoperabilidad (URIs, Linked Data)</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph RAG: Extracción de conocimiento</h2>
+        <p>Convertir texto no estructurado a triples RDF</p>
+        <p>Métodos:
+            <ul>
+                <li>NER + Relation Extraction (tradicional)</li>
+                <li>LLMs para extracción (GPT-4, etc.)</li>
+                <li>Ontology-guided extraction</li>
+                <li>Hybrid: combinar métodos</li>
+            </ul>
+        </p>
+        <p>Resultado: texto → &lt;sujeto, predicado, objeto&gt;</p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph RAG: Ejemplo</h2>
+        <p>Pregunta: "¿Qué ciudades están cerca de Bilbao?"</p>
+        <p>Proceso:
+            <ol>
+                <li>Identificar entidad: Bilbao</li>
+                <li>Query SPARQL: ciudades con distancia &lt; 50km</li>
+                <li>Recuperar: Bilbao → cercaDe → Donostia, Vitoria</li>
+                <li>LLM genera: "Las ciudades cercanas son..."</li>
+            </ol>
+        </p>
+        <p>Respuesta verificable con fuentes explícitas (URIs)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Graph RAG: Multi-hop reasoning</h2>
+        <p>Responder preguntas que requieren múltiples saltos</p>
+        <p>"¿Dónde estudió el supervisor de Mikel?"</p>
+        <pre><code>SELECT ?universidad WHERE {
+    ex:Mikel ex:supervisadoPor ?supervisor .
+    ?supervisor ex:estudióEn ?universidad
+}</code></pre>
+        <p>Graph RAG navega relaciones naturalmente</p>
+        <p>Naive RAG necesitaría chunks con toda la información</p>
+    </section>
+
+    <section class="slide">
+        <h2>Hybrid RAG</h2>
+        <p>Combinar múltiples enfoques de recuperación</p>
+        <p>Vector + Graph RAG:
+            <ul>
+                <li>Vector search para similitud semántica</li>
+                <li>Graph search para relaciones estructuradas</li>
+                <li>Fusión de resultados (ranking)</li>
+            </ul>
+        </p>
+        <p>Mejor de ambos mundos: flexibilidad + estructura</p>
+    </section>
+
+    <section class="slide">
+        <h2>Otros tipos de RAG</h2>
+        <p><strong>SQL RAG</strong>: consultas sobre bases de datos relacionales</p>
+        <p><strong>Document RAG</strong>: recuperación de documentos completos</p>
+        <p><strong>Multi-modal RAG</strong>: imágenes, tablas, código</p>
+        <p><strong>Conversational RAG</strong>: mantener contexto en diálogos</p>
+        <p><strong>Self-RAG</strong>: modelo decide cuándo recuperar información</p>
+    </section>
+
+    <section class="slide">
+        <h2>Advanced RAG: Reranking</h2>
+        <p>Mejora la recuperación inicial con segundo paso de ranking</p>
+        <p>Proceso:
+            <ol>
+                <li>Recuperar top-100 candidatos (rápido, impreciso)</li>
+                <li>Reranker evalúa relevancia precisa (lento, preciso)</li>
+                <li>Seleccionar top-5 para LLM</li>
+            </ol>
+        </p>
+        <p>Modelos: Cohere Rerank, Cross-encoders</p>
+    </section>
+
+    <section class="slide">
+        <h2>Advanced RAG: Query expansion</h2>
+        <p>Mejorar query del usuario antes de buscar</p>
+        <p>Técnicas:
+            <ul>
+                <li>Reformulación con LLM</li>
+                <li>Generar múltiples queries alternativas</li>
+                <li>Desambiguación de términos</li>
+                <li>Añadir sinónimos o contexto</li>
+            </ul>
+        </p>
+        <p>Mejora recall y precisión</p>
+    </section>
+
+    <section class="slide">
+        <h2>Advanced RAG: HyDE</h2>
+        <p>Hypothetical Document Embeddings</p>
+        <p>Proceso:
+            <ol>
+                <li>Usuario hace pregunta</li>
+                <li>LLM genera respuesta hipotética</li>
+                <li>Buscar documentos similares a la respuesta hipotética</li>
+                <li>Generar respuesta final con docs recuperados</li>
+            </ol>
+        </p>
+        <p>Mejora cuando query y documentos tienen diferente estilo</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG: Evaluación</h2>
+        <p>Métricas de recuperación:
+            <ul>
+                <li>Precision@k: relevancia de top-k resultados</li>
+                <li>Recall: fracción de docs relevantes recuperados</li>
+                <li>MRR (Mean Reciprocal Rank)</li>
+            </ul>
+        </p>
+        <p>Métricas de generación:
+            <ul>
+                <li>Correctness: precisión factual</li>
+                <li>Faithfulness: fidelidad a fuentes</li>
+                <li>Relevance: pertinencia de respuesta</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG: Frameworks</h2>
+        <p><a href="https://www.llamaindex.ai/">LlamaIndex</a>: framework RAG completo (Python)</p>
+        <p><a href="https://www.langchain.com/">LangChain</a>: orquestación de LLMs y RAG</p>
+        <p><a href="https://haystack.deepset.ai/">Haystack</a>: NLP pipelines, RAG</p>
+        <p><a href="https://github.com/neuml/txtai">txtai</a>: embeddings y búsqueda semántica</p>
+        <p>Microsoft <a href="https://github.com/microsoft/graphrag">GraphRAG</a>: Graph RAG con LLMs</p>
+    </section>
+
+    <section class="slide">
+        <h2>Model Context Protocol (MCP)</h2>
+        <p>Protocolo abierto de Anthropic para conectar LLMs con fuentes de datos</p>
+        <p>Objetivo: estandarizar integración de contexto externo</p>
+        <p>Componentes:
+            <ul>
+                <li><strong>MCP Hosts</strong>: aplicaciones con LLMs (Claude, IDEs)</li>
+                <li><strong>MCP Clients</strong>: mantienen conexiones con servidores</li>
+                <li><strong>MCP Servers</strong>: exponen recursos (datos, herramientas)</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>MCP: Características</h2>
+        <p>Protocolo basado en JSON-RPC 2.0</p>
+        <p>Transporte: stdio, HTTP con SSE</p>
+        <p>Primitivas:
+            <ul>
+                <li><strong>Resources</strong>: datos que el LLM puede leer</li>
+                <li><strong>Prompts</strong>: plantillas reutilizables</li>
+                <li><strong>Tools</strong>: funciones que el LLM puede ejecutar</li>
+                <li><strong>Sampling</strong>: LLM puede solicitar inferencias recursivas</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>MCP Resources</h2>
+        <p>Exponer datos para que LLM los consuma</p>
+        <p>Ejemplos:
+            <ul>
+                <li>Archivos locales (filesystem)</li>
+                <li>Bases de datos (SQL, RDF)</li>
+                <li>APIs externas</li>
+                <li>Documentos en la nube</li>
+            </ul>
+        </p>
+        <p>URI scheme: file://, db://, http://, ...</p>
+        <p>LLM solicita recursos por URI</p>
+    </section>
+
+    <section class="slide">
+        <h2>MCP Tools</h2>
+        <p>Funciones que el LLM puede invocar</p>
+        <p>Definición con JSON Schema para parámetros</p>
+        <p>Ejemplos:
+            <ul>
+                <li>Ejecutar queries SPARQL</li>
+                <li>Buscar en vector database</li>
+                <li>Llamar APIs externas</li>
+                <li>Operaciones CRUD en bases de datos</li>
+            </ul>
+        </p>
+        <p>LLM decide cuándo y cómo usar tools</p>
+    </section>
+
+    <section class="slide">
+        <h2>MCP: Ejemplo servidor</h2>
+        <pre><code>from mcp.server import Server
+from mcp.types import Resource, Tool
+
+server = Server("sparql-server")
+
+@server.list_resources()
+async def list_resources():
+    return [Resource(uri="kg://museums", name="Museums KG")]
+
+@server.read_resource()
+async def read_resource(uri: str):
+    # Ejecutar SPARQL y devolver resultados
+    return {"content": sparql_results}
+
+@server.list_tools()
+async def list_tools():
+    return [Tool(name="query_kg", description="Query KG")]</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>MCP + RAG</h2>
+        <p>MCP estandariza cómo LLMs acceden a fuentes RAG</p>
+        <p>Servidor MCP puede exponer:
+            <ul>
+                <li>Vector database como Resource</li>
+                <li>SPARQL endpoint como Tool</li>
+                <li>Búsqueda híbrida como Tool</li>
+            </ul>
+        </p>
+        <p>Ventaja: múltiples aplicaciones LLM pueden usar mismo servidor</p>
+    </section>
+
+    <section class="slide">
+        <h2>MCP: Adopción</h2>
+        <p>Soportado por:
+            <ul>
+                <li>Claude Desktop App (Anthropic)</li>
+                <li>VS Code + extensiones</li>
+                <li>IDEs modernos</li>
+            </ul>
+        </p>
+        <p>Servidores disponibles:
+            <ul>
+                <li>Filesystem, Git, PostgreSQL, Slack</li>
+                <li>Google Drive, GitHub, GitLab</li>
+                <li>Puppeteer (web scraping)</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Skills (Capacidades de Agentes)</h2>
+        <p>Skills: funcionalidades que agentes IA pueden ejecutar</p>
+        <p>Similar a MCP Tools pero más general</p>
+        <p>Tipos de skills:
+            <ul>
+                <li>Information retrieval (RAG)</li>
+                <li>Data processing (transformaciones)</li>
+                <li>External actions (APIs, comandos)</li>
+                <li>Reasoning (cálculos, lógica)</li>
+            </ul>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>Skills: Composición</h2>
+        <p>Skills se pueden componer para tareas complejas</p>
+        <p>Ejemplo: "Analiza ventas del último trimestre"
+            <ol>
+                <li>Skill: Consultar base de datos (SQL RAG)</li>
+                <li>Skill: Calcular estadísticas</li>
+                <li>Skill: Generar gráfico</li>
+                <li>Skill: Crear informe en PDF</li>
+            </ol>
+        </p>
+        <p>Agente orquesta secuencia de skills</p>
+    </section>
+
+    <section class="slide">
+        <h2>Skills + Knowledge Graphs</h2>
+        <p>Skill: "Query Knowledge Graph"
+            <ul>
+                <li>Input: pregunta en lenguaje natural</li>
+                <li>Proceso: traducir a SPARQL</li>
+                <li>Ejecutar query contra triple store</li>
+                <li>Formatear resultados</li>
+                <li>Output: respuesta estructurada</li>
+            </ul>
+        </p>
+        <p>Combina NLP + razonamiento simbólico</p>
+    </section>
+
+    <section class="slide">
+        <h2>Agentic RAG</h2>
+        <p>RAG donde agente decide estrategia de recuperación</p>
+        <p>Agente tiene múltiples skills/tools:
+            <ul>
+                <li>Vector search</li>
+                <li>Graph traversal</li>
+                <li>SQL queries</li>
+                <li>Web search</li>
+            </ul>
+        </p>
+        <p>Agente razona sobre qué tool usar y cuándo</p>
+        <p>Más flexible que RAG pipeline fijo</p>
+    </section>
+
+    <section class="slide">
+        <h2>Agentic RAG: ReAct</h2>
+        <p>ReAct: Reasoning + Acting</p>
+        <p>Agente alterna razonamiento y acción:
+            <ol>
+                <li>Thought: "Necesito información sobre X"</li>
+                <li>Action: Ejecutar búsqueda</li>
+                <li>Observation: Resultado de búsqueda</li>
+                <li>Thought: "Ahora necesito Y"</li>
+                <li>Action: Consultar base de datos</li>
+                <li>...</li>
+                <li>Final Answer: Respuesta completa</li>
+            </ol>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG + Ontologías: Semantic RAG</h2>
+        <p>Usar ontologías OWL para mejorar RAG</p>
+        <p>Ventajas:
+            <ul>
+                <li>Query expansion con jerarquías (rdfs:subClassOf)</li>
+                <li>Razonamiento automático (inferencias OWL)</li>
+                <li>Validación de respuestas (SHACL)</li>
+                <li>Desambiguación con definiciones formales</li>
+            </ul>
+        </p>
+        <p>Ejemplo: buscar "mamíferos" recupera también "perros", "gatos"</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG en producción: Desafíos</h2>
+        <p>Latencia: recuperación + generación debe ser rápida</p>
+        <p>Escalabilidad: millones de documentos</p>
+        <p>Actualización: mantener índices sincronizados</p>
+        <p>Costes: embeddings, almacenamiento, llamadas LLM</p>
+        <p>Privacidad: datos sensibles en contexto</p>
+        <p>Calidad: evaluar y monitorear respuestas</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG: Mejores prácticas</h2>
+        <p>Chunking inteligente: preservar unidades semánticas</p>
+        <p>Metadata: enriquecer chunks con contexto</p>
+        <p>Hybrid search: combinar vector + keyword</p>
+        <p>Reranking: mejorar selección de documentos</p>
+        <p>Citation: incluir referencias en respuestas</p>
+        <p>Evaluation: medir calidad continuamente</p>
+    </section>
+
+    <section class="slide">
+        <h2>RAG: Casos de uso</h2>
+        <p>Customer support: responder con documentación actualizada</p>
+        <p>Legal/Compliance: consultas sobre regulaciones</p>
+        <p>Investigación científica: búsqueda en literatura</p>
+        <p>Enterprise search: búsqueda en datos corporativos</p>
+        <p>Educación: tutores IA con material del curso</p>
+        <p>Healthcare: asistentes con historiales médicos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Futuro de RAG</h2>
+        <p>RAG multimodal: texto, imágenes, video, audio</p>
+        <p>Modelos nativos con RAG integrado</p>
+        <p>Retrieval más inteligente: comprensión profunda</p>
+        <p>Personalización: RAG adaptado al usuario</p>
+        <p>Verificación automática: fact-checking en tiempo real</p>
+        <p>Estandarización: protocolos como MCP</p>
+    </section>
+
+    <section class="slide">
+        <h2>Recursos para aprender RAG</h2>
+        <p><a href="https://arxiv.org/abs/2005.11401">RAG paper original (Lewis et al.)</a></p>
+        <p><a href="https://www.llamaindex.ai/">LlamaIndex documentation</a></p>
+        <p><a href="https://github.com/microsoft/graphrag">Microsoft GraphRAG</a></p>
+        <p><a href="https://modelcontextprotocol.io/">Model Context Protocol</a></p>
+        <p><a href="https://arxiv.org/abs/2312.10997">Self-RAG paper</a></p>
+        <p><a href="https://www.pinecone.io/learn/retrieval-augmented-generation/">Pinecone RAG guide</a></p>
+    </section>
+
+    
+    <!-- FOOTER -->
+
+    <footer class="badge">
+        <a href="https://github.com/mikel-egana-aranguren/ShowerTemplate">Fork me on GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="../ShowerTemplate/shower/shower.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+
+</body>
+</html>

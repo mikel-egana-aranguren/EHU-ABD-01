@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <title>SHACL</title>
+    <title>SHACL 1.2</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../ShowerTemplate/shower/themes/ribbon/styles/styles.css">
@@ -9,11 +9,8 @@
         .shower {
             --slide-ratio: calc(16 / 9);
         }
+        pre code { font-size: 0.7em; }
     </style>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
 </head>
 <body class="shower list">
 
@@ -36,7 +33,7 @@
         <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
     </section>
 
-    <section class="slide">
+        <section class="slide">
         <h2>SHACL</h2>
         <p>SHApes Constraint Language</p>
         <p>Define la forma que un grafo RDF debería tener: que relaciones, a que nodos, con que valores, etc.</p>
@@ -61,12 +58,196 @@
         <h2>SHACL vs OWL</h2>
         <p>Confusión muy común: OWL como lenguaje de esquema</p>
         <p>SHACL sí es un lenguaje de esquema: por ejemplo, nos dice cuántas relaciones tiene que tener una instancia, y si esa instancia no las tiene, es inválida</p>
+        <p>Sin embargo, SHACL está evolucionando hacia sustituir a OWL en ciertos contextos</p>
     </section>
 
     <section class="slide">
         <h2>Shape SHACL</h2>
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/ejemplo_W3C.svg" alt="Shape SHACL" width="65%"></p>
     </section>
+
+    <section class="slide">
+        <h2>SHACL: Componentes Core</h2>
+        <p>sh:NodeShape: define restricciones sobre nodos del grafo</p>
+        <p>sh:PropertyShape: define restricciones sobre propiedades</p>
+        <p>sh:targetClass, sh:targetNode, sh:targetSubjectsOf, sh:targetObjectsOf: qué nodos validar</p>
+        <p>sh:path: qué propiedad validar</p>
+    </section>
+
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de cardinalidad</h2>
+        <p>sh:minCount: número mínimo de valores</p>
+        <p>sh:maxCount: número máximo de valores</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:property [
+        sh:path ex:name ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de tipo</h2>
+        <p>sh:class: el valor debe ser instancia de una clase</p>
+        <p>sh:datatype: el valor debe tener un datatype específico</p>
+        <p>sh:nodeKind: tipo de nodo (IRI, Literal, BlankNode)</p>
+        <pre><code>sh:property [
+    sh:path ex:birthDate ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1
+] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de valor</h2>
+        <p>sh:in: el valor debe estar en una lista específica</p>
+        <p>sh:hasValue: debe existir un valor específico</p>
+        <p>sh:minExclusive, sh:maxExclusive: rangos numéricos</p>
+        <p>sh:minInclusive, sh:maxInclusive: rangos numéricos inclusivos</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de cadenas</h2>
+        <p>sh:minLength, sh:maxLength: longitud de strings</p>
+        <p>sh:pattern: expresión regular que debe cumplir</p>
+        <p>sh:languageIn: idiomas permitidos para literales</p>
+        <p>sh:uniqueLang: cada idioma solo puede aparecer una vez</p>
+
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de cadenas</h2>
+        <pre><code>sh:property [
+    sh:path rdfs:label ;
+    sh:uniqueLang true
+] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones lógicas</h2>
+        <p>sh:not: negación de una shape</p>
+        <p>sh:and: conjunción (todas las shapes deben cumplirse)</p>
+        <p>sh:or: disyunción (al menos una shape debe cumplirse)</p>
+        <p>sh:xone: disyunción exclusiva (exactamente una debe cumplirse)</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Restricciones de forma</h2>
+        <p>sh:node: el valor debe cumplir otra shape</p>
+        <p>sh:property: define restricciones anidadas</p>
+        <p>sh:qualifiedValueShape + sh:qualifiedMinCount/MaxCount: cuántos valores deben cumplir una shape</p>
+        <p>Permite validaciones complejas y composición de shapes</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Closed Shapes</h2>
+        <p>sh:closed true: solo se permiten las propiedades declaradas</p>
+        <p>sh:ignoredProperties: lista de propiedades que se ignoran</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path ex:name
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Severity Levels</h2>
+        <p>sh:severity: nivel de gravedad de una violación</p>
+        <p>sh:Violation (por defecto): error crítico</p>
+        <p>sh:Warning: advertencia</p>
+        <p>sh:Info: información</p>
+        <p>Permite diferenciar validaciones obligatorias de recomendaciones</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Mensajes personalizados</h2>
+        <p>sh:message: mensaje descriptivo para violaciones</p>
+        <p>Puede ser multilingüe usando language tags</p>
+        <pre><code>sh:property [
+    sh:path ex:age ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive 0 ;
+    sh:message "La edad debe ser un entero no negativo"@es ;
+    sh:message "Age must be a non-negative integer"@en
+] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Property Paths</h2>
+        <p>sh:path soporta caminos complejos:</p>
+        <p>Secuencia: ( ex:parent ex:age ) - padre.edad</p>
+        <p>Alternativa: [ sh:alternativePath ( ex:email ex:phone ) ]</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Property Paths</h2>
+        <p>Inverso: [ sh:inversePath ex:knows ]</p>
+        <p>Zero o más: [ sh:zeroOrMorePath ex:parent ]</p>
+        <p>Uno o más: [ sh:oneOrMorePath ex:subClassOf ]</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL-SPARQL</h2>
+        <p>Extensión avanzada: validaciones con queries SPARQL</p>
+        <p>sh:sparql permite restricciones arbitrariamente complejas</p>
+        <p>Más expresivo que SHACL Core pero menos eficiente</p>
+        <p>Útil para validaciones que requieren razonamiento complejo</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL-SPARQL: Ejemplo</h2>
+        <pre><code>ex:UniqueEmailShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:sparql [
+        sh:message "Email must be unique" ;
+        sh:select """
+            SELECT $this ?email WHERE {
+                $this ex:email ?email .
+                ?other ex:email ?email .
+                FILTER ($this != ?other)
+            }
+        """
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Validation Report</h2>
+        <p>Resultado de validación en RDF (NoSQL!RDF!)</p>
+        <p>sh:ValidationReport con sh:conforms (true/false)</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Validation Report</h2>
+        <p>sh:ValidationResult para cada violación:</p>
+        <ul>
+            <li>sh:focusNode: nodo que viola la restricción</li>
+            <li>sh:resultPath: propiedad violada</li>
+            <li>sh:value: valor problemático</li>
+            <li>sh:resultMessage: descripción del error</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Herramientas</h2>
+        <p><a href="https://www.topquadrant.com/products/shacl-playground/">SHACL Playground</a>: editor online</p>
+        <p><a href="https://github.com/TopQuadrant/shacl">pySHACL</a>: validador Python</p>
+        <p><a href="https://github.com/apache/jena/tree/main/jena-shacl">Apache Jena SHACL</a>: Java</p>
+        <p>GraphDB, Stardog: soporte SHACL integrado</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL: Buenas prácticas</h2>
+        <p>Usar sh:message descriptivos en múltiples idiomas</p>
+        <p>Organizar shapes en módulos reutilizables</p>
+        <p>Separar validaciones críticas (Violation) de recomendaciones (Warning)</p>
+        <p>Documentar shapes con rdfs:label y rdfs:comment</p>
+        <p>Preferir SHACL Core sobre SHACL-SPARQL cuando sea posible</p>
+    </section>
+
 
     <section class="slide">
         <h2>SHACL en GraphDB</h2>
@@ -94,7 +275,566 @@
 
 
 
-    
+
+    <section class="slide">
+        <h2>SHACL 1.2</h2>
+        <p><b>Working Draft</b> del W3C (marzo 2026), una evolución significativa respecto a SHACL 1.0</p>
+        <p>Nuevo alcance ampliado: "SHACL se puede usar para <b>validación</b>, <b>inferencia</b>, <b>modelado de dominios</b>, <b>generación de interfaces de usuario</b>, <b>generación de código</b> e <b>integración de datos</b>"</p>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL 1.2</h2>
+        <ul>
+            <li><a href="https://www.w3.org/TR/shacl12-core/">SHACL 1.2 Core</a>: núcleo del lenguaje</li>
+            <li><a href="https://www.w3.org/TR/shacl12-sparql/">SHACL 1.2 SPARQL Extensions</a>: definir restricciones basadas en SPARQL</li>
+            <li><a href="https://www.w3.org/TR/shacl12-rules/">SHACL 1.2 Rules (SRL)</a>: inferencia basada en reglas</li>
+            <li><a href="https://w3c.github.io/data-shapes/shacl12-ui/">SHACL 1.2 UI</a>: generación de interfaces de usuario</li>
+            <li><a href="https://www.w3.org/TR/shacl12-profiling/">SHACL 1.2 Profiling</a>: crear perfiles que representan a grafos</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>SHACL 1.2 Core: Novedades principales</h2>
+        <p>Nuevos mecanismos de <b>target</b>: sh:targetWhere, sh:shape</p>
+        <p>Nuevas restricciones: sh:someValue, sh:singleLine, restricciones de listas</p>
+        <p>sh:ShapeClass: una clase que es al mismo tiempo una shape</p>
+        <p>Soporte para <b>RDF 1.2</b>: sh:reifierShape</p>
+        <p><b>Propiedades no-validantes para IA: sh:intent, sh:agentInstruction</b></p>
+    </section>
+
+    <section class="slide">
+        <h2>Core: sh:ShapeClass</h2>
+        <p>Una clase que también actúa como shape, simplificando la definición</p>
+        <p>Todas las instancias de la clase se validan automáticamente contra la shape</p>
+        <p>Equivale a definir sh:NodeShape + sh:targetClass por separado</p>    
+    </section>
+
+    <section class="slide">
+        <h2>Core: sh:ShapeClass</h2>
+        <pre><code>ex:Person a sh:ShapeClass, rdfs:Class ;
+    sh:property [
+        sh:path ex:name ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string
+    ] .</code></pre>     
+    </section>
+
+    <section class="slide">
+        <h2>Core: sh:targetWhere</h2>
+        <p>Nuevo mecanismo de target basado en <b>condiciones</b> de la shape</p>
+        <p>Los nodos del grafo de datos que cumplan las condiciones serán focus nodes</p>
+    </section>
+
+        <section class="slide">
+        <h2>Core: sh:targetWhere</h2>
+        <pre><code>ex:HighScoreShape a sh:NodeShape ;
+    sh:targetWhere [
+            sh:property [
+                sh:path ex:score ;
+                sh:minInclusive 90
+            ]
+        ] ;
+            sh:property [
+            sh:path ex:award ;
+            sh:minCount 1
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Core: sh:shape como target implícito</h2>
+        <p><b>sh:shape</b>: marca una shape como objetivo implícito, validando automáticamente cualquier nodo que se encuentre en el grafo y que sea candidato</p>
+        <p>A diferencia de sh:targetClass, no requiere que los nodos sean explícitamente instancias de una clase</p>
+    </section>
+
+        <section class="slide">
+        <h2>Core: sh:shape como target implícito</h2>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:shape true ;
+    sh:property [
+        sh:path ex:name ;
+        sh:minCount 1
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Core: Node Expressions</h2>
+        <p>Permiten <b>computar dinámicamente</b> valores de propiedades</p>
+        <p>sh:values: asigna valores derivados a una propiedad</p>
+        <p>Funciones: sh:concat, sh:limit, sh:offset, sh:orderBy, sh:count, sh:sum...</p>
+    </section>
+
+        <section class="slide">
+        <h2>Core: Node Expressions</h2>
+        <pre><code>ex:Person-fullName a sh:PropertyShape ;
+    sh:path ex:fullName ;
+    sh:values [
+        sh:concat (
+            [ sh:path ex:firstName ]
+            " "
+            [ sh:path ex:lastName ]
+        )
+    ] .</code></pre>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>Core: sh:someValue</h2>
+        <p>Permite verificar que <b>al menos un valor</b> de un nodo de enfoque cumple con cierto criterio</p>
+        <p>A diferencia de las restricciones normales (que aplican a todos los valores), sh:someValue es existencial</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:property [
+        sh:path ex:email ;
+        sh:someValue [
+            sh:pattern ".*@company\\.com"
+        ]
+    ] .</code></pre>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>Core: Restricciones de listas</h2>
+        <p>Nuevas restricciones para validar <b>listas RDF</b> (rdf:List):</p>
+        <ul>
+            <li><b>sh:memberShape</b>: cada miembro de la lista debe cumplir esta shape</li>
+            <li><b>sh:minListLength</b>: longitud mínima de la lista</li>
+            <li><b>sh:maxListLength</b>: longitud máxima de la lista</li>
+        </ul>
+        <pre><code>sh:property [
+    sh:path ex:tags ;
+    sh:memberShape [ sh:datatype xsd:string ] ;
+    sh:minListLength 1 ;
+    sh:maxListLength 10
+] .</code></pre>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>Core: sh:class/sh:datatype como listas</h2>
+        <p>En SHACL 1.2, <b>sh:class</b> y <b>sh:datatype</b> pueden aceptar <b>listas de valores</b></p>
+        <p>Un nodo de valor es válido si cumple con al menos uno de los tipos listados</p>
+        <pre><code>sh:property [
+    sh:path ex:identifier ;
+    sh:datatype ( xsd:string xsd:integer )
+] .
+
+sh:property [
+    sh:path ex:relatedTo ;
+    sh:class ( ex:Person ex:Organization )
+] .</code></pre>
+        <p>También aplica a <b>sh:nodeKind</b> (puede ser una lista)</p>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>Core: sh:closed con sh:ByTypes</h2>
+        <p>Mejora en <b>closed shapes</b>: sh:ByTypes permite cerrar una shape considerando las propiedades declaradas en todas las shapes para los tipos del focus node</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:closed sh:ByTypes ;
+    sh:property [
+        sh:path ex:name
+    ] .</code></pre>
+        <p>Solo se permiten las propiedades declaradas para las clases (tipos) del nodo</p>
+    </section> -->
+
+    <section class="slide">
+        <h2>Core: Nuevos niveles de severidad</h2>
+        <p>Además de sh:Violation, sh:Warning, sh:Info, SHACL 1.2 añade:</p>
+        <ul>
+            <li><b>sh:Trace</b>: para depuración durante desarrollo</li>
+            <li><b>sh:Debug</b>: información de diagnóstico</li>
+        </ul>
+        <!-- <p>Se pueden añadir niveles de severidad y mensajes mediante <b>reificación RDF 1.2</b>:</p>
+        <pre><code>ex:PersonShape sh:property ex:NameProp {|
+    sh:severity sh:Warning ;
+    sh:message "Nombre recomendado"@es
+|} .</code></pre> -->
+    </section>
+
+    <!-- <section class="slide">
+        <h2>Core: sh:reifierShape (RDF 1.2)</h2>
+        <p>Soporte nativo para <b>reificación RDF 1.2</b></p>
+        <p>sh:reifierShape permite definir restricciones sobre los reificadores de un triple</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:property [
+        sh:path ex:knows ;
+        sh:reifierShape [
+            sh:property [
+                sh:path ex:since ;
+                sh:minCount 1 ;
+                sh:datatype xsd:date
+            ]
+        ]
+    ] .</code></pre>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>Core: sh:rootClass y sh:subsetOf</h2>
+        <p><b>sh:rootClass</b>: indica la clase raíz para restricciones de clase, útil para jerarquías</p>
+        <p><b>sh:subsetOf</b>: los valores de una propiedad deben ser un subconjunto de los valores de otra propiedad</p>
+        <pre><code>sh:property [
+    sh:path ex:bestFriends ;
+    sh:subsetOf ex:friends
+] .</code></pre>
+        <p>Garantiza que los mejores amigos de una persona también estén entre sus amigos</p>
+    </section> -->
+
+    <section class="slide">
+        <h2>Core: Propiedades para Agentes IA</h2>
+        <p>Nuevas propiedades <b>no-validantes</b> para integración con agentes inteligentes:</p>
+        <ul>
+            <li><b>sh:intent</b>: describe la intención de la shape (para humanos y agentes)</li>
+            <li><b>sh:agentInstruction</b>: instrucciones específicas para agentes IA/LLM</li>
+            <!-- <li><b>sh:codeIdentifier</b>: identificador para generación de código</li>
+            <li><b>sh:unit</b>: unidad de medida asociada a una propiedad</li> -->
+        </ul>
+        <!-- <pre><code>ex:TempProp a sh:PropertyShape ;
+    sh:path ex:temperature ;
+    sh:datatype xsd:decimal ;
+    sh:unit &lt;http://qudt.org/vocab/unit/DEG_C&gt; ;
+    sh:intent "Temperatura corporal del paciente" ;
+    sh:agentInstruction "Valor entre 35.0 y 42.0" .</code></pre> -->
+    </section>
+
+    <section class="slide">
+        <h2>Core: sh:singleLine y sh:conformanceDisallows</h2>
+        <p><b>sh:singleLine</b>: indica si un valor literal debe ser una sola línea (sin saltos de línea). Usado por interfaces de usuario para elegir el widget adecuado</p>
+        <p><b>sh:conformanceDisallows</b>: permite definir qué impide la conformancia, ampliando el modelo de validación</p>
+        <!-- <pre><code>sh:property [
+    sh:path ex:title ;
+    sh:singleLine true ;
+    sh:datatype xsd:string
+] .</code></pre> -->
+    </section>
+
+    <section class="slide">
+        <h2>SHACL 1.2 Rules</h2>
+        <p>Nueva especificación para <b>inferencia basada en reglas</b></p>
+        <p>Introduce el <b>Shape Rules Language (SRL)</b></p>
+        <p>Las reglas se pueden adjuntar a shapes para generar nuevos triples</p>
+        <p>Soporta <b>recursión</b> y <b>negation as failure</b></p>
+    </section>
+
+    <section class="slide">
+        <h2>Rules: Sintaxis SRL</h2>
+        <p>Las reglas usan sintaxis <b>RULE/WHERE</b>:</p>
+        <p>La cláusula WHERE define condiciones; la cláusula RULE define los triples a generar</p>
+</code></pre>    
+    </section>
+
+        <section class="slide">
+        <h2>Rules: Sintaxis SRL</h2>
+        <pre><code>PREFIX ex: &lt;http://example.com/ns#&gt;
+
+RULE {
+    ?person ex:fullName ?fullName .
+}
+WHERE {
+    ?person ex:firstName ?first .
+    ?person ex:lastName ?last .
+    BIND(CONCAT(?first, " ", ?last) AS ?fullName)
+}</code></pre>    
+    </section>
+
+    <section class="slide">
+        <h2>Rules: Negación y recursión</h2>
+        <p><b>Negation as failure</b>: reglas para cuando algo NO existe</p>
+        <!-- <pre><code>RULE {
+    ?person ex:status "Sin email" .
+}
+WHERE {
+    ?person a ex:Person .
+    NOT EXISTS { ?person ex:email ?email }
+}</code></pre> -->
+        <p><b>Recursión</b>: las reglas pueden generar triples que activan otras reglas, con <b>estratificación</b> para garantizar resultados consistentes</p>
+    </section>
+
+    <section class="slide">
+        <h2>Rules: Adjuntar reglas a Shapes</h2>
+        <p>Las reglas se pueden vincular a shapes específicas, para que solo se apliquen a los focus nodes de la shape</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:rule [
+        a sh:SRLRule ;
+        sh:construct """
+            RULE { $this ex:fullName ?fn }
+            WHERE {
+                $this ex:firstName ?f .
+                $this ex:lastName ?l .
+                BIND(CONCAT(?f," ",?l) AS ?fn)
+            }
+        """
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Rules: Estratificación</h2>
+        <p>Las reglas se evalúan en <b>capas de estratificación</b> para resolver dependencias y negación:</p>
+        <ol>
+            <li>Se analiza el grafo de dependencias entre reglas</li>
+            <li>Las reglas que dependen de negaciones de otras se colocan en capas superiores</li>
+            <li>Cada capa se evalúa completamente antes de pasar a la siguiente</li>
+        </ol>
+        <p>Garantiza un modelo semántico único y consistente</p>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>Rules: Sintaxis RDF alternativa</h2>
+        <p>Las reglas SRL también se pueden expresar directamente en <b>RDF</b> (sintaxis RDF Rules)</p>
+        <p>Útil cuando se quieren almacenar las reglas dentro del mismo grafo RDF</p>
+        <pre><code>ex:FullNameRule a sh:SRLRule ;
+    sh:condition [
+        sh:property [
+            sh:path ex:firstName ;
+            sh:minCount 1
+        ]
+    ] ;
+    sh:rule [
+        sh:subject sh:this ;
+        sh:predicate ex:fullName ;
+        sh:object [ sh:concat (
+            [ sh:path ex:firstName ] " "
+            [ sh:path ex:lastName ] ) ]
+    ] .</code></pre>
+    </section> -->
+
+    <section class="slide">
+        <h2>SHACL 1.2 SPARQL Extensions</h2>
+        <p>Define extensiones de SHACL basadas en <b>SPARQL 1.2</b></p>
+        <ul>
+            <li><b>Restricciones basadas en SPARQL</b> (sh:sparql)</li>
+            <li><b>Componentes de restricción</b> reutilizables (sh:ConstraintComponent)</li>
+            <li><b>Expresiones de nodo SPARQL</b> (sh:SelectExpression, sh:SPARQLExprExpression)</li>
+        </ul>
+        <p>Más expresivo que SHACL Core pero menos eficiente</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL: Restricciones con sh:sparql</h2>
+        <p>Permiten restricciones <b>arbitrariamente complejas</b> usando SELECT queries</p>
+        <p>La variable <b>$this</b> se pre-asocia al focus node actual</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL: Restricciones con sh:sparql</h2>
+        <pre><code>ex:LanguageShape a sh:NodeShape ;
+    sh:targetClass ex:Country ;
+    sh:sparql [
+        sh:message "Debe tener etiqueta en alemán" ;
+        sh:prefixes ex: ;
+        sh:select """
+            SELECT $this ?value WHERE {
+                $this ex:germanLabel ?value .
+                FILTER (!langMatches(lang(?value), "de"))
+            }
+        """
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL: Componentes de restricción</h2>
+        <p>Permiten <b>abstraer y reutilizar</b> lógica de validación SPARQL</p>
+        <p>Se declaran con sh:ConstraintComponent + sh:parameter + validador</p>
+    </section>
+
+        <section class="slide">
+        <h2>SPARQL: Componentes de restricción</h2>
+        <pre><code>ex:LangComponent a sh:ConstraintComponent ;
+    sh:parameter [ sh:path ex:lang ] ;
+    sh:validator [
+        a sh:SPARQLAskValidator ;
+        sh:message "Idioma incorrecto: {$lang}" ;
+        sh:ask """ASK {
+            FILTER (isLiteral($value) &amp;&amp;
+              langMatches(lang($value), $lang))
+        }"""
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL: Validadores ASK vs SELECT</h2>
+        <p>Dos tipos de validadores SPARQL:</p>
+        <ul>
+            <li><b>ASK</b> (sh:SPARQLAskValidator): devuelve true si el valor <b>cumple</b> la restricción</li>
+            <li><b>SELECT</b> (sh:SPARQLSelectValidator): devuelve los valores que <b>NO cumplen</b></li>
+        </ul>
+        <p>Selección de validador: sh:nodeValidator (para NodeShape), sh:propertyValidator (para PropertyShape), sh:validator (para ambos, solo ASK)</p>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>SPARQL: Annotation Properties</h2>
+        <p>Novedad en SHACL 1.2: permite <b>inyectar propiedades adicionales</b> en los resultados de validación</p>
+        <pre><code>ex:AuditShape a sh:NodeShape ;
+    sh:sparql [
+        sh:resultAnnotation [
+            sh:annotationProperty ex:timestamp ;
+            sh:annotationVarName "time"
+        ] ;
+        sh:select """
+            SELECT $this ?message ?time WHERE {
+                BIND(NOW() AS ?time)
+                BIND("Auditado" AS ?message)
+            }
+        """
+    ] .</code></pre>
+        <p>El resultado de validación incluirá ex:timestamp con el valor de ?time</p>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>SPARQL: Node Expressions SPARQL</h2>
+        <p>Dos nuevas funciones de expresión de nodo basadas en SPARQL:</p>
+        <p><b>sh:SelectExpression</b>: computa valores usando un SELECT completo</p>
+        <pre><code>ex:Person-fullName a sh:PropertyShape ;
+    sh:path ex:fullName ;
+    sh:values [
+        sh:select """
+            SELECT ?fullName WHERE {
+                $this ex:firstName ?f .
+                $this ex:lastName ?l .
+                BIND(CONCAT(?f," ",?l) AS ?fullName)
+            }
+        """
+    ] .</code></pre>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>SPARQL: sh:SPARQLExprExpression</h2>
+        <p><b>sh:sparqlExpr</b>: expresión SPARQL compacta para computar un valor</p>
+        <pre><code>ex:Resource-uriLength a sh:PropertyShape ;
+    sh:path ex:uriLength ;
+    sh:values [
+        sh:sparqlExpr "STRLEN(STR($this))"
+    ] ;
+    sh:datatype xsd:integer .</code></pre>
+        <p>Más conciso que un SELECT completo para expresiones simples</p>
+        <p>Se ha eliminado el soporte para las variables pre-asociadas opcionales <b>$shapesGraph</b> y <b>$currentShape</b></p>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>SPARQL: Prefijos para queries</h2>
+        <p>Se pueden declarar <b>prefijos reutilizables</b> en el shapes graph:</p>
+        <pre><code>ex:
+    sh:declare [
+        sh:prefix "ex" ;
+        sh:namespace
+            "http://example.com/ns#"^^xsd:anyURI
+    ] ;
+    sh:declare [
+        sh:prefix "schema" ;
+        sh:namespace
+            "http://schema.org/"^^xsd:anyURI
+    ] .</code></pre>
+        <p>Las restricciones SPARQL referencian estos prefijos con sh:prefixes</p>
+    </section> -->
+
+    <section class="slide">
+        <h2>SHACL 1.2 UI (User Interfaces)</h2>
+        <p>Nueva especificación para <b>generación de interfaces de usuario</b> a partir de shapes SHACL</p>
+        <p>Define el concepto de <b>SHACL Renderer</b>: software que procesa shapes y datos para generar UI dinámicamente</p>
+        <p>Nuevo namespace: <b>shui:</b> (http://www.w3.org/ns/shacl-ui#)</p>
+        <p>Dos modos: <b>vista</b> (visualización) y <b>edición</b> (modificación de datos)</p>
+    </section>
+
+    <section class="slide">
+        <h2>UI: Widgets</h2>
+        <ul>
+            <li><b>Editores</b> (shui:Editor): para modificar datos — TextFieldEditor, DatePickerEditor, BooleanSelectEditor, AutoCompleteEditor, EnumSelectEditor...</li>
+            <li><b>Visores</b> (shui:Viewer): para mostrar datos — LabelViewer, LiteralViewer, HTMLViewer, ImageViewer, URIViewer...</li>
+        </ul>
+        <p>Se seleccionan manualmente (shui:editor, shui:viewer) o automáticamente mediante un <b>sistema de puntuación</b></p>
+    </section>
+
+    <section class="slide">
+        <h2>UI: Ejemplo de editores</h2>
+        <pre><code>ex:Person-married a sh:PropertyShape ;
+    sh:path ex:married ;
+    sh:datatype xsd:boolean .
+# → BooleanSelectEditor (score 10)
+
+ex:Person-dateOfBirth a sh:PropertyShape ;
+    sh:path ex:dateOfBirth ;
+    sh:datatype xsd:date .
+# → DatePickerEditor (score 10)
+
+ex:Address-region a sh:PropertyShape ;
+    sh:path schema:addressRegion ;
+    sh:in ("ACT" "NSW" "QLD" "SA" "VIC") .
+# → EnumSelectEditor (score 10)</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>UI: Property Paths en modo vista y edición</h2>
+        <p><b>Modo vista</b>: MUST soportar predicate paths e inverse paths; SHOULD soportar paths complejos (secuencia, alternativa, etc.)</p>
+        <p><b>Modo edición</b>: MUST soportar predicate e inverse paths; SHOULD soportar alternative paths</p>
+        <pre><code>ex:PersonShape a sh:NodeShape ;
+    sh:property [
+        sh:path foaf:name ;
+        sh:name "Nombre"
+    ] ;
+    sh:property [
+        sh:path [ sh:inversePath ex:member ] ;
+        sh:name "Departamento"
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>UI: Property Roles</h2>
+        <p>Anotaciones para indicar el <b>rol</b> de una propiedad en la interfaz</p>
+        <p><b>shui:propertyRole</b>: indica cómo debe tratarse una propiedad (ej. como etiqueta de visualización)</p>
+        <pre><code>ex:Label a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    shui:propertyRole shui:LabelRole .</code></pre>
+        <p>Con <b>prioridad cualificada</b> (sh:order) y soporte para <b>anotaciones de triples RDF 1.2</b>:</p>
+        <pre><code>ex:PrefLabel a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    shui:propertyRole shui:LabelRole
+        {| sh:order 0 |} .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>UI: DetailsEditor y formularios anidados</h2>
+        <p><b>shui:DetailsEditor</b>: permite editar nodos complejos como formularios anidados</p>
+        <pre><code>ex:Product-weight a sh:PropertyShape ;
+    sh:path ex:weight ;
+    shui:editor shui:DetailsEditor ;
+    sh:maxCount 1 ;
+    sh:node ex:ValueWithWeight ;
+    sh:nodeKind sh:BlankNode .
+
+ex:ValueWithWeight a sh:NodeShape ;
+    sh:property [
+        sh:path ex:numericValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path ex:unit ;
+        sh:class qudt:Unit ;
+        sh:minCount 1
+    ] .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>UI: ValueTableViewer</h2>
+        <p><b>shui:ValueTableViewer</b>: muestra múltiples valores como una <b>tabla HTML</b></p>
+        <p>Es un Multi Viewer: toma control sobre todos los valores de una propiedad</p>
+        <p>Las columnas se derivan de la node shape referenciada con sh:node</p>
+        <p>El orden de columnas se controla con sh:order</p>
+        <pre><code>ex:Concept-narrower a sh:PropertyShape ;
+    sh:path [ sh:inversePath skos:broader ] ;
+    sh:name "narrower (tabla)" ;
+    shui:viewer shui:ValueTableViewer ;
+    sh:node ex:ConceptTableShape .</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Resumen: Cambios clave en SHACL 1.2</h2>
+        <ul>
+            <li><b>Core</b>: sh:ShapeClass, sh:targetWhere, node expressions, restricciones de listas, soporte RDF 1.2, propiedades para agentes IA</li>
+            <li><b>Rules</b>: Shape Rules Language (SRL), recursión, negación, estratificación</li>
+            <li><b>SPARQL</b>: annotation properties, SelectExpression, SPARQLExprExpression</li>
+            <li><b>UI</b>: SHACL Renderer, widgets con puntuación, property roles, formularios anidados</li>
+        </ul>
+    </section>
+
     <!-- FOOTER -->
 
     <footer class="badge">
@@ -104,7 +844,6 @@
     <div class="progress"></div>
 
     <script src="../ShowerTemplate/shower/shower.js"></script>
-    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
 
 </body>
 </html>

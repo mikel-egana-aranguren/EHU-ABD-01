@@ -38,183 +38,777 @@
 
     <section class="slide">
         <h2>OWL</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/LEGO-ontology.png" alt="OWL RDF/XML" width="60%"></p>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/LEGO-ontology.png" alt="LEGO" width="60%"></p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/AstraZeneca.png" alt="AstraZeneca" width="30%"></p>
+    </section>
+
+        <section class="slide">
+        <h2>OWL</h2>
+        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/IKEA_OWL.png" alt="IKEA" width="30%"></p>
     </section>
 
     <section class="slide">
         <h2>OWL</h2>
         <p>OWL: Web Ontology Language</p>
-        <p>Estándar <a href="https://www.w3.org/TR/owl2-overview/">oficial del W3C</a> para crear ontologías en la web con un semántica precisa y formal</p>
+        <p>Estándar <a href="https://www.w3.org/TR/owl2-overview/">oficial del W3C</a> para crear ontologías en la web con un semántica precisa y formal (=HTML, !=SQL)</p>
+        <p>Ontología: conjunto de descripciones precisas sobre un <b>dominio de interés</b></p>
+        <p>Previene malentendidos en la comunicación humana</p>
+        <p>Asegura que el software se comporte de forma uniforme y predecible</p>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>OWL 2: Documentos W3C</h2>
+        <a href="https://www.w3.org/TR/2012/REC-owl2-primer-20121211/">OWL 2 Primer</a>: introducción al lenguaje<br>
+        <a href="https://www.w3.org/TR/owl2-syntax/">OWL 2 Structural Specification</a>: sintaxis formal<br>
+        <a href="https://www.w3.org/TR/owl2-direct-semantics/">OWL 2 Direct Semantics</a>: semántica basada en Description Logics<br>
+        <a href="https://www.w3.org/TR/owl2-rdf-based-semantics/">OWL 2 RDF-Based Semantics</a>: semántica basada en RDF<br>
+        <a href="https://www.w3.org/TR/owl2-mapping-to-rdf/">OWL 2 Mapping to RDF</a>: serialización en RDF<br>
+        <a href="https://www.w3.org/TR/owl2-profiles/">OWL 2 Profiles</a>: sublenguajes tratables<br>
+        <a href="https://www.w3.org/TR/owl2-quick-reference/">OWL 2 Quick Reference</a>: referencia rápida
     </section>
 
     <section class="slide">
-        <h2>OWL</h2>
-        <p>Se basa en Lógica Descriptiva (DL) para representar computacionalmente un dominio de conocimiento:
-            <ul>
-                <li>Razonamiento automático: inferir conocimiento "nuevo" (*), consultas, consistencia, clasificar entidades contra la ontología, ...</li>
-                <li>Integrar información dispersa mediante un vocabulario común</li>
-            </ul>
-        </p>
+        <h1>¿Qué es OWL 2?</h1>
+        <p>Basado en <a href="https://www.w3.org/TR/2012/REC-owl2-primer-20121211/">OWL 2 Primer (W3C Rec.)</a></p>
+    </section> -->
 
-    </section>
+    <!-- <section class="slide">
+        <h2>¿Qué es OWL 2?</h2>
+        <p>OWL 2 es un lenguaje para expresar <b>ontologías</b></p>
+        <p>Una ontología: conjunto de descripciones precisas sobre una parte del mundo (<b>dominio de interés</b>)</p>
+        <p>Previene malentendidos en la comunicación humana</p>
+        <p>Asegura que el software se comporte de forma uniforme y predecible</p>
+    </section> -->
 
-    <section class="slide">
+        <section class="slide">
         <h2>OWL</h2>
-        <p>No es un lenguaje esquema con restricciones, se basa en inferencia (Para eso esta SHACL)</p>
         <p>El mismo lenguaje RDF para definir datos y su vocabulario* (NoSQL!RDF!)</p>
+        <p>Funcion 1: vocabulario para integración de datos</p>
+        <p>Funcion 2: lenguaje de modelado para describir el dominio de interés y aplicar razonamiento automático</p>
+        </p>
     </section>
 
     <section class="slide">
-        <h2>Sintaxis RDF/XML</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_rdf_xml.png" alt="OWL RDF/XML" width="60%"></p>
+        <h2>OWL</h2>
+        <p><b>No es un lenguaje de programación</b>: es declarativo, describe un estado del dominio</p>
+        <p><b>No es un lenguaje de esquema</b>: no prescribe la estructura de un documento (ej. XML/JSON schema) - Para eso esta SHACL</p>
+        <p><b>No es un framework de bases de datos</b>: sigue la <b>Open World Assumption</b> (un hecho ausente puede ser verdadero, no se asume como falso)</p>
     </section>
 
     <section class="slide">
-        <h2>Manchester OWL Syntax</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_mos.png" alt="OWL Manchester Syntax" width="60%"></p>
+        <h2>Closed World vs Open World</h2>
+        <p><b>Closed World Assumption (CWA)</b>: lo que no está en la BD es falso (SQL)</p>
+        <p><b>Open World Assumption (OWA)</b>: lo que no se dice puede ser verdadero o falso (OWL)</p>
+        <p>Ejemplo: si no hay info sobre la edad de María, SQL asume NULL/sin edad; OWL asume que simplemente no se sabe</p>
+    </section>
+
+        <section class="slide">
+        <h2>Open World Assumption (OWA)</h2>
+        <p>La ausencia de información no implica falsedad</p>
+        <p>Si no sabemos que Mikel vive en Bilbao, no asumimos que vive en otro sitio</p>
+        <p>Diferente de bases de datos relacionales (Closed World)</p>
+        <p>Consecuencia: las restricciones universales no son restrictivas por defecto</p>
+        <p>Para "cerrar" el mundo: usar propiedades funcionales, closure axioms, SHACL</p>
     </section>
 
     <section class="slide">
-        <h2>Semántica OWL</h2>
-        <p>Entidades: las entidades del dominio de conocimiento, identificadas con URIs, introducidas por el desarrollador ("Mikel", "participa_en", ...)</p>
-        <p>Axiomas: relacionan las entidades mediante el vocabulario lógico que ofrece OWL (namespace OWL)</p>
-        <p>Una ontología puede importar otra (owl:import) y hacer referencia a sus entidades mediante axiomas</p>
+        <h2>No Unique Name Assumption (NUNA)</h2>
+        <p>Dos URIs diferentes pueden referirse a la misma entidad</p>
+        <p>ex:Bilbao y ex:Bilbo pueden ser owl:sameAs</p>
+        <p>Útil para integración de datos de diferentes fuentes</p>
+        <p>Permite reconciliación automática mediante razonamiento</p>
+        <p>owl:differentFrom para forzar distinción</p>
     </section>
 
     <section class="slide">
-        <h2>Semántica OWL</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/entidades.png" alt="Entidades OWL" width="60%"></p>
+        <h2>OWL</h2>
+        <p><b>Entidades</b>: los elementos que se refieren a objetos del dominio: <i>Juan, Persona, tieneEdad, ...</i></p>
+        <p><b>Axiomas</b>: las afirmaciones básicas de una ontología (se consideran verdaderas): <i>Juan es una Persona, Los adultos tienen edad mayor a 18, ...</i></p>
+        <p><b>Expresiones</b>: combinaciones de entidades y axiomas para formar descripciones complejas: <i>un funcionario es un adulto que tiene por lo menos un trabajo de duracion indefinida en una institucion que recibe fondos ...</i></p>
     </section>
 
     <section class="slide">
-        <h2>Semántica OWL</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/axioma.png" alt="Axioma OWL" width="60%"></p>
-    </section>
-
-    <section class="slide">
-        <h2>Individuos</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_inds.png" alt="Individuos" width="60%"></p>
+        <h2>Entidades</h2>
+        <p><b>Individuos</b> (individuals): objetos concretos (ej: Juan, María)</p>
+        <p><b>Clases</b> (classes): categorías que agrupan individuos (ej: Persona, Mujer)</p>
+        <p><b>Propiedades</b> (properties): relaciones entre entidades</p>
     </section>
 
     <section class="slide">
         <h2>Propiedades</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_props.png" alt="Propiedades" width="60%"></p>
+        <ul>
+            <li><b>Object properties</b>: relacionan objeto con objeto (ej: tienePareja)</li>
+            <li><b>Datatype properties</b>: asignan valores de datos a objetos (ej: tieneEdad)</li>
+            <li><b>Annotation properties</b>: metadatos sobre la ontología (ej: rdfs:comment)</li>
+        </ul>
     </section>
 
     <section class="slide">
-        <h2>Clases</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_clases.png" alt="Clases" width="60%"></p>
+        <h2>Razonamiento</h2>
+        <p>Los <b>razonadores</b> (reasoners) pueden calcular automáticamente <b>consecuencias</b> de los axiomas</p>
+        <p>Un conjunto de axiomas A <b>implica</b> (entails) un axioma a si a es verdadero siempre que A es verdadero</p>
+        <p>Un conjunto de axiomas puede ser <b>consistente</b> (hay un estado posible donde todos son verdad) o <b>inconsistente</b></p>
     </section>
 
     <section class="slide">
-        <h2>Clases</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Clase_OWL.png" alt="Clases" width="40%"></p>
+        <h2>Sintaxis OWL 2</h2>
+        <p><b>Functional-Style Syntax</b>: para especificación e implementación</p>
+        <p><b>RDF/XML</b>: obligatoria para todas las herramientas OWL 2</p>
+        <p><b>Turtle</b>: serialización RDF legible</p>
+        <p><b>Manchester Syntax</b>: diseñada para no-lógicos</p>
+        <p><b>OWL/XML</b>: basada en XML Schema</p>
     </section>
 
     <section class="slide">
-        <h2>Clases subclase</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Clase_SubClase_OWL.png" alt="Clase subclase" width="40%"></p>
+        <h1>Clases, Propiedades e Individuos</h1>
+        <p>Modelado básico con OWL 2</p>
+        <p style="font-size:10px;font-family: monospace">[protege]</p>
+    </section>
+
+    <section class="slide">
+        <h2>Clases e instancias</h2>
+        <p>Declarar que un individuo pertenece a una clase:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:Mary rdf:type :Person .<br>
+:Mary rdf:type :Woman .
+        </pre>
+        <p style="font-size:10px;font-family: monospace">[OWL RDF Turtle syntax]</p>
+        <p>Un individuo puede pertenecer a varias clases simultáneamente (RDF! Web Semantica! NoSQL!)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Jerarquía de clases (SubClassOf)</h2>
+        <p>"Toda mujer es persona" → relación subclase</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:Woman rdfs:subClassOf :Person .<br>
+:Mother rdfs:subClassOf :Woman .
+        </pre>
     </section>
 
     <section class="slide">
         <h2>Clases equivalentes</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Clase_equiv_OWL.png" alt="Clases equivalentes" width="40%"></p>
+        <p>Dos clases contienen exactamente los mismos individuos:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:Person owl:equivalentClass :Human .
+        </pre>
+        <p>Equivale a declarar SubClassOf en ambas direcciones</p>
     </section>
 
     <section class="slide">
-        <h2>Jerarquía de clases (Taxonomía)</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_is_a.png" alt="Jerarquía de clases (Taxonomía)" width="30%"></p>
+        <h2>Disjunción de clases (DisjointClasses)</h2>
+        <p>Ningún individuo puede pertenecer a ambas clases a la vez:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:Woman owl:disjointWith :Man .
+        </pre>
+        <p>Si María es Mujer, el razonador infiere que María <b>no</b> es Hombre</p>
     </section>
 
     <section class="slide">
-        <h2>Condiciones necesarias</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_necessary.png" alt="Condiciones necesarias" width="60%"></p>
+        <h2>Object Properties</h2>
+        <p>Relacionan individuos entre sí:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:Jon rdf:type owl:NamedIndividual ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:pareja :Mary .<br><br>
+
+[ rdf:type owl:NegativePropertyAssertion ;<br>
+&nbsp;&nbsp;owl:sourceIndividual :Jon ;<br>
+&nbsp;&nbsp;owl:assertionProperty :pareja ;<br>
+&nbsp;&nbsp;owl:targetIndividual :Mary<br>
+ ] .
+        </pre>
     </section>
 
     <section class="slide">
-        <h2>Condiciones necesarias y suficientes</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_necessary_and_sufficient.png" alt="Condiciones necesarias y suficientes" width="60%"></p>
+        <h2>Jerarquía de propiedades</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:pareja rdfs:subPropertyOf :relacion .
+        </pre>
+        <p>Si B es pareja de A → B tiene relacion con A</p>
+        <p>(La relación inversa no es necesariamente cierta)</p>
     </section>
 
     <section class="slide">
-        <h2>Restricción existencial</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_existential.png" alt="Restricción existencial" width="60%"></p>
+        <h2>Domain y Range</h2>
+        <p>Restricciones sobre qué tipos de entidades conecta una propiedad:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:tieneHijo rdfs:domain :persona .<br>
+:tieneHijo rdfs:range :menor .
+        </pre>
+        <p>Si "Pedro tieneHijo Maria" → Pedro es Persona, Maria es menor</p>
+        <p>⚠ Domain/Range <b>no son restricciones</b>, son <b>axiomas de inferencia</b></p>
     </section>
 
     <section class="slide">
-        <h2>Restricción universal</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_universal.png" alt="Restricción universal" width="60%"></p>
+        <h2>⚠ Error común con Domain/Range</h2>
+        <p>Ejemplo: edad domain Rersona</p>
+        <p>Si decimos "Felix edad 9" y "Felix rdf:type Gato"</p>
+        <p>→ El razonador infiere que Felix <b>también</b> es Persona</p>
+        <p>Domain/Range no validan: <b>infieren</b> nuevas clases</p>
+        <p>(Solucion?)</p>
     </section>
 
     <section class="slide">
-        <h2>Restricción un individuo (value)</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_has_value.png" alt="Restricción un individuo (value)" width="60%"></p>
+        <h2>Igualdad y desigualdad de individuos</h2>
+        <p>OWL <b>no asume</b> que nombres diferentes = individuos diferentes (No Unique Name Assumption)</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:James owl:sameAs :Jim .<br>
+:John owl:differentFrom :Bill .
+        </pre>
     </section>
 
     <section class="slide">
-        <h2>Restricciones cardinales</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Pizza_cardinality.png" alt="Restricciones cardinales" width="60%"></p>
+        <h2>Datatype Properties</h2>
+        <p>Relacionan individuos con valores de datos (literales):</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+:John :hasAge "51"^^xsd:integer .<br><br>
+
+[]  a owl:NegativePropertyAssertion ;<br>
+&nbsp;&nbsp;owl:sourceIndividual :Jack ;<br>
+&nbsp;&nbsp;owl:assertionProperty :hasAge ;<br>
+&nbsp;&nbsp;owl:targetValue "53"^^xsd:integer .<br><br>
+
+:hasAge rdfs:domain :Person .<br><br>
+
+:hasAge rdfs:range xsd:nonNegativeInteger .<br>
+        </pre>
+        <p>datatypes de XML Schema: xsd:integer, xsd:string, xsd:boolean, ...</p>
     </section>
 
     <section class="slide">
-        <h2>disjointFrom, not, or, and</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/owl_boolean.png" alt="Boolean" width="60%"></p>
+        <h1>Relaciones avanzadas de clases</h1>
+        <p>Constructores lógicos para clases complejas</p>
     </section>
 
     <section class="slide">
-        <h2>Expresiones complejas</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_complex_expression.png" alt="Expresiones complejas" width="60%"></p>
+        <h2>Intersección de clases (AND)</h2>
+        <p>La clase contiene individuos que pertenecen a <b>ambas</b> clases:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+EquivalentClasses(:Mother ObjectIntersectionOf(:Parent :Woman))
+] .
+        </pre>
+        <p style="font-size:10px;font-family: monospace">[OWL functional syntax]</p>
+        <p>→ Toda Mother es Woman y toda Mother es Parent</p>
     </section>
 
     <section class="slide">
-        <h2>Propiedades</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/OWL_props.png" alt="Propiedades" width="60%"></p>
+        <h2>Unión de clases (OR)</h2>
+        <p>La clase contiene individuos que pertenecen a <b>al menos una</b> de las clases:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+Class: Parent <br>
+&nbsp;&nbsp;EquivalentTo: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;Father or Mother
+        </pre>
+            <p style="font-size:10px;font-family: monospace">[Manchester OWL syntax]</p>
     </section>
 
     <section class="slide">
-        <h2>Propiedades</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/props_f_1.png" alt="Propiedades" width="60%"></p>
+        <h2>Complemento de clases (NOT)</h2>
+        <p>Los individuos que <b>no</b> pertenecen a la clase:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# ChildlessPerson = Person AND NOT Parent<br><br>
+
+:ChildlessPerson owl:equivalentClass [<br>
+&nbsp;&nbsp;owl:intersectionOf ( :Person [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rdf:type owl:Class ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;owl:complementOf :Parent<br>
+&nbsp;&nbsp;] )<br>
+] .
+
+        </pre>
+        <p>Los constructores se pueden anidar arbitrariamente</p>
     </section>
 
     <section class="slide">
-        <h2>Propiedades</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/props_f_2.png" alt="Propiedades" width="60%"></p>
+        <h2>SubClassOf con expresiones complejas</h2>
+        <p>Condiciones necesarias pero no suficientes:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Todo Grandfather es Man AND Parent<br>
+# (pero no todo Man AND Parent es Grandfather)<br>
+SubClassOf(<br>
+&nbsp;&nbsp;:Grandfather<br>
+&nbsp;&nbsp;ObjectIntersectionOf( :Man :Parent )<br>
+)
+        </pre>
+        <p>EquivalentClasses = condición <b>necesaria y suficiente</b></p>
+        <p>SubClassOf = solo condición <b>necesaria</b></p>
     </section>
 
     <section class="slide">
-        <h2>Propiedades</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/props_f_3.png" alt="Propiedades" width="60%"></p>
+        <h2>Restricción existencial (∃, SOME)</h2>
+        <p>Al menos un valor relacionado pertenece a una clase:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Parent = tiene al menos un hijo que es Person<br>
+EquivalentClasses(<br>
+&nbsp;&nbsp;:Parent<br>
+&nbsp;&nbsp;ObjectSomeValuesFrom( :hasChild :Person )<br>
+)
+        </pre>
+        <p>Indicadores en lenguaje natural: "algún", "al menos uno"</p>
     </section>
 
     <section class="slide">
-        <h2>Individuos</h2>
-        <p>Miembro de una o más clases: rdf:type (RDF! Web Semantica! NoSQL!)</p>
-        <p>Igual (owl:sameas) o diferente (owl:differentfrom) a otro individuo</p>
-        <p>Relaciones binarias con otros individuos o datos (triples), positivas o negativas</p>
+        <h2>Restricción universal (∀, ONLY)</h2>
+        <p><b>Todos</b> los valores relacionados pertenecen a una clase:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# HappyPerson = todos sus hijos son HappyPerson<br>
+EquivalentClasses(<br>
+&nbsp;&nbsp;:HappyPerson<br>
+&nbsp;&nbsp;ObjectAllValuesFrom( :hasChild :HappyPerson )<br>
+)
+        </pre>
+        <p>Indicadores: "solo", "exclusivamente", "nada más que"</p>
     </section>
 
     <section class="slide">
-        <h2>Razonamiento automático</h2>
-        <p>Un razonador infiere los "nuevos" axiomas que implican los axiomas que hemos introducido en la ontología</p>
-        <p>El razonador infiere todos los axiomas; es útil para tratar con conocimiento complejo</p>
-        <p>Open World Assumption</p>
-        <p>No Unique Name Assumption</p>
+        <h2>⚠ Trampa de la restricción universal</h2>
+        <p>ObjectAllValuesFrom( :hasChild :HappyPerson )</p>
+        <p>¡Una persona <b>sin hijos</b> cumple esta restricción!</p>
+        <p>Para exigir que además tenga al menos un hijo feliz:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+EquivalentClasses(<br>
+&nbsp;&nbsp;:HappyPerson<br>
+&nbsp;&nbsp;ObjectIntersectionOf(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ObjectAllValuesFrom( :hasChild :HappyPerson )<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ObjectSomeValuesFrom( :hasChild :HappyPerson )<br>
+&nbsp;&nbsp;)<br>
+)
+        </pre>
     </section>
 
     <section class="slide">
-        <h2>Razonamiento automático: mantener taxonomía</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Normalisation_instance.png" alt="Razonamiento automático: mantener taxonomía" width="30%"></p>
+        <h2>HasValue y HasSelf</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Hijos de John = los que tienen padre John<br>
+EquivalentClasses(<br>
+&nbsp;&nbsp;:JohnsChildren<br>
+&nbsp;&nbsp;ObjectHasValue( :hasParent :John )<br>
+)<br>
+<br>
+# Narcisista = se ama a sí mismo<br>
+EquivalentClasses(<br>
+&nbsp;&nbsp;:NarcisticPerson<br>
+&nbsp;&nbsp;ObjectHasSelf( :loves )<br>
+)
+        </pre>
     </section>
 
     <section class="slide">
-        <h2>Razonamiento automático: Consistencia</h2>
-        <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/consistencia.png" alt="Razonamiento automático: Consistencia" width="40%"></p>
+        <h2>Restricciones de cardinalidad</h2>
+        <p>Especificar el número de individuos relacionados:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# John tiene como máximo 4 hijos que son padres<br>
+ClassAssertion(<br>
+&nbsp;&nbsp;ObjectMaxCardinality( 4 :hasChild :Parent )<br>
+&nbsp;&nbsp;:John )<br>
+<br>
+# John tiene al menos 2 hijos que son padres<br>
+ClassAssertion(<br>
+&nbsp;&nbsp;ObjectMinCardinality( 2 :hasChild :Parent )<br>
+&nbsp;&nbsp;:John )<br>
+<br>
+# John tiene exactamente 3 hijos que son padres<br>
+ClassAssertion(<br>
+&nbsp;&nbsp;ObjectExactCardinality( 3 :hasChild :Parent )<br>
+&nbsp;&nbsp;:John )
+        </pre>
     </section>
 
     <section class="slide">
-        <h2>Razonamiento automático: Clasificar</h2>
-        <p>Clasificar entidades: dada una entidad nueva, como se relaciona con las demas entidades (types, equivalentTo, subClassOf, triples)</p>
-        <p>Una consulta es una clase anónima que clasificamos contra la ontología como si fuese una entidad</p>
+        <h2>Restricciones de cardinalidad: Turtle</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Exactamente 5 hijos<br>
+:John rdf:type [<br>
+&nbsp;&nbsp;rdf:type owl:Restriction ;<br>
+&nbsp;&nbsp;owl:onProperty :hasChild ;<br>
+&nbsp;&nbsp;owl:cardinality "5"^^xsd:nonNegativeInteger<br>
+] .<br>
+<br>
+# Máximo 4 hijos que son Parent<br>
+:John rdf:type [<br>
+&nbsp;&nbsp;rdf:type owl:Restriction ;<br>
+&nbsp;&nbsp;owl:onProperty :hasChild ;<br>
+&nbsp;&nbsp;owl:maxQualifiedCardinality<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"4"^^xsd:nonNegativeInteger ;<br>
+&nbsp;&nbsp;owl:onClass :Parent<br>
+] .
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Enumeración de individuos (OneOf)</h2>
+        <p>Definir una clase enumerando todos sus miembros:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Clase cerrada: solo Bill, John y Mary<br>
+EquivalentClasses(<br>
+&nbsp;&nbsp;:MyBirthdayGuests<br>
+&nbsp;&nbsp;ObjectOneOf( :Bill :John :Mary )<br>
+)<br>
+<br>
+# Turtle:<br>
+:MyBirthdayGuests owl:equivalentClass [<br>
+&nbsp;&nbsp;owl:oneOf ( :Bill :John :Mary )<br>
+] .
+        </pre>
+        <p>Si Jeff es MyBirthdayGuests → Jeff = Bill, John o Mary</p>
+    </section>
+
+    <section class="slide">
+        <h1>Uso avanzado de propiedades</h1>
+        <p>Características y construcciones avanzadas</p>
+    </section>
+
+    <section class="slide">
+        <h2>Propiedades inversas</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# hasParent es la inversa de hasChild<br>
+InverseObjectProperties( :hasParent :hasChild )<br>
+<br>
+# Turtle:<br>
+:hasParent owl:inverseOf :hasChild .<br>
+<br>
+# Uso anónimo en expresiones:<br>
+EquivalentClasses(<br>
+&nbsp;&nbsp;:Orphan<br>
+&nbsp;&nbsp;ObjectAllValuesFrom(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ObjectInverseOf( :hasChild )<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:Dead<br>
+&nbsp;&nbsp;)<br>
+)
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Propiedades simétricas y asimétricas</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Si A hasSpouse B → B hasSpouse A<br>
+SymmetricObjectProperty( :hasSpouse )<br>
+<br>
+# Si A hasChild B → NUNCA B hasChild A<br>
+AsymmetricObjectProperty( :hasChild )<br>
+<br>
+# Turtle:<br>
+:hasSpouse rdf:type owl:SymmetricProperty .<br>
+:hasChild rdf:type owl:AsymmetricProperty .
+        </pre>
+        <p>Asimétrica ≠ no-simétrica (asimétrica es más fuerte)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Propiedades reflexivas e irreflexivas</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Todo individuo es su propio pariente<br>
+ReflexiveObjectProperty( :hasRelative )<br>
+<br>
+# Nadie puede ser su propio padre<br>
+IrreflexiveObjectProperty( :parentOf )<br>
+<br>
+# Turtle:<br>
+:hasRelative rdf:type owl:ReflexiveProperty .<br>
+:parentOf rdf:type owl:IrreflexiveProperty .
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Propiedades funcionales</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Cada persona tiene como máximo un marido<br>
+FunctionalObjectProperty( :hasHusband )<br>
+<br>
+# Cada marido lo es de como máximo una persona<br>
+InverseFunctionalObjectProperty( :hasHusband )<br>
+<br>
+# Turtle:<br>
+:hasHusband rdf:type owl:FunctionalProperty .<br>
+:hasHusband rdf:type owl:InverseFunctionalProperty .
+        </pre>
+        <p>Si Mary hasHusband James y Mary hasHusband Jim → James = Jim</p>
+    </section>
+
+    <section class="slide">
+        <h2>Propiedades transitivas</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Si A hasAncestor B y B hasAncestor C<br>
+# → A hasAncestor C<br>
+TransitiveObjectProperty( :hasAncestor )<br>
+<br>
+# Turtle:<br>
+:hasAncestor rdf:type owl:TransitiveProperty .
+        </pre>
+        <p>hasParent es subpropiedad de hasAncestor: los padres de padres de padres se incluyen automáticamente</p>
+    </section>
+
+    <section class="slide">
+        <h2>Propiedades disjuntas</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Nadie es padre e hijo de la misma persona<br>
+DisjointObjectProperties( :hasParent :hasSpouse )
+        </pre>
+        <p>No puede haber dos individuos conectados simultáneamente por ambas propiedades</p>
+    </section>
+
+    <section class="slide">
+        <h2>Cadenas de propiedades (Property Chains)</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# hasParent o hasParent = hasGrandparent<br>
+SubObjectPropertyOf(<br>
+&nbsp;&nbsp;ObjectPropertyChain( :hasParent :hasParent )<br>
+&nbsp;&nbsp;:hasGrandparent<br>
+)<br>
+<br>
+# hasFather o hasBrother = hasUncle<br>
+SubObjectPropertyOf(<br>
+&nbsp;&nbsp;ObjectPropertyChain( :hasFather :hasBrother )<br>
+&nbsp;&nbsp;:hasUncle<br>
+)
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Claves (Keys)</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# El número de la Seguridad Social identifica<br>
+# unívocamente a cada Person<br>
+HasKey( :Person () ( :hasSSN ) )<br>
+<br>
+# Turtle:<br>
+:Person owl:hasKey ( :hasSSN ) .
+        </pre>
+        <p>Cada instancia nombrada de la clase se identifica unívocamente por los valores de esas propiedades</p>
+    </section>
+
+    <section class="slide">
+        <h1>Uso avanzado de datatypes</h1>
+        <p>Restricciones y definiciones de tipos de datos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Definición de datatypes</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Edad entre 0 y 150 (facetas de XML Schema)<br>
+DatatypeDefinition(<br>
+&nbsp;&nbsp;:personAge<br>
+&nbsp;&nbsp;DatatypeRestriction( xsd:integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xsd:minInclusive "0"^^xsd:integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xsd:maxInclusive "150"^^xsd:integer<br>
+&nbsp;&nbsp;)<br>
+)<br>
+<br>
+# majorAge = personAge AND NOT minorAge<br>
+DatatypeDefinition(<br>
+&nbsp;&nbsp;:majorAge<br>
+&nbsp;&nbsp;DataIntersectionOf(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:personAge<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DataComplementOf( :minorAge )<br>
+&nbsp;&nbsp;)<br>
+)
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Enumeración de datos y restricciones</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# toddlerAge = {1, 2}<br>
+DatatypeDefinition(<br>
+&nbsp;&nbsp;:toddlerAge<br>
+&nbsp;&nbsp;DataOneOf( "1"^^xsd:integer "2"^^xsd:integer )<br>
+)<br>
+<br>
+# hasAge es funcional: cada persona tiene una sola edad<br>
+FunctionalDataProperty( :hasAge )<br>
+<br>
+# Teenager: edad entre 13 y 19<br>
+SubClassOf(<br>
+&nbsp;&nbsp;:Teenager<br>
+&nbsp;&nbsp;DataSomeValuesFrom( :hasAge<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DatatypeRestriction( xsd:integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xsd:minExclusive "12"^^xsd:integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xsd:maxInclusive "19"^^xsd:integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;)<br>
+)
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h1>Anotaciones y gestión de ontologías</h1>
+        <p>Metadatos y organización</p>
+    </section>
+
+    <section class="slide">
+        <h2>Anotaciones (Annotations)</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Anotar una clase<br>
+AnnotationAssertion( rdfs:comment :Person<br>
+&nbsp;&nbsp;"Represents the set of all people." )<br>
+<br>
+# Anotar un axioma<br>
+SubClassOf(<br>
+&nbsp;&nbsp;Annotation( rdfs:comment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"States that every man is a person." )<br>
+&nbsp;&nbsp;:Man :Person<br>
+)
+        </pre>
+        <p>Las anotaciones <b>no tienen significado lógico</b>: son metadatos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Gestión de ontologías</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Declarar la ontología con su IRI<br>
+Ontology(&lt;http://example.com/owl/families&gt;<br>
+&nbsp;&nbsp;...<br>
+)<br>
+<br>
+# Importar otra ontología<br>
+Import(&lt;http://example.org/otherOntologies/<br>
+&nbsp;&nbsp;families.owl&gt;)<br>
+<br>
+# Vincular nombres entre ontologías<br>
+SameIndividual( :John otherOnt:JohnBrown )<br>
+EquivalentClasses( :Adult otherOnt:Grownup )<br>
+EquivalentObjectProperties(<br>
+&nbsp;&nbsp;:hasChild otherOnt:child )
+        </pre>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>Declaraciones de entidades</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+Declaration( NamedIndividual( :John ) )<br>
+Declaration( Class( :Person ) )<br>
+Declaration( ObjectProperty( :hasWife ) )<br>
+Declaration( DataProperty( :hasAge ) )
+        </pre>
+        <p><b>Punning</b>: un IRI puede denotar a la vez una clase y un individuo</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+# Father como clase e individuo<br>
+ClassAssertion( :Father :John )<br>
+ClassAssertion( :SocialRole :Father )
+        </pre>
+    </section> -->
+
+    <section class="slide">
+        <h1>OWL 2 DL y OWL 2 Full</h1>
+        <p>Dos formas de interpretar OWL 2</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 DL</h2>
+        <p><b>Direct Semantics</b>:</p>
+        <ul>
+            <li>Subconjunto sintácticamente restringido</li>
+            <li>Decidible: los razonadores garantizan respuesta</li>
+            <li>Múltiples razonadores de calidad disponibles</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 Full</h2>
+        <p><b>RDF-Based Semantics</b>:</p>
+        <ul>
+            <li>Extensión natural de RDFS</li>
+            <li>Indecidible: no hay razonadores completos</li>
+            <li>Totalmente reflectivo (todo es un triple)</li>
+        </ul>
+    </section>
+
+    <!-- <section class="slide">
+        <h2>OWL 2 DL vs OWL 2 Full: diferencias</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 14px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 6px;">Aspecto</th>
+                <th style="border: 1px solid #ccc; padding: 6px;">OWL 2 DL</th>
+                <th style="border: 1px solid #ccc; padding: 6px;">OWL 2 Full</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Semántica</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Direct Semantics</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">RDF-Based Semantics</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Decidibilidad</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Decidible</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Indecidible</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Anotaciones</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Sin significado formal</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Pueden generar inferencias</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Punning</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Clase e individuo son vistas distintas</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">SameIndividual implica EquivalentClasses</td>
+            </tr>
+        </table>
+    </section> -->
+
+    <section class="slide">
+        <h1>OWL 2 Profiles</h1>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 Profiles</h2>
+        <p>OWL 2 completo es muy expresivo pero computacionalmente costoso</p>
+        <p>Los perfiles son <b>subconjuntos sintácticos</b> con buenas propiedades computacionales</p>
+        <p>Ningún perfil es subconjunto de otro</p>
+        <p>Todo razonador OWL 2 DL es válido para los tres perfiles (pero puede ser más lento)</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 EL (Existential Language)</h2>
+        <p><b>Optimizado para</b>: ontologías grandes con descripciones estructurales complejas: <a href="http://purl.bioontology.org/ontology/SNOMEDCT/">SNOMED-CT</a>, <a href="https://geneontology.org">Gene Ontology</a></p>
+        <p><b>Permite</b>: expresiones de clase ricas, cadenas de propiedades, intersección</p>
+        <p><b>No permite</b>: negación, disyunción, cuantificación universal, inversas</p>
+        <p><b>Complejidad</b>: polinomial (PTIME)</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 QL (Query Language)</h2>
+        <p><b>Optimizado para</b>: consultas sobre grandes volúmenes de datos</p>
+        <p><b>Basado en DL-Lite</b>: traducción de consultas a SQL</p>
+        <p><b>Permite</b>: inversas, jerarquías de propiedades, diagramas ER/UML</p>
+        <p><b>No permite</b>: cuantificación existencial a expresión de clase, cadenas de propiedades, igualdad</p>
+        <p><b>Complejidad</b>: LogSpace en datos (NLOGSPACE)</p>
+    </section>
+
+    <section class="slide">
+        <h2>OWL 2 RL (Rule Language)</h2>
+        <p><b>Optimizado para</b>: razonamiento escalable mediante reglas</p>
+        <p><b>Compatible con</b>: RDF(S), reglas (forward/backward chaining)</p>
+        <p><b>Permite</b>: intersección, cadenas de propiedades, cardinalidad máxima</p>
+        <p><b>No permite</b>: existenciales que fuercen la existencia de individuos desconocidos</p>
+        <p><b>Complejidad</b>: polinomial (PTIME)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Comparación de perfiles OWL 2</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 13px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 5px;">Perfil</th>
+                <th style="border: 1px solid #ccc; padding: 5px;">Caso de uso</th>
+                <th style="border: 1px solid #ccc; padding: 5px;">Implementación</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 5px;">OWL 2 EL</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Clasificación de grandes ontologías</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Razonadores especializados (ELK, CEL)</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 5px;">OWL 2 QL</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Consultas + ontología ligera</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Reescritura de SPARQL → SQL (Ontop)</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 5px;">OWL 2 RL</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Enriquecimiento de datos RDF</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Motores de reglas (GraphDB)</td>
+            </tr>
+        </table>
     </section>
 
     <section class="slide">
@@ -222,13 +816,85 @@
         <p><img  style="border: 1px solid #555;"  src="pictures-abd-01/Plain-KG_KG_KGI-Ok.svg" alt="Knowledge Graph" width="70%"></p>
     </section>
 
-    <section class="slide">
-        <h2>Knowledge Graphs</h2>
-        <p>WikiData: <a href="https://www.wikidata.org/">https://www.wikidata.org/</a></p>
-        <p>DBPedia: <a href="https://www.dbpedia.org/about/">https://www.dbpedia.org/about/</a></p>
-        <p>Uniprot: <a href="https://sparql.uniprot.org/">https://sparql.uniprot.org/</a></p>
-        <p>...</p>
+        <section class="slide">
+        <h2>OWL y SPARQL</h2>
+        <p>SPARQL consulta el grafo RDF serializado</p>
+        <p>Por defecto no considera axiomas inferidos</p>
+        <p>GraphDB: materializa inferencias o razona en tiempo de consulta</p>
+        <p>SPARQL 1.1: entailment regimes (RDF, RDFS, OWL)</p>
+        <p>Federated queries: consultar múltiples endpoints con ontologías</p>
     </section>
+
+    <section class="slide">
+        <h2>Inconsistencias en OWL</h2>
+        <p>Ontología inconsistente: contiene contradicciones lógicas</p>
+        <p>Clase insatisfacible: no puede tener instancias (equivalente a owl:Nothing)</p>
+        <p>Causas comunes:
+            <ul>
+                <li>Clases disjuntas con instancias compartidas</li>
+                <li>Restricciones de cardinalidad contradictorias</li>
+                <li>Propiedades funcionales con múltiples valores</li>
+            </ul>
+        </p>
+        <p>Usar razonador para detectar y explicar inconsistencias</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explicaciones de inferencias</h2>
+        <p>Justification: conjunto mínimo de axiomas que causa una inferencia</p>
+        <p>Herramientas: Protégé plugin de explicación</p>
+        <p>Debugging: identificar axiomas problemáticos</p>
+        <p>Puede haber múltiples justificaciones para una inferencia</p>
+    </section>
+
+    <section class="slide">
+        <h2>Ontologias publicas</h2>
+Repositorios de ontologias: LOV, OBO, bioportal, ontobee, etc.
+Schema (Estadisticas de uso)
+ELI
+    </section>
+
+
+    <!-- <section class="slide">
+        <h2>Herramientas OWL</h2>
+        <p><b>Editores</b>:</p>
+        <ul>
+            <li><a href="https://protege.stanford.edu/">Protégé</a>: editor libre, el más utilizado</li>
+        </ul>
+        <p><b>Razonadores</b>:</p>
+        <ul>
+            <li><a href="http://www.hermit-reasoner.com/">HermiT</a>: OWL 2 DL completo</li>
+            <li><a href="https://github.com/liveontologies/elk-reasoner">ELK</a>: OWL 2 EL (muy rápido)</li>
+            <li><a href="https://github.com/stardog-union/pellet">Pellet/Openllet</a>: OWL 2 DL</li>
+        </ul>
+        <p><b>Triplestores</b>: GraphDB (OWL 2 RL), Stardog (OWL 2 DL)</p>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>Resumen OWL 2</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 4px;">Concepto</th>
+                <th style="border: 1px solid #ccc; padding: 4px;">Functional-Style</th>
+                <th style="border: 1px solid #ccc; padding: 4px;">Turtle</th>
+            </tr>
+            <tr><td style="border: 1px solid #ccc; padding: 4px;">Instancia</td><td style="border: 1px solid #ccc; padding: 4px;">ClassAssertion(:C :x)</td><td style="border: 1px solid #ccc; padding: 4px;">:x a :C</td></tr>
+            <tr><td style="border: 1px solid #ccc; padding: 4px;">Subclase</td><td style="border: 1px solid #ccc; padding: 4px;">SubClassOf(:A :B)</td><td style="border: 1px solid #ccc; padding: 4px;">:A rdfs:subClassOf :B</td></tr>
+            <tr><td style="border: 1px solid #ccc; padding: 4px;">Equivalencia</td><td style="border: 1px solid #ccc; padding: 4px;">EquivalentClasses(:A :B)</td><td style="border: 1px solid #ccc; padding: 4px;">:A owl:equivalentClass :B</td></tr>
+            <tr><td style="border: 1px solid #ccc; padding: 4px;">Disjunción</td><td style="border: 1px solid #ccc; padding: 4px;">DisjointClasses(:A :B)</td><td style="border: 1px solid #ccc; padding: 4px;">:A owl:disjointWith :B</td></tr>
+            <tr><td style="border: 1px solid #ccc; padding: 4px;">∃ (some)</td><td style="border: 1px solid #ccc; padding: 4px;">ObjectSomeValuesFrom(:p :C)</td><td style="border: 1px solid #ccc; padding: 4px;">owl:someValuesFrom :C</td></tr>
+            <tr><td style="border: 1px solid #ccc; padding: 4px;">∀ (only)</td><td style="border: 1px solid #ccc; padding: 4px;">ObjectAllValuesFrom(:p :C)</td><td style="border: 1px solid #ccc; padding: 4px;">owl:allValuesFrom :C</td></tr>
+        </table>
+    </section> -->
+
+    <!-- <section class="slide">
+        <h2>Recursos para aprender OWL</h2>
+        <p><a href="https://www.w3.org/TR/2012/REC-owl2-primer-20121211/">OWL 2 Primer (W3C Rec.)</a></p>
+        <p><a href="https://www.w3.org/TR/owl2-quick-reference/">OWL 2 Quick Reference Guide</a></p>
+        <p><a href="https://protege.stanford.edu/">Protégé Editor</a></p>
+        <p><a href="https://www.w3.org/TR/owl2-profiles/">OWL 2 Profiles</a></p>
+        <p><a href="https://manchesterowlsyntax.org/">Manchester OWL Syntax</a></p>
+    </section> -->
 
     <!-- FOOTER -->
 
