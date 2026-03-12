@@ -1,5 +1,9 @@
 # Releases
 
+## 2025-2026-1
+
+* Intro NoSQL, Grafos, RDF
+
 ## 2024-2025-2
 
 * No Mongo
