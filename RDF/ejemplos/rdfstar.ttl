@@ -15,6 +15,13 @@ ehu:jon ehu:vive_en eus:bilbo .
 
 # PREFIX eustat: <urn:eustat:property:>
 # PREFIX ehu: <https://ehu.eus/staff/pdi/>
+# SELECT ?triple ?year
+# WHERE {
+#    ?triple eustat:since ?year
+# }
+
+# PREFIX eustat: <urn:eustat:property:>
+# PREFIX ehu: <https://ehu.eus/staff/pdi/>
 # SELECT ?year ?bizileku
 # WHERE {
 #    ehu:jon ehu:vive_en ?bizileku .

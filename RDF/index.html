@@ -201,13 +201,18 @@
         </div>
     </section>
 
-        <section class="slide">
+    <section class="slide">
         <h2>RDF: JSON-LD</h2>
         <p>Serialización RDF en JSON: fácil para desarrolladores web</p>
-        <p>Usado por Schema.org para metadatos en páginas web</p>
-        <p>Google, Bing, Yahoo lo procesan para mejorar búsquedas</p>
         <p>@context define el mapeo de claves JSON a URIs RDF</p>
+        <p>Usado por <a href="https://schema.org/">Schema.org</a> (Google) para metadatos en páginas web</p>
+        <p>Google, Bing, Yahoo lo procesan para mejorar búsquedas</p>
         <p style="font-size:10px;font-family: monospace">[ejemplos/mikel.jsonld]</p>
+    </section>
+
+    <section class="slide">
+        <h2>RDF: JSON-LD</h2>
+        <p><img src="pictures-abd-01/structured-data-explainer.png" alt="Google Structured Data https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" width="80%"></p>
     </section>
 
     <section class="slide">
@@ -277,8 +282,9 @@
         </ul>
     </section>
 
-        <section class="slide">
+    <section class="slide">
         <h2>GraphDB</h2>
+            <p><i>eGela; Guiones de laboratorio; NoSQL; Software necesario</i></p>
             <p style="font-size:10px;font-family: monospace">[ejemplos/./graphdb]</p>
             <p style="font-size:10px;font-family: monospace">[ejemplos/jon_bilbo.ttl]</p>
             <p style="font-size:10px;font-family: monospace">[ejemplos/mikel_bilbo.ttl]</p>
@@ -307,7 +313,7 @@
     <section class="slide">
         <h2>Grafos RDF</h2>
         <p>Datos y metadatos en el mismo lenguaje (NoSQL! RDF!)</p>
-        <p><img src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="60%"></p>
+        <p><img src="pictures-abd-01/namedgraph_metadata_namedgraph2.svg" alt="Grafo RDF" width="50%"></p>
         <p style="font-size:10px;font-family: monospace">[ejemplos/seguridad_social.nq]</p>
     </section>
 
@@ -320,7 +326,7 @@
     <section class="slide">
         <h2>Blank Nodes</h2>
         <p>Nodos anónimos sin URI: recursos sin identificador global</p>
-        <p>Se usan cuando no necesitamos referenciar el recurso desde fuera. Problema para Linked Data: no se pueden enlazar desde grafos en servidores externos</p>
+        <p>Se usan cuando no necesitamos referenciar el recurso desde fuera (no se pueden enlazar desde grafos en servidores externos)</p>
         <p>Sintaxis Turtle: _:b1, _:b2, ... o []</p>
         <p>El recurso "Jon" no tiene URI propia</p>
         <p style="font-size:10px;font-family: monospace">[ejemplos/jon_bilbo.ttl >> jon_bilbo_blank.ttl]</p>
@@ -328,8 +334,8 @@
 
     <section class="slide">
         <h2>RDF: reificación</h2>
-        <p>Información sobre un triple, ej. Mikel y Jon son amigos desde 1997</p>
-        <p>Triple RDF: Mikel amigo_de Jon. Desde 1997?</p>
+        <p>Información sobre un triple: <i>Mikel y Jon son amigos desde 1997</i></p>
+        <p>Triple RDF: <b>Mikel amigo_de Jon</b>. <i>Desde 1997?</i></p>
     </section>
 
     <section class="slide">
@@ -344,11 +350,11 @@
 
     <section class="slide">
         <h2>RDF Star (RDF*)</h2>
-        <p>Simplifica la reificación (más intuitivo que Named Graphs, más simple que nodo intermedio)</p>
+        <p>Simplifica la reificación: más intuitivo que Named Graphs, más simple que nodo intermedio</p>
         <p>Extensión reciente de RDF: permitir triples como sujetos u objetos</p>
         <p>Sintaxis: &lt;&lt; sujeto predicado objeto &gt;&gt;</p>
         <p>Estándar W3C en desarrollo</p>
-        <p style="font-size:10px;font-family: monospace">[ejemplos/rdfstar.ttl - consultas]</p>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/rdfstar.ttl - consultas SPARQL en comentarios]</p>
     </section>
 
 
@@ -356,9 +362,9 @@
         <h2>UPSERT (UPDATE INSERT)</h2>
         <p>Operación en SQL que actualiza si existe, inserta si no</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-INSERT INTO mascotas (id, nombre, color)
-VALUES (2, "Fluffy", "negro")
-ON DUPLICATE KEY UPDATE color = VALUES(color);
+INSERT INTO mascotas (id, nombre, color)<br>
+VALUES (2, "Fluffy", "negro")<br>
+ON DUPLICATE KEY UPDATE color = VALUES(color);<br>
         </pre>
         <p>Objetivo: mantener un único valor actualizado para una fila</p>
                 <p style="font-size:12px">Basado en: <a href="https://medium.com/@skontopo2009/upsert-vs-rdf-same-goal-different-rules-ac503ff4f8ed" target="_blank">Stratos Kontopoulos (Medium)</a></p>
@@ -375,7 +381,7 @@ ON DUPLICATE KEY UPDATE color = VALUES(color);
         <h2>Sin semántica de "valor único"</h2>
         <p>El modelo RDF permite varios valores por propiedad en un recurso</p>
         <p>Incluso con <em>owl:FunctionalProperty</em> (OWL), la restricción es lógica: la Triple Store no borra automáticamente</p>
-        <p>Los triplestores pueden permitir, avisar (SHACL) o inferir (OWL); no borran automáticamente</p>
+        <p>Los Triple Stores pueden permitir, avisar (SHACL) o inferir (OWL); no borran automáticamente</p>
     </section>
 
     <section class="slide">
