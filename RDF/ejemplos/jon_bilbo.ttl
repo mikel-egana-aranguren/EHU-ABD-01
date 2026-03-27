@@ -2,7 +2,7 @@
 @prefix ehu: <https://ehu.eus/staff/pdi/> .
 @prefix eustat: <urn:eustat:property:> .
 
-ehu:mikel eustat:amigo_de ehu:jon .
-ehu:jon ehu:vive_en eus:bilbo .
+ehu:mikel eustat:laguna ehu:jon .
+ehu:jon ehu:bizilekua eus:bilbo .
 
 
