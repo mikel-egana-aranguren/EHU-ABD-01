@@ -52,13 +52,13 @@
 
     <section class="slide">
         <h2>Recursos para aprender SPARQL</h2>
-        <p><a href="https://www.learningsparql.com/">Learning SPARQL (libro)</a></p>
+        <p><a href="https://www.learningsparql.com/">Learning SPARQL</a> (libro)</p>
         <p><a href="https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial">Wikidata SPARQL Tutorial</a></p>
         <p><a href="https://query.wikidata.org/">Wikidata Query Service</a> (con ejemplos)</p>
     </section>
 
     <section class="slide">
-        <h2>SPARQL W3C</h2>
+        <h2>SPARQL W3C (=HTML, !=SQL)</h2>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/">SPARQL 1.1 Query Language</a>: consultas sobre grafos RDF en SPARQL<br>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-update-20130321/">SPARQL 1.1 Update</a>: modificar RDF mediante SPARQL<br>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/">SPARQL 1.1 Protocol</a>: ejecutar consultas SPARQL sobre HTTP<br>
@@ -66,11 +66,6 @@
         <a href="https://www.w3.org/TR/2013/REC-sparql11-service-description-20130321/">SPARQL 1.1 Service Description</a>: describir endpoints SPARQL en RDF<br>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321/">SPARQL 1.1 Federated Query</a>: combinar endpoints en una consulta SPARQL<br>
         <a href="https://graphdb.ontotext.com/documentation/10.8/w3c-specs.html#sparql-protocol-and-query-language">GraphDB SPARQL 1.1 compliance</a> (<strike>SPARQL 1.1 Service Description</strike>)
-    </section>
-
-    <section class="slide">
-        <h1>SPARQL 1.1 Query Language</h1>
-        <p>Estándar del W3C (=HTML, !=SQL)</p>
     </section>
 
     <section class="slide">
@@ -130,14 +125,14 @@ WHERE {<br>
         <h2>OPTIONAL</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?langile ?bizilekua<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;# Tiene que ser una persona<br>
 &nbsp;&nbsp;?langile rdf:type foaf:person .<br>
-<br><br>
+<br>
 &nbsp;&nbsp;# Tiene que vivir en algun sitio<br>
 &nbsp;&nbsp;?langile gip_prop:bizilekua ?bizilekua<br>
-}<br>
+}
         </pre>
     </section>
 
@@ -145,16 +140,16 @@ WHERE {<br>
         <h2>OPTIONAL</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         SELECT ?langile ?bizilekua<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;# Tiene que ser una persona<br>
 &nbsp;&nbsp;?langile rdf:type foaf:person .<br>
-<br><br>
+<br>
 &nbsp;&nbsp;# Puede vivir en un sitio o no<br>
 &nbsp;&nbsp;OPTIONAL {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?langile gip_prop:bizilekua ?bizilekua<br>
 &nbsp;&nbsp;}<br>
-}<br>
+}
         </pre>
     </section>
 
@@ -162,12 +157,12 @@ WHERE {<br>
         <h2>UNION</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?entitatea ?izena<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;{ ?entitatea rdfs:label ?izena }<br>
 &nbsp;&nbsp;UNION<br>
 &nbsp;&nbsp;{ ?entitatea foaf:name ?izena }<br>
-}<br>
+}
         </pre>
     </section>
 
@@ -275,6 +270,7 @@ WHERE {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         DESCRIBE &lt;http://gipuzkoa.eus/resource/mikel-aranguren&gt;
         </pre>
+        <p>[Visual]</p>
     </section>
 
     <section class="slide">
@@ -293,11 +289,6 @@ INSERT DATA{<br>
 &nbsp;&nbsp;}<br>
 } 
         </pre>
-    </section>
-
-
-    <section class="slide">
-        <h2>GRAFOS</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT * <br>
 FROM &lt;http://example/bookStore&gt; # Probar sin URI grafo<br>
@@ -305,7 +296,9 @@ WHERE {<br>
 &nbsp;&nbsp;?s ?p  ?o .<br>
 }<br>
         </pre>
+        
     </section>
+
     
     <section class="slide">
         <h2>Funciones de agregación</h2>
