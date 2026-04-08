@@ -39,11 +39,26 @@
     <section class="slide">
         <h2>SPARQL</h2>
         <p><b>S</b>PARQL <b>P</b>rotocol and <b>R</b>DF <b>Q</b>uery <b>L</b>anguage</p>
-        <p><a href="https://www.w3.org/TR/sparql11-overview/">Recomendación oficial del W3C</a></p>
     </section>
 
     <section class="slide">
-        <h2>SPARQL</h2>
+        <h2>SPARQL Endpoints públicos</h2>
+        <p><a href="https://query.wikidata.org/">Wikidata Query Service</a></p>
+        <p><a href="https://dbpedia.org/sparql">DBpedia SPARQL</a></p>
+        <p><a href="https://sparql.uniprot.org/">UniProt SPARQL</a></p>
+        <p><a href="https://opendata.euskadi.eus/lod/-/linked-open-data/">Open Data Euskadi</a></p>
+        <p><a href="https://datos.gob.es/es/sparql">datos.gob.es</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Recursos para aprender SPARQL</h2>
+        <p><a href="https://www.learningsparql.com/">Learning SPARQL</a> (libro)</p>
+        <p><a href="https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial">Wikidata SPARQL Tutorial</a></p>
+        <p><a href="https://query.wikidata.org/">Wikidata Query Service</a> (con ejemplos)</p>
+    </section>
+
+    <section class="slide">
+        <h2>SPARQL W3C (=HTML, !=SQL)</h2>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/">SPARQL 1.1 Query Language</a>: consultas sobre grafos RDF en SPARQL<br>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-update-20130321/">SPARQL 1.1 Update</a>: modificar RDF mediante SPARQL<br>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/">SPARQL 1.1 Protocol</a>: ejecutar consultas SPARQL sobre HTTP<br>
@@ -51,17 +66,6 @@
         <a href="https://www.w3.org/TR/2013/REC-sparql11-service-description-20130321/">SPARQL 1.1 Service Description</a>: describir endpoints SPARQL en RDF<br>
         <a href="https://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321/">SPARQL 1.1 Federated Query</a>: combinar endpoints en una consulta SPARQL<br>
         <a href="https://graphdb.ontotext.com/documentation/10.8/w3c-specs.html#sparql-protocol-and-query-language">GraphDB SPARQL 1.1 compliance</a> (<strike>SPARQL 1.1 Service Description</strike>)
-    </section>
-
-    <!-- <section class="slide">
-        <h2>SPARQL</h2>
-        <p>Empresas que piden conocimiento de SPARQL: <a href="https://sparql.club/">https://sparql.club/</a>  (Datos de indeed.com y monster.com)</p>
-        <p>Libros: <a href="https://www.learningsparql.com/">https://www.learningsparql.com/</a></p>
-    </section> -->
-
-    <section class="slide">
-        <h1>SPARQL 1.1 Query Language</h1>
-        <p>Estándar del W3C (=HTML, !=SQL)</p>
     </section>
 
     <section class="slide">
@@ -77,6 +81,7 @@
     <section class="slide">
         <h2>Dataset museos</h2>
         <p style="font-size:10px;font-family: monospace">[ejemplos/Museoak.rdf]</p>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/./graphdb]</p>
         <p><img src="pictures-abd-01/Museoak-graph.png" alt="Grafo museos" width="70%"></p>
     </section>
 
@@ -120,14 +125,14 @@ WHERE {<br>
         <h2>OPTIONAL</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?langile ?bizilekua<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;# Tiene que ser una persona<br>
 &nbsp;&nbsp;?langile rdf:type foaf:person .<br>
-<br><br>
+<br>
 &nbsp;&nbsp;# Tiene que vivir en algun sitio<br>
 &nbsp;&nbsp;?langile gip_prop:bizilekua ?bizilekua<br>
-}<br>
+}
         </pre>
     </section>
 
@@ -135,16 +140,16 @@ WHERE {<br>
         <h2>OPTIONAL</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         SELECT ?langile ?bizilekua<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;# Tiene que ser una persona<br>
 &nbsp;&nbsp;?langile rdf:type foaf:person .<br>
-<br><br>
+<br>
 &nbsp;&nbsp;# Puede vivir en un sitio o no<br>
 &nbsp;&nbsp;OPTIONAL {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?langile gip_prop:bizilekua ?bizilekua<br>
 &nbsp;&nbsp;}<br>
-}<br>
+}
         </pre>
     </section>
 
@@ -152,12 +157,12 @@ WHERE {<br>
         <h2>UNION</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?entitatea ?izena<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;{ ?entitatea rdfs:label ?izena }<br>
 &nbsp;&nbsp;UNION<br>
 &nbsp;&nbsp;{ ?entitatea foaf:name ?izena }<br>
-}<br>
+}
         </pre>
     </section>
 
@@ -165,11 +170,11 @@ WHERE {<br>
         <h2>Ordenar resultados</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?pertsona ?izena<br>
-<br><br>
-WHERE {<br><br>
+<br>
+WHERE {<br>
 &nbsp;&nbsp;?pertsona foaf:name ?izena <br>
 }<br>
- <br><br>
+ <br>
 ORDER BY DESC (?izena) # Puede ser DESC o ASC
         </pre>
     </section>
@@ -177,11 +182,11 @@ ORDER BY DESC (?izena) # Puede ser DESC o ASC
     <section class="slide">
         <h2>Limitar resultados</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-        SELECT ?pertsona ?izena<br>
+        SELECT ?pertsona ?izena
 <br><br>
 WHERE {<br>
 &nbsp;&nbsp;?pertsona foaf:name ?izena <br>
-}<br>
+}<br><br>
 ORDER BY DESC (?izena) <br>
 LIMIT 3<br>
         </pre>
@@ -191,10 +196,10 @@ LIMIT 3<br>
         <h2>Paginación</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         SELECT ?pertsona ?izena<br>
-  <br><br>          
+  <br>         
 WHERE {<br>
 &nbsp;&nbsp;?pertsona foaf:name ?izena <br>
-}<br>
+}<br><br>
 ORDER BY DESC (?izena) <br>
 LIMIT 3<br>
 OFFSET 3 # OFFSET 6<br>
@@ -205,7 +210,7 @@ OFFSET 3 # OFFSET 6<br>
         <h2>Filtrar resultados</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         SELECT ?museoa ?langile_kop<br>
-<br><br> 
+<br>
 WHERE {<br>
 &nbsp;&nbsp;?museoa gip_prop:kopurua ?langile_kop .<br>
 &nbsp;&nbsp;FILTER (?langile_kop > "800"^^xsd:int)<br>
@@ -217,7 +222,7 @@ WHERE {<br>
         <h2>Filtrar resultados</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         SELECT ?langile ?izena<br>
-<br><br>
+<br>
 WHERE {<br>
 &nbsp;&nbsp;?langile foaf:name ?izena .<br>
 &nbsp;&nbsp;FILTER regex(?izena,'Mi.*')<br>
@@ -265,6 +270,7 @@ WHERE {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
         DESCRIBE &lt;http://gipuzkoa.eus/resource/mikel-aranguren&gt;
         </pre>
+        <p>[Visual]</p>
     </section>
 
     <section class="slide">
@@ -283,11 +289,6 @@ INSERT DATA{<br>
 &nbsp;&nbsp;}<br>
 } 
         </pre>
-    </section>
-
-
-    <section class="slide">
-        <h2>GRAFOS</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT * <br>
 FROM &lt;http://example/bookStore&gt; # Probar sin URI grafo<br>
@@ -295,7 +296,9 @@ WHERE {<br>
 &nbsp;&nbsp;?s ?p  ?o .<br>
 }<br>
         </pre>
+        
     </section>
+
     
     <section class="slide">
         <h2>Funciones de agregación</h2>
@@ -407,33 +410,12 @@ WHERE {<br>
         <p>Operadores: +, -, *, /</p>
     </section>
 
-    <!-- <section class="slide">
-        <h2>....</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-        SELECT ?price (?price * 1.21 AS ?priceWithVAT)
-WHERE {
-    ?item ex:price ?price
-}
-        </pre>
-    </section> -->
-
     <section class="slide">
         <h2>Funciones de fecha/hora</h2>
         <p>NOW(): fecha y hora actual</p>
         <p>YEAR / MONTH / DAY: extraer componentes</p>
         <p>HOURS / MINUTES / SECONDS: hora específica</p>
     </section>
-
-    <!-- <section class="slide">
-        <h2>....</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-        SELECT ?event ?date
-WHERE {
-    ?event ex:date ?date .
-    FILTER (YEAR(?date) = 2025)
-}
-        </pre>
-    </section> -->
 
     <section class="slide">
         <h2>VALUES</h2>
@@ -500,23 +482,10 @@ WHERE {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?person ?city<br>
 WHERE {<br>
-&nbsp;&nbsp;?person rdf:type foaf:person .<br>
-&nbsp;&nbsp;?person gov:worksFor/gip_prop:kokalekua ?city .<br>
+&nbsp;&nbsp;?person gov:worksFor/gip_prop:kokalekua ?city . # descomponer<br>
 }
         </pre>
     </section>
-
-    <!-- <section class="slide">
-        <h2>SPARQL UPDATE</h2>
-        <p>Operaciones de modificación de grafos</p>
-        <p>INSERT DATA: insertar triples directamente</p>
-        <p>DELETE DATA: eliminar triples específicos</p>
-        <p>DELETE/INSERT: basado en patrones WHERE</p>
-        <p>LOAD: cargar RDF desde URI</p>
-        <p>CLEAR: eliminar todo un grafo</p>
-        <p>CREATE / DROP: gestionar grafos</p>
-    </section> -->
-
 
     <section class="slide">
         <h1>SPARQL 1.1 Update</h1>
@@ -528,20 +497,20 @@ WHERE {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 DELETE DATA {<br>
 &nbsp;&nbsp;&lt;http://gipuzkoa.eus/resource/aitor-labajo&gt; <br>
-&nbsp;&nbsp;rdf:type foaf:person<br>
+&nbsp;&nbsp;rdf:type gip:hiritar<br>
 }<br>
 # DESCRIBE &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt;
         </pre>
     </section>
 
     <section class="slide">
-        <h2>DELETE</h2>
+        <h2>DELETE WHERE</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-DELETE {?person rdf:type foaf:person}<br>
+DELETE {?person rdf:type gip:hiritar}<br>
 WHERE {?person foaf:name ?name}<br>
 <br>
 #SELECT * WHERE {<br>
-#&nbsp;&nbsp;?person rdf:type foaf:person<br>
+#&nbsp;&nbsp;?person rdf:type gip:hiritar<br>
 #}
         </pre>
     </section>
@@ -550,14 +519,14 @@ WHERE {?person foaf:name ?name}<br>
         <h2>INSERT DATA</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 INSERT DATA {<br>
-&nbsp;&nbsp;gip:aitor-labajo rdf:type gip:hiritar<br>
+&nbsp;&nbsp;gip:aitor-labajo rdf:type foaf:person<br>
 }<br>
 # DESCRIBE gip:aitor-labajo
         </pre>
     </section>
 
     <section class="slide">
-        <h2>INSERT</h2>
+        <h2>INSERT WHERE</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 INSERT {<br>
 &nbsp;&nbsp;gip:jon-alfaro rdf:type ?type .<br>
@@ -597,6 +566,7 @@ WHERE {<br>
 
     <section class="slide">
         <h2>LOAD</h2>
+        (=HTML, !=SQL)
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 LOAD &lt;https://rest.uniprot.org/uniprotkb/P01308.rdf&gt;<br>
 INTO GRAPH &lt;urn:uniprot&gt;
@@ -608,28 +578,20 @@ INTO GRAPH &lt;urn:uniprot&gt;
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 CLEAR GRAPH &lt;urn:uniprot&gt;<br>
 <br>
-CLEAR DEFAULT<br>
+# CLEAR DEFAULT<br>
 <br>
-CLEAR ALL
+# CLEAR ALL
         </pre>
     </section>
 
-    <!-- <section class="slide">
-        <h2>CREATE</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-CREATE GRAPH &lt;http://example.org/newGraph&gt;<br>
-<br>
-# Crear solo si no existe:<br>
-CREATE SILENT GRAPH &lt;http://example.org/newGraph&gt;
-        </pre>
-    </section> -->
+
 
     <section class="slide">
         <h2>DROP</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 DROP GRAPH &lt;http://example.org/myGraph&gt;<br>
 <br>
-DROP ALL
+# DROP ALL
         </pre>
     </section>
 
@@ -651,89 +613,7 @@ TO &lt;urn:backup&gt;
         </pre>
     </section>
 
-    <!-- <section class="slide">
-        <h2>MOVE</h2>
-        <p>Mover el contenido de un grafo a otro (borra el origen):</p>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-MOVE &lt;http://example.org/sourceGraph&gt;<br>
-TO &lt;http://example.org/targetGraph&gt;<br>
-<br>
-# Mover del grafo por defecto:<br>
-MOVE DEFAULT<br>
-TO &lt;http://example.org/newLocation&gt;
-        </pre>
-    </section>
-
-    <section class="slide">
-        <h2>ADD</h2>
-        <p>Añadir el contenido de un grafo a otro (sin borrar el origen):</p>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-ADD &lt;http://example.org/sourceGraph&gt;<br>
-TO &lt;http://example.org/targetGraph&gt;<br>
-<br>
-# Añadir al grafo por defecto:<br>
-ADD &lt;http://example.org/toMerge&gt;<br>
-TO DEFAULT
-        </pre>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>Graph Management: Operaciones Conjuntas</h2>
-        <p>Ejemplo: Crear, cargar, copiar y limpiar grafos:</p>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-# 1. Crear nuevo grafo<br>
-CREATE GRAPH &lt;http://example.org/staging&gt;;<br>
-<br>
-# 2. Cargar datos<br>
-LOAD &lt;http://example.org/data.rdf&gt;<br>
-INTO GRAPH &lt;http://example.org/staging&gt;;<br>
-<br>
-# 3. Copiar al destino<br>
-COPY &lt;http://example.org/staging&gt;<br>
-TO &lt;http://example.org/production&gt;;<br>
-<br>
-# 4. Limpiar staging<br>
-CLEAR GRAPH &lt;http://example.org/staging&gt;
-        </pre>
-    </section> -->
-
-
-
-       <!-- <section class="slide">
-        <h2>Cómo lograr un UPSERT en triplestores</h2>
-        <ol>
-            <li>Carga el delta en un grafo de “staging”.</li>
-            <li>Ejecuta SPARQL Update: DELETE de valores antiguos + INSERT de los nuevos.</li>
-        </ol>
-        <p>Patrón común: GraphDB, Fuseki/Jena, Virtuoso, Stardog, etc.</p>
-    </section>
-
-    <section class="slide">
-        <h2>Ejemplo: DELETE/INSERT dirigido</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-PREFIX ex: <http://www.example.com/>
-
-# 1) Delta en grafo de staging con el nuevo color
-# GRAPH &lt;staging&gt;:  ex:mi_mascota ex:color "negro"
-
-# 2) Update dirigido sobre el grafo objetivo
-WITH &lt;mascotas&gt;
-DELETE { ?s ex:color ?old }
-INSERT { ?s ex:color "negro" }
-WHERE  {
-  GRAPH &lt;staging&gt; { ?s ex:color "negro" }
-  OPTIONAL { ?s ex:color ?old }
-  FILTER( !bound(?old) || ?old != "negro" )
-}
-        </pre>
-        <p>Idea: borrar valores previos de los sujetos afectados e insertar el nuevo.</p>
-
-        Como detectar que hay que actualizar? En SQL se asume que cada fila tiene un solo valor
-        para cada columna, pero en RDF un sujeto puede tener múltiples valores para una propiedad
-        OWL functional property para detectar
-        SHACL para detectar
-        RDF-star para marcar el triple como de "valor unico"
-    </section> -->
+    
 
      <section class="slide">
         <h1>SPARQL 1.1 Protocol</h1>
@@ -765,16 +645,16 @@ WHERE  {
         <p>Proporciona metadatos sobre endpoints SPARQL para ayudar a los clientes:</p>
         <ul>
             <li><b>Descubrir capacidades</b>: ¿Qué funcionalidades soporta? (agregaciones, property paths, negación, etc.)</li>
-            <li><b>Encontrar datasets disponibles</b>: ¿Qué grafos con nombre y grafo por defecto están disponibles?</li>
-            <li><b>Determinar formatos soportados</b>: JSON, XML, CSV, etc.</li>
-            <li><b>Ver regímenes de inferencia</b>: RDFS, OWL, etc.</li>
+            <li><b>Encontrar datasets disponibles</b>: ¿Qué Named Graphs están disponibles?</li>
+            <li><b>Determinar formatos soportados</b>: JSON, XML, CSV, ...</li>
+            <li><b>Ver regímenes de inferencia</b>: RDFS, OWL, ...</li>
         </ul>
     </section>
 
     <section class="slide">
         <h2>SPARQL 1.1 Service Description</h2>
         <p><code>curl -H "Accept: text/turtle" https://dbpedia.org/sparql/</code></p>
-        <p><p style="font-size:10px;font-family: monospace">[ejemplos/dbpedia_service_description.ttl]</p></p>
+        <p style="font-size:10px;font-family: monospace">[ejemplos/dbpedia_service_description.ttl]</p>
     </section>
 
     <section class="slide">
@@ -794,23 +674,22 @@ WHERE  {
         <h2>Consultas federadas</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 INSERT DATA {<br>
-&nbsp;&nbsp;&lt;http://gipuzkoa.eus/resource/bilbo&gt; owl:sameAs &lt;http://www.wikidata.org/entity/Q8692&gt; . <br>
+&nbsp;&nbsp;&lt;http://gipuzkoa.eus/resource/bilbo&gt; owl:sameAs &lt;http://dbpedia.org/resource/Bilbao&gt; . <br>
 }
         </pre>
-    </section>
 
-    <section class="slide">
-        <h2>Consultas federadas</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+                <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?pop <br>
 WHERE {<br>
 &nbsp;&nbsp;gip:bilbo owl:sameAs ?town . <br>
-&nbsp;&nbsp;SERVICE &lt;https://query.wikidata.org/sparql&gt; { <br>
-&nbsp;&nbsp;&nbsp;&nbsp;?town <http://www.wikidata.org/prop/direct/P1082> ?pop . <br>
+&nbsp;&nbsp;SERVICE &lt;https://dbpedia.org/sparql/&gt; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;?town &lt;http://dbpedia.org/ontology/populationTotal&gt; ?pop . <br>
 &nbsp;&nbsp;} <br>
 } 
         </pre>
     </section>
+
+
 
     <section class="slide">
         <h1>SPARQL 1.1 Graph Store HTTP Protocol</h1>
@@ -881,133 +760,21 @@ WHERE {<br>
         </table>
     </section>
 
-    <!-- <section class="slide">
-        <h2>Graph Store HTTP Protocol: Caso de uso</h2>
-        <p><b>Escenario</b>: Mantener versiones de catálogos de datos</p>
-        <pre style="font-size:12px; line-height:1.3;"><code># Descargar versión actual
-curl "http://localhost:7200/sparql/graph?graph=http://datos.org/v1" > v1.ttl
-
-# Actualizar a nueva versión (reemplazar completamente)
-curl -X PUT -H "Content-Type: text/turtle" -d @v2.ttl \
-  "http://localhost:7200/sparql/graph?graph=http://datos.org/v2"
-
-# Mantener ambas versiones disponibles simultáneamente
-# Las aplicaciones pueden elegir qué versión consultar</code></pre>
-    </section>
-
-    <section class="slide">
-        <h2>Graph Store: Activación en GraphDB</h2>
-        <p>GraphDB activa el Graph Store Protocol por defecto en:</p>
-        <p><code>http://localhost:7200/repositories/&lt;repositorio&gt;/statements</code></p>
-        <p>Verificar configuración en GraphDB Workbench:</p>
-        <ul>
-            <li>Administration → Repositories → Edit</li>
-            <li>Buscar opción "Enable update operations" o "Enable SPARQL Update"</li>
-            <li>Asegurar que el usuario tiene permisos de escritura</li>
-        </ul>
-    </section> -->
-
-    <section class="slide">
-        <h2>SPARQL Performance</h2>
-        <p>Usar LIMIT para pruebas y desarrollo</p>
-        <p>Poner filtros más restrictivos primero</p>
-        <p>Evitar OPTIONAL innecesarios (costosos)</p>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL Performance</h2>
-        <p>Usar FILTER lo más pronto posible en WHERE</p>
-        <p>Aprovechar índices: triple patterns específicos</p>
-        <p>Evitar regex complejos si es posible</p>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL Debugging</h2>
-        <p>Construir query incrementalmente</p>
-        <p>Usar SELECT * para ver todas las variables</p>
-        <p>Comentar cláusulas (#)</p>
-        <p>LIMIT pequeño durante desarrollo</p>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL Debugging</h2>
-        <p>Explicar plan de ejecución (Específico de producto): <a href="https://graphdb.ontotext.com/documentation/10.8/explain-plan.html">GraphDB Explain Plan</a></p>
-                <p><pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
-SELECT * FROM onto:explain<br>
-WHERE {<br>
-&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
-&nbsp;&nbsp;MINUS {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?museo gip_prop:kopurua ?obras .<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FILTER (?obras > 300)<br>
-&nbsp;&nbsp;}<br>
-}<br>
-        </pre></p>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL y razonamiento</h2>
-        <p>Razonamiento en tiempo de carga: materialización</p>
-        <p>Razonamiento en tiempo de consulta: inferencia dinámica</p>
-        <p>GraphDB: soporta ambos modos</p>
-        <p>SPARQL puede consultar triples inferidos por OWL/RDFS</p>
-    </section>
-
-
-    <!-- <section class="slide">
-        <h2>SPARQL GeoSPARQL</h2>
-        <p>Extensión para consultas geoespaciales</p>
-        <p>Funciones: geof:distance, geof:within, geof:intersects</p>
-        <pre><code>SELECT ?place ?location WHERE {
-    ?place geo:hasGeometry/geo:asWKT ?location .
-    FILTER(geof:distance(?location, "POINT(2.17 41.39)"^^geo:wktLiteral) < 10)
-}</code></pre>
-        <p>Encuentra lugares a menos de 10km de Barcelona</p>
-    </section>
-
-    <section class="slide">
-        <h2>SPARQL Full-Text Search</h2>
-        <p>Extensión para búsqueda de texto (no estándar)</p>
-        <p>GraphDB: <code>PREFIX luc: &lt;http://www.ontotext.com/connectors/lucene#&gt;</code></p>
-        <pre><code>SELECT ?person ?name ?score WHERE {
-    ?search a luc:index ;
-            luc:query "Mikel*" ;
-            luc:entities ?person ;
-            luc:score ?score .
-    ?person foaf:name ?name
-}</code></pre>
-    </section> -->
-
-    <section class="slide">
-        <h2>SPARQL vs SQL</h2>
-        <p>Similitudes: SELECT, WHERE, FILTER (WHERE), ORDER BY, LIMIT</p>
-        <p>Diferencias:
-            <ul>
-                <li>SPARQL: patrón de grafos; SQL: tablas relacionales</li>
-                <li>SPARQL: datos distribuidos, federación; SQL: local</li>
-                <li>SPARQL: esquema flexible; SQL: esquema rígido</li>
-                <li>SPARQL: URIs globales; SQL: IDs locales</li>
-            </ul>
-        </p>
-    </section>
-
     <section class="slide">
         <h2>GraphDB Ontop: Virtualización de datos relacionales</h2>
         <p><a href="https://graphdb.ontotext.com/documentation/10.8/ontop.html">Ontop</a> es un plugin de GraphDB que permite consultar bases de datos relacionales (SQL) mediante SPARQL</p>
         <p>Los datos <strong>no se copian</strong> al triplestore: se acceden en tiempo real (virtualización)</p>
-        <p>Ontop traduce las consultas SPARQL a SQL automáticamente</p>
+        <p>Ontop traduce las consultas SPARQL a SQL automáticamente: El usuario consulta con SPARQL sin saber que los datos están en SQL</p>
     </section>
 
     <section class="slide">
         <h2>GraphDB Ontop: Arquitectura</h2>
-        <p>Componentes necesarios:</p>
         <ul>
             <li><strong>Base de datos relacional</strong>: la fuente de datos SQL existente</li>
             <li><strong>Ontología</strong>: define el vocabulario RDF (clases y propiedades)</li>
             <li><strong>Mapping R2RML</strong>: mapeo entre tablas/columnas SQL y el grafo RDF</li>
             <li><strong>Ontop/GraphDB</strong>: motor que traduce SPARQL → SQL en tiempo real</li>
         </ul>
-        <p>El usuario consulta con SPARQL sin saber que los datos están en SQL</p>
     </section>
 
     <section class="slide">
@@ -1054,34 +821,15 @@ WHERE {<br>
 
     <section class="slide">
         <h2>R2RML: Resultado del mapeo</h2>
-        <!-- <pre><code>ex:empleado/1 a ex:Empleado ;
-  ex:nombre "Ana" ;
-  ex:departamento ex:dept/10 .
-ex:empleado/2 a ex:Empleado ;
-  ex:nombre "Luis" ;
-  ex:departamento ex:dept/20 .</code></pre> -->
         <p><img src="pictures-abd-01/r2rml_result.svg" alt="R2RML Grafo RDF" width="60%"></p>
     </section>
 
-    <!-- <section class="slide">
-        <h2>GraphDB Ontop: Consulta SPARQL</h2>
-        <pre><code>PREFIX ex: &lt;http://ejemplo.org/&gt;
-SELECT ?nombre ?dept WHERE {
-  ?emp a ex:Empleado ;
-       ex:nombre ?nombre ;
-       ex:departamento ?dept .
-}</code></pre>
-        <p>Ontop traduce internamente esta consulta a:</p>
-        <pre><code>SELECT nombre, dept_id
-FROM empleados</code></pre>
-    </section> -->
 
     <section class="slide">
         <h2>GraphDB Ontop: Ventajas</h2>
         <ul>
             <li>No se duplican datos: los datos siguen en la BD relacional</li>
             <li>Datos siempre actualizados (acceso en tiempo real)</li>
-            <li>Se puede combinar con datos RDF nativos del triplestore</li>
             <li>Estándar W3C (R2RML): portable entre motores</li>
         </ul>
     </section>
@@ -1094,22 +842,161 @@ FROM empleados</code></pre>
         </ul>
     </section>
 
+
     <section class="slide">
-        <h2>SPARQL Endpoints públicos</h2>
-        <p><a href="https://query.wikidata.org/">Wikidata Query Service</a></p>
-        <p><a href="https://dbpedia.org/sparql">DBpedia SPARQL</a></p>
-        <p><a href="https://sparql.uniprot.org/">UniProt SPARQL</a></p>
-        <p><a href="https://opendata.euskadi.eus/lod/-/linked-open-data/">Open Data Euskadi</a></p>
-        <p><a href="https://datos.gob.es/es/sparql">datos.gob.es</a></p>
+        <h2>GraphDB Explain Plan</h2>
+        <p>GraphDB join flow: evaluar joins entre patrones con variables compartidas (SPARQL: inner join implicito)</p>
+        <p>GraphDB <a href="https://graphdb.ontotext.com/documentation/10.8/explain-plan.html">Explain Plan</a>: analizar el orden de evaluación optimizado</p>
+        <p>Se activa añadiendo <code>FROM onto:explain</code> a la consulta</p>
+        <p>(<code>onto:measure</code> provee los tiempos de ejecución)</p>
+    </section>
+
+    
+            <section class="slide">
+        <h2>GraphDB Explain Plan</h2>
+                <p><pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
+SELECT * FROM onto:explain # onto:measure<br>
+WHERE {<br>
+&nbsp;&nbsp;?s ?p ?o.<br>
+}<br>
+        </pre></p>
+
+        <p><img src="pictures-abd-01/explain_plan.png" alt="GraphDB Explain Plan" width="70%"></p>
+    </section>
+    
+    <section class="slide">
+        <h2>GraphDB Explain Plan</h2>
+        <p><b>Optimization group</b>: grupo de triples, ordenados segun optimización</p>
+        <p><b>Collection size</b>: triples que coinciden con el patrón</p>
+        <p><b>Predicate collection size</b>: total de triples en el repositorio que tienen este predicado</p>
+        <p><b>Unique subjects</b>: número de sujetos únicos que coinciden con el patrón</p>
     </section>
 
     <section class="slide">
-        <h2>Recursos para aprender SPARQL</h2>
-        <p><a href="https://www.learningsparql.com/">Learning SPARQL (libro)</a></p>
-        <p><a href="https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial">Wikidata SPARQL Tutorial</a></p>
-        <p><a href="https://query.wikidata.org/">Wikidata Query Service</a> (con ejemplos)</p>
+        <h2>GraphDB Explain Plan</h2>
+        <p><b>Unique objects</b>: número de objetos únicos que coinciden con el patrón</p>
+        <p><b>Current complexity</b>: la complejidad (el número de búsquedas atómicas en el índice) que la base de datos necesitará realizar para ese patrón</p>
+        <p><b>Estimated number of iterations</b>: las iteraciones que se ejecutarán para este grupo</p>
+
     </section>
 
+    <section class="slide">
+        <h2>GraphDB Explain Plan</h2>
+        <p>Orden de triples dentro de grupo por selectividad</p>
+        <p>Selectividad de un patrón: collection size (Overload de predicado), joins (sujetos/objetos unicos), variables resueltas en patrón anterior</p>
+
+    </section>
+    
+        <section class="slide">
+        <h2>Explain Plan</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;<br>
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;<br>
+PREFIX gov: &lt;http://vocab.data.gov/def/drm#&gt;<br>
+<br>
+SELECT * FROM onto:explain<br>
+WHERE {<br>
+&nbsp;&nbsp;?person rdf:type foaf:person .<br>
+&nbsp;&nbsp;?person gov:worksFor ?museo .<br>
+&nbsp;&nbsp;?person foaf:name ?nombre .<br>
+}<br>
+        </pre>
+        <p style="font-size:10px;font-family: monospace">[INSERT {?person rdf:type foaf:person . } WHERE { ?person gov:worksFor ?museo . ?person foaf:name ?nombre . }]</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explain Plan: Orden de patrones</h2>
+        <p>foaf:name: collection size 13 (el más bajo) pero además predicate collection size también 13: foaf:name solo se usa en esos triples, muy selectivo</p>
+        <p>gov:worksFor collection size 16, pero ?person ya esta resuelto</p>
+        <p>rdf:type collection size 54, con 45 sujeto unicos y objetos unicos</p>
+        <p>Complejidad = collection size / selectividad (Incluyendo variables resueltas)</p>
+    </section>
+    
+    <section class="slide">
+        <h2>GraphDB Explain Plan</h2>
+        <p>Triples dentro de grupo: se optimizan automáticamente</p>
+        <p>Orden de grupos: no se optimiza automáticamente, se evalúan en el orden en que aparecen en la consulta (el usuario debe optimizarlos)</p>
+        <p>Los grupos aparecen cuando se rompe el flujo de joins</p>
+    </section>
+
+    <section class="slide">
+        <h2>Rompen el flujo de joins</h2>
+        <p>OPTIONAL: hay que resolver el left join completo primero y luego la parte opcional</p>
+        <p>UNION: se evalúan independientemente y luego se combinan</p>
+        <p>sub-SELECT: siempre se evalúa primero</p>
+        <p>FILTER, BIND, VALUES: dependen de variables anteriores</p>
+    </section>
+
+    <section class="slide">
+        <h2>Rompen el flujo de joins</h2>
+        <p>Property paths con * o +: expansión recursiva</p>
+        <p>Patrones desconectados sin variables compartidas</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explain Plan: FILTER temprano vs tardío</h2>
+        <p>Consulta A: FILTER al final (ineficiente)</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT * FROM onto:explain<br>
+WHERE {<br>
+&nbsp;&nbsp;?person rdf:type foaf:person .<br>
+&nbsp;&nbsp;?person gov:worksFor ?museo .<br>
+&nbsp;&nbsp;?person foaf:name ?nombre .<br>
+&nbsp;&nbsp;FILTER regex(?nombre, "Mi.*")<br>
+}<br>
+        </pre>
+        <p>Primero genera TODAS las combinaciones, después filtra</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explain Plan: FILTER temprano vs tardío</h2>
+        <p>Consulta B: FILTER justo después de ?nombre (eficiente)</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT * FROM onto:explain<br>
+WHERE {<br>
+&nbsp;&nbsp;?person foaf:name ?nombre .<br>
+&nbsp;&nbsp;FILTER regex(?nombre, "Mi.*")<br>
+&nbsp;&nbsp;?person rdf:type foaf:person .<br>
+&nbsp;&nbsp;?person gov:worksFor ?museo .<br>
+}<br>
+        </pre>
+        <p>Filtra pronto → menos resultados intermedios → menos joins</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explain Plan: Impacto de OPTIONAL</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT * FROM onto:explain<br>
+WHERE {<br>
+&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
+&nbsp;&nbsp;?museo rdfs:label ?nombre .<br>
+&nbsp;&nbsp;OPTIONAL {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?museo gip_prop:kopurua ?obras .<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;OPTIONAL {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?museo gip_prop:kokalekua ?ciudad .<br>
+&nbsp;&nbsp;}<br>
+}<br>
+        </pre>
+        <p>Cada OPTIONAL añade un Left Join → más costoso</p>
+    </section>
+
+    <section class="slide">
+        <h2>Explain Plan: Evitar OPTIONAL innecesario</h2>
+        <p>Si sabemos que todos los museos tienen kokalekua y kopurua:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+SELECT * FROM onto:explain<br>
+WHERE {<br>
+&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
+&nbsp;&nbsp;?museo rdfs:label ?nombre .<br>
+&nbsp;&nbsp;?museo gip_prop:kopurua ?obras .<br>
+&nbsp;&nbsp;?museo gip_prop:kokalekua ?ciudad .<br>
+}<br>
+        </pre>
+        <p>Sin OPTIONAL: Inner Join, más eficiente</p>
+    </section>
 
     <!-- FOOTER -->
 
