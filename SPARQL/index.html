@@ -482,8 +482,7 @@ WHERE {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 SELECT ?person ?city<br>
 WHERE {<br>
-&nbsp;&nbsp;?person rdf:type foaf:person .<br>
-&nbsp;&nbsp;?person gov:worksFor/gip_prop:kokalekua ?city .<br>
+&nbsp;&nbsp;?person gov:worksFor/gip_prop:kokalekua ?city . # descomponer<br>
 }
         </pre>
     </section>
@@ -498,7 +497,7 @@ WHERE {<br>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 DELETE DATA {<br>
 &nbsp;&nbsp;&lt;http://gipuzkoa.eus/resource/aitor-labajo&gt; <br>
-&nbsp;&nbsp;rdf:type foaf:person<br>
+&nbsp;&nbsp;rdf:type gip:hiritar<br>
 }<br>
 # DESCRIBE &lt;http://gipuzkoa.eus/resource/aitor-labajo&gt;
         </pre>
@@ -507,11 +506,11 @@ DELETE DATA {<br>
     <section class="slide">
         <h2>DELETE WHERE</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-DELETE {?person rdf:type foaf:person}<br>
+DELETE {?person rdf:type gip:hiritar}<br>
 WHERE {?person foaf:name ?name}<br>
 <br>
 #SELECT * WHERE {<br>
-#&nbsp;&nbsp;?person rdf:type foaf:person<br>
+#&nbsp;&nbsp;?person rdf:type gip:hiritar<br>
 #}
         </pre>
     </section>
@@ -520,7 +519,7 @@ WHERE {?person foaf:name ?name}<br>
         <h2>INSERT DATA</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 INSERT DATA {<br>
-&nbsp;&nbsp;gip:aitor-labajo rdf:type gip:hiritar<br>
+&nbsp;&nbsp;gip:aitor-labajo rdf:type foaf:person<br>
 }<br>
 # DESCRIBE gip:aitor-labajo
         </pre>
@@ -850,7 +849,6 @@ WHERE {<br>
         <p>GraphDB <a href="https://graphdb.ontotext.com/documentation/10.8/explain-plan.html">Explain Plan</a>: analizar el orden de evaluación optimizado</p>
         <p>Se activa añadiendo <code>FROM onto:explain</code> a la consulta</p>
         <p>(<code>onto:measure</code> provee los tiempos de ejecución)</p>
-        <!-- <p>Requiere: <code>PREFIX onto: &lt;http://www.ontotext.com/&gt;</code></p> -->
     </section>
 
     
@@ -905,6 +903,7 @@ WHERE {<br>
 &nbsp;&nbsp;?person foaf:name ?nombre .<br>
 }<br>
         </pre>
+        <p style="font-size:10px;font-family: monospace">[INSERT {?person rdf:type foaf:person . } WHERE { ?person gov:worksFor ?museo . ?person foaf:name ?nombre . }]</p>
     </section>
 
     <section class="slide">
