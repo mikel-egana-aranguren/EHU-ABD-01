@@ -108,15 +108,12 @@
 
         <section class="slide">
         <h2>Open World Assumption (OWA)</h2>
-        <p>La ausencia de información no implica falsedad</p>
-        <p>Si no sabemos que Mikel vive en Bilbao, no asumimos que vive en otro sitio</p>
-        <p>Diferente de bases de datos relacionales (Closed World)</p>
         <p>Consecuencia: las restricciones universales no son restrictivas por defecto</p>
         <p>Para "cerrar" el mundo: usar propiedades funcionales, closure axioms, SHACL</p>
     </section>
 
     <section class="slide">
-        <h2>No Unique Name Assumption (NUNA)</h2>
+        <h2>No Unique Name Assumption</h2>
         <p>Dos URIs diferentes pueden referirse a la misma entidad</p>
         <p>ex:Bilbao y ex:Bilbo pueden ser owl:sameAs</p>
         <p>Útil para integración de datos de diferentes fuentes</p>
@@ -133,17 +130,17 @@
 
     <section class="slide">
         <h2>Entidades</h2>
-        <p><b>Individuos</b> (individuals): objetos concretos (ej: Juan, María)</p>
-        <p><b>Clases</b> (classes): categorías que agrupan individuos (ej: Persona, Mujer)</p>
-        <p><b>Propiedades</b> (properties): relaciones entre entidades</p>
+        <p><b>Individuos</b> (individuals): objetos concretos (Juan, María, ...)</p>
+        <p><b>Clases</b> (classes): categorías que agrupan individuos (Persona, Mujer, ...)</p>
+        <p><b>Propiedades</b> (properties): relaciones entre entidades (tieneEdad, tienePareja, ...)</p>
     </section>
 
     <section class="slide">
         <h2>Propiedades</h2>
         <ul>
-            <li><b>Object properties</b>: relacionan objeto con objeto (ej: tienePareja)</li>
-            <li><b>Datatype properties</b>: asignan valores de datos a objetos (ej: tieneEdad)</li>
-            <li><b>Annotation properties</b>: metadatos sobre la ontología (ej: rdfs:comment)</li>
+            <li><b>Object properties</b>: relacionan objeto con objeto (tienePareja, ...)</li>
+            <li><b>Datatype properties</b>: asignan valores de datos a objetos (tieneEdad, ...)</li>
+            <li><b>Annotation properties</b>: metadatos que no son parte del modelo (rdfs:comment, rdfs:label, ...)</li>
         </ul>
     </section>
 
@@ -159,7 +156,7 @@
         <p><b>Functional-Style Syntax</b>: para especificación e implementación</p>
         <p><b>RDF/XML</b>: obligatoria para todas las herramientas OWL 2</p>
         <p><b>Turtle</b>: serialización RDF legible</p>
-        <p><b>Manchester Syntax</b>: diseñada para no-lógicos</p>
+        <p><b>Manchester OWL Syntax</b>: para humanos</p>
         <p><b>OWL/XML</b>: basada en XML Schema</p>
     </section>
 
@@ -205,11 +202,12 @@
 :Woman owl:disjointWith :Man .
         </pre>
         <p>Si María es Mujer, el razonador infiere que María <b>no</b> es Hombre</p>
+        <p>[Activar razonador; inconsistente; explain]</p>
     </section>
 
     <section class="slide">
         <h2>Object Properties</h2>
-        <p>Relacionan individuos entre sí:</p>
+        <p>Relacionan individuos entre sí (Positiva o negativa):</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 :Jon rdf:type owl:NamedIndividual ;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;:pareja :Mary .<br><br>
@@ -220,6 +218,7 @@
 &nbsp;&nbsp;owl:targetIndividual :Mary<br>
  ] .
         </pre>
+        <p>[Activar razonador]</p>
     </section>
 
     <section class="slide">
@@ -229,6 +228,7 @@
         </pre>
         <p>Si B es pareja de A → B tiene relacion con A</p>
         <p>(La relación inversa no es necesariamente cierta)</p>
+        <p>[Activar razonador]</p>
     </section>
 
     <section class="slide">
@@ -238,7 +238,13 @@
 :tieneHijo rdfs:domain :persona .<br>
 :tieneHijo rdfs:range :menor .
         </pre>
-        <p>Si "Pedro tieneHijo Maria" → Pedro es Persona, Maria es menor</p>
+        <p>Si "Pedro tieneHijo Mikel (Clase adulto)" → inferencia?</p>
+    </section>
+
+    <section class="slide">
+        <h2>Domain y Range</h2>
+        <p>Adulto disjointWith menor → inferencia?</p>
+        <p>Si "Pedro tieneHijo Maria" → inferencia?</p>
         <p>⚠ Domain/Range <b>no son restricciones</b>, son <b>axiomas de inferencia</b></p>
     </section>
 
