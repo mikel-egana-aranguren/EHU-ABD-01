@@ -761,31 +761,21 @@ WHERE {<br>
         </table>
     </section>
 
-
-
-
-
-
-
-
-
-    <!-- <section class="slide">
+    <section class="slide">
         <h2>GraphDB Ontop: Virtualización de datos relacionales</h2>
         <p><a href="https://graphdb.ontotext.com/documentation/10.8/ontop.html">Ontop</a> es un plugin de GraphDB que permite consultar bases de datos relacionales (SQL) mediante SPARQL</p>
         <p>Los datos <strong>no se copian</strong> al triplestore: se acceden en tiempo real (virtualización)</p>
-        <p>Ontop traduce las consultas SPARQL a SQL automáticamente</p>
+        <p>Ontop traduce las consultas SPARQL a SQL automáticamente: El usuario consulta con SPARQL sin saber que los datos están en SQL</p>
     </section>
 
     <section class="slide">
         <h2>GraphDB Ontop: Arquitectura</h2>
-        <p>Componentes necesarios:</p>
         <ul>
             <li><strong>Base de datos relacional</strong>: la fuente de datos SQL existente</li>
             <li><strong>Ontología</strong>: define el vocabulario RDF (clases y propiedades)</li>
             <li><strong>Mapping R2RML</strong>: mapeo entre tablas/columnas SQL y el grafo RDF</li>
             <li><strong>Ontop/GraphDB</strong>: motor que traduce SPARQL → SQL en tiempo real</li>
         </ul>
-        <p>El usuario consulta con SPARQL sin saber que los datos están en SQL</p>
     </section>
 
     <section class="slide">
@@ -841,7 +831,6 @@ WHERE {<br>
         <ul>
             <li>No se duplican datos: los datos siguen en la BD relacional</li>
             <li>Datos siempre actualizados (acceso en tiempo real)</li>
-            <li>Se puede combinar con datos RDF nativos del triplestore</li>
             <li>Estándar W3C (R2RML): portable entre motores</li>
         </ul>
     </section>
@@ -852,25 +841,16 @@ WHERE {<br>
             <li>Rendimiento depende de la BD relacional subyacente</li>
             <li>No todas las funciones SPARQL tienen traducción directa a SQL</li>
         </ul>
-    </section> -->
+    </section>
 
 
-
-
-
-
-
-
-
-
-
-    <!-- <section class="slide">
+    <section class="slide">
         <h2>GraphDB Explain Plan</h2>
-        <p>GraphDB ofrece un <a href="https://graphdb.ontotext.com/documentation/10.8/explain-plan.html">plan de ejecución</a> para analizar consultas SPARQL</p>
-        <p>Similar al EXPLAIN de SQL: muestra el orden de evaluación interna</p>
+        <p>GraphDB join flow: evaluar joins entre patrones con variables compartidas (SPARQL: inner join implicito)</p>
+        <p>GraphDB <a href="https://graphdb.ontotext.com/documentation/10.8/explain-plan.html">Explain Plan</a>: analizar el orden de evaluación optimizado</p>
         <p>Se activa añadiendo <code>FROM onto:explain</code> a la consulta</p>
         <p>(<code>onto:measure</code> provee los tiempos de ejecución)</p>
-        <p>Requiere: <code>PREFIX onto: &lt;http://www.ontotext.com/&gt;</code></p>
+        <!-- <p>Requiere: <code>PREFIX onto: &lt;http://www.ontotext.com/&gt;</code></p> -->
     </section>
 
     
@@ -878,7 +858,7 @@ WHERE {<br>
         <h2>GraphDB Explain Plan</h2>
                 <p><pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
-SELECT * FROM onto:explain<br>
+SELECT * FROM onto:explain # onto:measure<br>
 WHERE {<br>
 &nbsp;&nbsp;?s ?p ?o.<br>
 }<br>
@@ -889,7 +869,7 @@ WHERE {<br>
     
     <section class="slide">
         <h2>GraphDB Explain Plan</h2>
-        <p><b>Optimization group</b>: grupo de triples</p>
+        <p><b>Optimization group</b>: grupo de triples, ordenados segun optimización</p>
         <p><b>Collection size</b>: triples que coinciden con el patrón</p>
         <p><b>Predicate collection size</b>: total de triples en el repositorio que tienen este predicado</p>
         <p><b>Unique subjects</b>: número de sujetos únicos que coinciden con el patrón</p>
@@ -898,51 +878,20 @@ WHERE {<br>
     <section class="slide">
         <h2>GraphDB Explain Plan</h2>
         <p><b>Unique objects</b>: número de objetos únicos que coinciden con el patrón</p>
-        <p><b>Current complexity</b>: la complejidad (el número de búsquedas atómicas en el índice) que la base de datos necesitará realizar</p>
-        <p><b>ESTIMATED NUMBER OF ITERATIONS</b>: las iteraciones que se ejecutarán para este grupo</p>
+        <p><b>Current complexity</b>: la complejidad (el número de búsquedas atómicas en el índice) que la base de datos necesitará realizar para ese patrón</p>
+        <p><b>Estimated number of iterations</b>: las iteraciones que se ejecutarán para este grupo</p>
+
     </section>
-    
-    
-    
+
     <section class="slide">
         <h2>GraphDB Explain Plan</h2>
+        <p>Orden de triples dentro de grupo por selectividad</p>
+        <p>Selectividad de un patrón: collection size (Overload de predicado), joins (sujetos/objetos unicos), variables resueltas en patrón anterior</p>
+
     </section>
-
-
-
-
-
-
-
-
+    
         <section class="slide">
-        <h2>GraphDB Explain Plan</h2>
-                <p><pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
-SELECT * FROM onto:explain<br>
-WHERE {<br>
-&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
-&nbsp;&nbsp;MINUS {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?museo gip_prop:kopurua ?obras .<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FILTER (?obras > 300)<br>
-&nbsp;&nbsp;}<br>
-}<br>
-        </pre></p>
-    </section>
-
-    <section class="slide">
-        <h2>GraphDB Explain Plan</h2>
-        <p>El resultado muestra:</p>
-        <ul>
-            <li><b>Orden de evaluación</b>: qué patrones se ejecutan primero</li>
-            <li><b>Joins</b>: cómo se combinan los resultados intermedios</li>
-            <li><b>Filtros</b>: dónde se aplican las restricciones</li>
-            <li><b>Estimación de coste</b>: número estimado de resultados por paso</li>
-        </ul>
-    </section>
-
-    <section class="slide">
-        <h2>Explain Plan: Ejemplo básico</h2>
+        <h2>Explain Plan</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
 PREFIX onto: &lt;http://www.ontotext.com/&gt;<br>
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;<br>
@@ -956,16 +905,35 @@ WHERE {<br>
 &nbsp;&nbsp;?person foaf:name ?nombre .<br>
 }<br>
         </pre>
-        <p>¿En qué orden evalúa GraphDB los tres patrones?</p>
     </section>
 
     <section class="slide">
         <h2>Explain Plan: Orden de patrones</h2>
-        <p>GraphDB elige el orden óptimo basándose en la <b>selectividad</b></p>
-        <p>Patrones más selectivos (menos resultados) se evalúan primero</p>
-        <p>rdf:type foaf:person → muchos resultados (poco selectivo)</p>
-        <p>foaf:name → único por persona (más selectivo)</p>
-        <p>El optimizador puede reordenar los patrones del WHERE</p>
+        <p>foaf:name: collection size 13 (el más bajo) pero además predicate collection size también 13: foaf:name solo se usa en esos triples, muy selectivo</p>
+        <p>gov:worksFor collection size 16, pero ?person ya esta resuelto</p>
+        <p>rdf:type collection size 54, con 45 sujeto unicos y objetos unicos</p>
+        <p>Complejidad = collection size / selectividad (Incluyendo variables resueltas)</p>
+    </section>
+    
+    <section class="slide">
+        <h2>GraphDB Explain Plan</h2>
+        <p>Triples dentro de grupo: se optimizan automáticamente</p>
+        <p>Orden de grupos: no se optimiza automáticamente, se evalúan en el orden en que aparecen en la consulta (el usuario debe optimizarlos)</p>
+        <p>Los grupos aparecen cuando se rompe el flujo de joins</p>
+    </section>
+
+    <section class="slide">
+        <h2>Rompen el flujo de joins</h2>
+        <p>OPTIONAL: hay que resolver el left join completo primero y luego la parte opcional</p>
+        <p>UNION: se evalúan independientemente y luego se combinan</p>
+        <p>sub-SELECT: siempre se evalúa primero</p>
+        <p>FILTER, BIND, VALUES: dependen de variables anteriores</p>
+    </section>
+
+    <section class="slide">
+        <h2>Rompen el flujo de joins</h2>
+        <p>Property paths con * o +: expansión recursiva</p>
+        <p>Patrones desconectados sin variables compartidas</p>
     </section>
 
     <section class="slide">
@@ -1029,68 +997,7 @@ WHERE {<br>
 }<br>
         </pre>
         <p>Sin OPTIONAL: Inner Join, más eficiente</p>
-        <p>Comparar ambos Explain Plans</p>
     </section>
-
-    <section class="slide">
-        <h2>Explain Plan: Agregación con GROUP BY</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-SELECT ?museo (COUNT(?person) AS ?num) <br>
-FROM onto:explain<br>
-WHERE {<br>
-&nbsp;&nbsp;?person rdf:type foaf:person .<br>
-&nbsp;&nbsp;?person gov:worksFor ?museo .<br>
-}<br>
-GROUP BY ?museo<br>
-ORDER BY DESC(?num)<br>
-        </pre>
-        <p>El Explain Plan muestra GROUP BY como operación adicional sobre los joins</p>
-    </section>
-
-    <section class="slide">
-        <h2>Explain Plan: Patrón específico vs genérico</h2>
-        <p>Consulta genérica (costosa):</p>
-        <pre style="font-size:12px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-SELECT * FROM onto:explain WHERE { ?s ?p ?o }<br>
-        </pre>
-        <p>Consulta específica (eficiente, aprovecha índices):</p>
-        <pre style="font-size:12px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-SELECT * FROM onto:explain WHERE {<br>
-&nbsp;&nbsp;gip:gugenheim gip_prop:kopurua ?obras<br>
-}<br>
-        </pre>
-        <p>Cuanto más concreto el triple pattern, menos resultados intermedios</p>
-    </section>
-
-    <section class="slide">
-        <h2>Explain Plan: MINUS vs NOT EXISTS</h2>
-        <pre style="font-size:13px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-# MINUS (elimina soluciones)<br>
-SELECT * FROM onto:explain WHERE {<br>
-&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
-&nbsp;&nbsp;MINUS { ?museo gip_prop:kopurua ?o . FILTER(?o > 300) }<br>
-}<br>
-<br>
-# NOT EXISTS (filtro booleano)<br>
-SELECT * FROM onto:explain WHERE {<br>
-&nbsp;&nbsp;?museo rdf:type dbpedia:museum .<br>
-&nbsp;&nbsp;FILTER NOT EXISTS {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?museo gip_prop:kopurua ?o . FILTER(?o > 300)<br>
-&nbsp;&nbsp;}<br>
-}<br>
-        </pre>
-        <p>NOT EXISTS suele ser más eficiente: no necesita calcular bindings</p>
-    </section>
-
-    <section class="slide">
-        <h2>Explain Plan: Resumen de optimización</h2>
-        <p>1. Patrones más selectivos primero</p>
-        <p>2. FILTER lo antes posible (justo después de la variable)</p>
-        <p>3. Evitar OPTIONAL si los datos siempre existen</p>
-        <p>4. Preferir NOT EXISTS sobre MINUS</p>
-        <p>5. Triple patterns concretos (sujeto/predicado fijo)</p>
-        <p>6. Usar LIMIT durante desarrollo</p>
-    </section> -->
 
     <!-- FOOTER -->
 

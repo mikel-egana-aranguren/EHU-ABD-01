@@ -1,0 +1,11 @@
+PREFIX onto: <http://www.ontotext.com/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX gov: <http://vocab.data.gov/def/drm#>
+
+SELECT * FROM onto:explain
+WHERE {
+  ?person rdf:type foaf:person .
+  ?person gov:worksFor ?museo .
+  ?person foaf:name ?nombre .
+}
