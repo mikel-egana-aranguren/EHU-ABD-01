@@ -151,6 +151,13 @@
         <p>Un conjunto de axiomas puede ser <b>consistente</b> (hay un estado posible donde todos son verdad) o <b>inconsistente</b></p>
     </section>
 
+        <section class="slide">
+        <h2>Inconsistencias en OWL</h2>
+        <p>Ontología inconsistente: contiene contradicciones lógicas</p>
+        <p>Clase insatisfacible: no puede tener instancias (equivalente a owl:Nothing)</p>
+        <p>Usar razonador para detectar y explicar inconsistencias</p>
+    </section>
+
     <section class="slide">
         <h2>Sintaxis OWL 2</h2>
         <p><b>Functional-Style Syntax</b>: para especificación e implementación</p>
@@ -464,9 +471,8 @@ EquivalentClasses(<br>
 
     <section class="slide">
         <h1>Expresiones complejas en clases</h1>
-        <p>Value partition</p>
-        <p>Nested restrictions</p>
-        <p>http://odps.sf.net</p>
+        <p>Ejemplos/ExpresionCompleja.ttl</p>
+        <p><a href="http://odps.sf.net">ONTOLOGY DESIGN PATTERNS (ODPs) PUBLIC CATALOG</a> (Ejemplos/odp_1.6)</p>
     </section>
 
     <section class="slide">
@@ -838,27 +844,9 @@ ClassAssertion( :SocialRole :Father )
         <p>Federated queries: consultar múltiples endpoints con ontologías</p>
     </section>
 
-    <section class="slide">
-        <h2>Inconsistencias en OWL</h2>
-        <p>Ontología inconsistente: contiene contradicciones lógicas</p>
-        <p>Clase insatisfacible: no puede tener instancias (equivalente a owl:Nothing)</p>
-        <p>Causas comunes:
-            <ul>
-                <li>Clases disjuntas con instancias compartidas</li>
-                <li>Restricciones de cardinalidad contradictorias</li>
-                <li>Propiedades funcionales con múltiples valores</li>
-            </ul>
-        </p>
-        <p>Usar razonador para detectar y explicar inconsistencias</p>
-    </section>
+
 
     <section class="slide">
-        <h2>Explicaciones de inferencias</h2>
-        <p>Justification: conjunto mínimo de axiomas que causa una inferencia</p>
-        <p>Herramientas: Protégé plugin de explicación</p>
-        <p>Debugging: identificar axiomas problemáticos</p>
-        <p>Puede haber múltiples justificaciones para una inferencia</p>
-    </section>
 
     <section class="slide">
         <h2>Ontologias publicas</h2>
@@ -868,46 +856,7 @@ ELI
     </section>
 
 
-    <!-- <section class="slide">
-        <h2>Herramientas OWL</h2>
-        <p><b>Editores</b>:</p>
-        <ul>
-            <li><a href="https://protege.stanford.edu/">Protégé</a>: editor libre, el más utilizado</li>
-        </ul>
-        <p><b>Razonadores</b>:</p>
-        <ul>
-            <li><a href="http://www.hermit-reasoner.com/">HermiT</a>: OWL 2 DL completo</li>
-            <li><a href="https://github.com/liveontologies/elk-reasoner">ELK</a>: OWL 2 EL (muy rápido)</li>
-            <li><a href="https://github.com/stardog-union/pellet">Pellet/Openllet</a>: OWL 2 DL</li>
-        </ul>
-        <p><b>Triplestores</b>: GraphDB (OWL 2 RL), Stardog (OWL 2 DL)</p>
-    </section> -->
 
-    <!-- <section class="slide">
-        <h2>Resumen OWL 2</h2>
-        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
-            <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #ccc; padding: 4px;">Concepto</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Functional-Style</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Turtle</th>
-            </tr>
-            <tr><td style="border: 1px solid #ccc; padding: 4px;">Instancia</td><td style="border: 1px solid #ccc; padding: 4px;">ClassAssertion(:C :x)</td><td style="border: 1px solid #ccc; padding: 4px;">:x a :C</td></tr>
-            <tr><td style="border: 1px solid #ccc; padding: 4px;">Subclase</td><td style="border: 1px solid #ccc; padding: 4px;">SubClassOf(:A :B)</td><td style="border: 1px solid #ccc; padding: 4px;">:A rdfs:subClassOf :B</td></tr>
-            <tr><td style="border: 1px solid #ccc; padding: 4px;">Equivalencia</td><td style="border: 1px solid #ccc; padding: 4px;">EquivalentClasses(:A :B)</td><td style="border: 1px solid #ccc; padding: 4px;">:A owl:equivalentClass :B</td></tr>
-            <tr><td style="border: 1px solid #ccc; padding: 4px;">Disjunción</td><td style="border: 1px solid #ccc; padding: 4px;">DisjointClasses(:A :B)</td><td style="border: 1px solid #ccc; padding: 4px;">:A owl:disjointWith :B</td></tr>
-            <tr><td style="border: 1px solid #ccc; padding: 4px;">∃ (some)</td><td style="border: 1px solid #ccc; padding: 4px;">ObjectSomeValuesFrom(:p :C)</td><td style="border: 1px solid #ccc; padding: 4px;">owl:someValuesFrom :C</td></tr>
-            <tr><td style="border: 1px solid #ccc; padding: 4px;">∀ (only)</td><td style="border: 1px solid #ccc; padding: 4px;">ObjectAllValuesFrom(:p :C)</td><td style="border: 1px solid #ccc; padding: 4px;">owl:allValuesFrom :C</td></tr>
-        </table>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>Recursos para aprender OWL</h2>
-        <p><a href="https://www.w3.org/TR/2012/REC-owl2-primer-20121211/">OWL 2 Primer (W3C Rec.)</a></p>
-        <p><a href="https://www.w3.org/TR/owl2-quick-reference/">OWL 2 Quick Reference Guide</a></p>
-        <p><a href="https://protege.stanford.edu/">Protégé Editor</a></p>
-        <p><a href="https://www.w3.org/TR/owl2-profiles/">OWL 2 Profiles</a></p>
-        <p><a href="https://manchesterowlsyntax.org/">Manchester OWL Syntax</a></p>
-    </section> -->
 
     <!-- FOOTER -->
 
