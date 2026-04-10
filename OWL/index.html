@@ -95,7 +95,7 @@
     <section class="slide">
         <h2>OWL</h2>
         <p><b>No es un lenguaje de programación</b>: es declarativo, describe un estado del dominio</p>
-        <p><b>No es un lenguaje de esquema</b>: no prescribe la estructura de un documento (ej. XML/JSON schema) - Para eso esta SHACL</p>
+        <p><b>No es un lenguaje de esquema</b>: no prescribe la estructura de un documento (ej. XML/JSON schema) ni de datos - Para eso esta SHACL</p>
         <p><b>No es un framework de bases de datos</b>: sigue la <b>Open World Assumption</b> (un hecho ausente puede ser verdadero, no se asume como falso)</p>
     </section>
 
@@ -103,14 +103,10 @@
         <h2>Closed World vs Open World</h2>
         <p><b>Closed World Assumption (CWA)</b>: lo que no está en la BD es falso (SQL)</p>
         <p><b>Open World Assumption (OWA)</b>: lo que no se dice puede ser verdadero o falso (OWL)</p>
-        <p>Ejemplo: si no hay info sobre la edad de María, SQL asume NULL/sin edad; OWL asume que simplemente no se sabe</p>
+        <p>Ejemplo: si no hay info sobre la edad de María, SQL asume NULL/sin edad; OWL asume que simplemente no se sabe (Hay que decir explicitamente que María no tiene edad)</p>
     </section>
 
-        <section class="slide">
-        <h2>Open World Assumption (OWA)</h2>
-        <p>Consecuencia: las restricciones universales no son restrictivas por defecto</p>
-        <p>Para "cerrar" el mundo: usar propiedades funcionales, closure axioms, SHACL</p>
-    </section>
+
 
     <section class="slide">
         <h2>No Unique Name Assumption</h2>
@@ -332,7 +328,6 @@ Class: Parent <br>
 ] .
 
         </pre>
-        <p>Los constructores se pueden anidar arbitrariamente</p>
     </section>
 
     <section class="slide">
@@ -558,6 +553,7 @@ TransitiveObjectProperty( :hasAncestor )<br>
 :hasAncestor rdf:type owl:TransitiveProperty .
         </pre>
         <p>hasParent es subpropiedad de hasAncestor: los padres de padres de padres se incluyen automáticamente</p>
+        <p>(Ejemplos/TransitivaFuncional)</p>
     </section>
 
     <section class="slide">
@@ -659,56 +655,24 @@ SubClassOf(<br>
 
     <section class="slide">
         <h2>Anotaciones (Annotations)</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-# Anotar una clase<br>
-AnnotationAssertion( rdfs:comment :Person<br>
-&nbsp;&nbsp;"Represents the set of all people." )<br>
-<br>
-# Anotar un axioma<br>
-SubClassOf(<br>
-&nbsp;&nbsp;Annotation( rdfs:comment<br>
-&nbsp;&nbsp;&nbsp;&nbsp;"States that every man is a person." )<br>
-&nbsp;&nbsp;:Man :Person<br>
-)
-        </pre>
-        <p>Las anotaciones <b>no tienen significado lógico</b>: son metadatos</p>
+        <p>Las anotaciones <b>no tienen significado lógico</b>: son metadatos codificados mediante annotation properties (rdfs:label, rdfs:comment, ...)</p>
+        <p>Anotar entidades</p>
+        <p>Anotar axiomas</p>
+        <p>Anotar ontologias</p>        
     </section>
 
     <section class="slide">
         <h2>Gestión de ontologías</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-# Declarar la ontología con su IRI<br>
-Ontology(&lt;http://example.com/owl/families&gt;<br>
-&nbsp;&nbsp;...<br>
-)<br>
-<br>
-# Importar otra ontología<br>
-Import(&lt;http://example.org/otherOntologies/<br>
-&nbsp;&nbsp;families.owl&gt;)<br>
-<br>
-# Vincular nombres entre ontologías<br>
-SameIndividual( :John otherOnt:JohnBrown )<br>
-EquivalentClasses( :Adult otherOnt:Grownup )<br>
-EquivalentObjectProperties(<br>
-&nbsp;&nbsp;:hasChild otherOnt:child )
-        </pre>
+        <p>URI ontologia: Ejemplos/ehu.ttl, URI entidades?</p>
+        <p>Importar ontologías mediante archivos: Ejemplos/ehu-pdi.ttl, Ejemplos/ehu-estudiante.ttl</p>
+        <p>Vincular entidades entre ontologías mediante axiomas: owl:sameAs en Ejemplos/ehu.ttl</p>
     </section>
 
-    <!-- <section class="slide">
-        <h2>Declaraciones de entidades</h2>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-Declaration( NamedIndividual( :John ) )<br>
-Declaration( Class( :Person ) )<br>
-Declaration( ObjectProperty( :hasWife ) )<br>
-Declaration( DataProperty( :hasAge ) )
-        </pre>
-        <p><b>Punning</b>: un IRI puede denotar a la vez una clase y un individuo</p>
-        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-# Father como clase e individuo<br>
-ClassAssertion( :Father :John )<br>
-ClassAssertion( :SocialRole :Father )
-        </pre>
-    </section> -->
+    <section class="slide">
+        <h2>Gestión de ontologías</h2>
+        <p>Reconciliación de entidades a través de URIs: schema:Person</p>
+        <p>Importar ontologías mediante URIs: LOV; Category tab: academy; edu- Education Ontology</p>
+    </section>
 
     <section class="slide">
         <h1>OWL 2 DL y OWL 2 Full</h1>
@@ -837,22 +801,20 @@ ClassAssertion( :SocialRole :Father )
 
         <section class="slide">
         <h2>OWL y SPARQL</h2>
-        <p>SPARQL consulta el grafo RDF serializado</p>
-        <p>Por defecto no considera axiomas inferidos</p>
-        <p>GraphDB: materializa inferencias o razona en tiempo de consulta</p>
-        <p>SPARQL 1.1: entailment regimes (RDF, RDFS, OWL)</p>
-        <p>Federated queries: consultar múltiples endpoints con ontologías</p>
+        <p>SPARQL consulta el grafo RDF, por defecto no considera axiomas inferidos</p>
+        <p>GraphDB inference on: materializa inferencias (nuevos triples) o aplica razonamiento para obtener mejores resultados SPARQL</p>
+        <p>Consultas federadas más interoperables si endpoints comparten ontologías</p>
     </section>
 
 
 
     <section class="slide">
-
-    <section class="slide">
         <h2>Ontologias publicas</h2>
-Repositorios de ontologias: LOV, OBO, bioportal, ontobee, etc.
-Schema (Estadisticas de uso)
-ELI
+        <p>Repositorios de ontologias: <a href="https://lov.linkeddata.es/dataset/lov">Linked Open Vocabularies</a>, <a href="https://bioportal.bioontology.org">NCBO Bioportal</a>, ...</p>
+        <p><a href="https://schema.org">Schema</a></p>
+        <p><a href="https://op.europa.eu/en/web/eu-vocabularies/ontologies"></a>EU vocabularies: <a href="https://www.w3.org/TR/vocab-owl2/">European Legislation Identifier</a>, ...</p>
+        <p>...</p>
+
     </section>
 
 
