@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://vocab.ehu.eus/estudiante" uri="ehu-estudiante.ttl"/>
+    <uri id="Imports Wizard Entry" name="https://schema.edu.ee/0.1/" uri="https://schema.edu.ee/"/>
+    <uri id="Imports Wizard Entry" name="http://vocab.ehu.eus/pdi" uri="ehu-pdi.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://vocab.ehu.eus/estudiante" uri="ehu-estudiante.ttl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Domain_Modelling_ODP/Adapted_SEP.owl" uri="odp_1.6/odp/owl/Domain_Modelling_ODP/Adapted_SEP.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Domain_Modelling_ODP/Composite_Property_Chain.owl" uri="odp_1.6/odp/owl/Domain_Modelling_ODP/CompositePropertyChain.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Domain_Modelling_ODP/List.owl" uri="odp_1.6/odp/owl/Domain_Modelling_ODP/List.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Domain_Modelling_ODP/Sequence.owl" uri="odp_1.6/odp/owl/Domain_Modelling_ODP/Sequence.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Extension_ODP/Exception.owl" uri="odp_1.6/odp/owl/Extension_ODP/Exception.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Extension_ODP/Nary_Relationship.owl" uri="odp_1.6/odp/owl/Extension_ODP/Nary_Relationship.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Good_Practice_ODP/Closure.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Closure.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Good_Practice_ODP/DefinedClass_Description.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/DefinedClass_Description.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Good_Practice_ODP/Normalisation.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Normalisation.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Good_Practice_ODP/Upper_Level_Ontology.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Upper_Level_Ontology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://odps.sourceforge.net/odp/owl/Good_Practice_ODP/Value_Partition.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Value_Partition.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://www.gong.manchester.ac.uk/odp/owl/Domain_Modelling_ODP/Interactor_Role_Interaction.owl" uri="odp_1.6/odp/owl/Domain_Modelling_ODP/Interactor_Role_Interaction.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://www.gong.manchester.ac.uk/odp/owl/Extension_ODP/Nary_DataType_Relationship.owl" uri="odp_1.6/odp/owl/Extension_ODP/Nary_DataType_Relationship.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://www.gong.manchester.ac.uk/odp/owl/Good_Practice_ODP/Entity_Feature_Value.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Entity_Feature_Value.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://www.gong.manchester.ac.uk/odp/owl/Good_Practice_ODP/Entity_Property_Quality.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Entity_Property_Quality.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://www.gong.manchester.ac.uk/odp/owl/Good_Practice_ODP/Entity_Quality.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Entity_Quality.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1776671582985" name="http://www.gong.manchester.ac.uk/odp/owl/Good_Practice_ODP/Selector.owl" uri="odp_1.6/odp/owl/Good_Practice_ODP/Selector.owl"/>
+    </group>
+</catalog>

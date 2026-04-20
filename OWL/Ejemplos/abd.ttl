@@ -6,7 +6,16 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://vocab.ehu.eus/abd/> .
 
-<http://vocab.ehu.eus/abd> rdf:type owl:Ontology .
+<http://vocab.ehu.eus/abd> rdf:type owl:Ontology ;
+                            rdfs:comment "mi ontologia" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://vocab.ehu.eus/abd/anotacion_mikel
+:anotacion_mikel rdf:type owl:AnnotationProperty .
+
 
 #################################################################
 #    Object Properties
@@ -14,7 +23,8 @@
 
 ###  http://vocab.ehu.eus/abd/pareja
 :pareja rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :relacion .
+        rdfs:subPropertyOf :relacion ;
+        rdf:type owl:FunctionalProperty .
 
 
 ###  http://vocab.ehu.eus/abd/relacion
@@ -28,12 +38,54 @@
            rdfs:range :Menor .
 
 
+###  http://vocab.ehu.eus/abd/tieneProgenitor
+:tieneProgenitor rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :relacion ;
+                 rdf:type owl:TransitiveProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://vocab.ehu.eus/abd/edad
+:edad rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Human ;
+      rdfs:range xsd:integer .
+
+
 #################################################################
 #    Classes
 #################################################################
 
+###  http://vocab.ehu.eus/abd/Father
+:Father rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+###  http://vocab.ehu.eus/abd/Huerfano
+:Huerfano rdf:type owl:Class .
+
+
 ###  http://vocab.ehu.eus/abd/Human
 :Human rdf:type owl:Class .
+
+
+###  http://vocab.ehu.eus/abd/Invitados
+:Invitados rdf:type owl:Class ;
+           owl:equivalentClass _:genid1 .
+
+_:genid1 rdf:type owl:Class ;
+          owl:oneOf ( :Mary
+                      :Mikel
+                    ) .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :Invitados ;
+   owl:annotatedProperty owl:equivalentClass ;
+   owl:annotatedTarget _:genid1 ;
+   rdfs:comment "mi axioma"
+ ] .
 
 
 ###  http://vocab.ehu.eus/abd/Man
@@ -46,9 +98,50 @@
 :Menor rdf:type owl:Class .
 
 
+###  http://vocab.ehu.eus/abd/Mother
+:Mother rdf:type owl:Class ;
+        owl:equivalentClass [ owl:intersectionOf ( :Parent
+                                                   :Woman
+                                                 ) ;
+                              rdf:type owl:Class
+                            ] .
+
+
+###  http://vocab.ehu.eus/abd/Muerto
+:Muerto rdf:type owl:Class ;
+        rdfs:comment "estar muerto" ;
+        rdfs:label "dead"@en .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :Muerto ;
+   owl:annotatedProperty rdfs:label ;
+   owl:annotatedTarget "dead"@en ;
+   rdfs:comment "anotar recursivamente"
+ ] .
+
+
+###  http://vocab.ehu.eus/abd/Parent
+:Parent rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty :tieneHijo ;
+                          owl:someValuesFrom :Human
+                        ] .
+
+
 ###  http://vocab.ehu.eus/abd/Person
 :Person rdf:type owl:Class ;
         rdfs:label "Gizakia"@eu .
+
+
+###  http://vocab.ehu.eus/abd/PersonaSinHijos
+:PersonaSinHijos rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :Person
+                                                            [ rdf:type owl:Class ;
+                                                              owl:complementOf :Parent
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] .
 
 
 ###  http://vocab.ehu.eus/abd/Woman
@@ -63,7 +156,8 @@
 ###  http://vocab.ehu.eus/abd/Jon
 :Jon rdf:type owl:NamedIndividual ,
               :Man ;
-     :pareja :Mary .
+     :pareja :Mary ,
+             :Pedro .
 
 
 ###  http://vocab.ehu.eus/abd/Mary
