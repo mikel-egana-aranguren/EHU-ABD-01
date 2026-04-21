@@ -245,89 +245,76 @@ bilbo> show collections<br>
     <section class="slide">
         <h2>insertOne()</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.insertOne({
-  nombre: "Ana García",
-  email: "ana@ehu.eus",
-  edad: 21
+db.bilbo.insertOne({<br>
+&nbsp;&nbsp;nombre: "Ana García",{<br>
+&nbsp;&nbsp;email: "ana@ehu.eus",{<br>
+&nbsp;&nbsp;edad: 21{<br>
 })
-
-// Resultado:
-// { acknowledged: true,
-//   insertedId: ObjectId("6650a1b2...") }
         </pre>
         <p>No hace falta definir la tabla (colección) previamente</p>
         <p>No hace falta que todos los documentos tengan los mismos campos</p>
+        <p>MongoDB inserta un ID automáticamente</p>
+        <p>db.bilbo.findOne({ _id: ObjectId("XXX") }) / db.bilbo.find()</p>
     </section>
 
     <section class="slide">
         <h2>insertMany()</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.insertMany([
-  {
-    nombre: "Jon Aguirre",
-    email: "jon@ehu.eus",
-    edad: 22,
-    notas: [
-      { asignatura: "ABD", nota: 7.5 }
-    ]
-  },
-  {
-    nombre: "Miren Etxebarria",
-    email: "miren@ehu.eus",
-    edad: 20
-  },
-  {
-    nombre: "Unai López",
-    email: "unai@ehu.eus",
-    edad: 23,
-    becado: true
-  }
-])
+db.alumnos.insertMany([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Jon Aguirre",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "jon@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 22,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;notas: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "ABD", nota: 7.5 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Miren Etxebarria",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "miren@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 20<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Unai López",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "unai@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 23,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;becado: true<br>
+&nbsp;&nbsp;}<br>
+])<br>
         </pre>
-        <p>Cada documento puede tener campos diferentes (schemaless)</p>
+
     </section>
 
     <section class="slide">
         <h2>Schemaless: flexibilidad</h2>
-      <p>En MongoDB, la colección admite documentos con estructuras diferentes</p>
-        <p>En MongoDB, cada documento puede tener campos diferentes:</p>
-        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Documento 1: tiene campo "notas"
-{ nombre: "Jon", notas: [{asignatura: "ABD", nota: 7}] }
+              <p>Cada documento puede tener campos diferentes </p>
 
-// Documento 2: no tiene "notas", pero tiene "becado"
-{ nombre: "Miren", becado: true }
-
-// Documento 3: tiene un campo "direccion" anidado
-{ nombre: "Unai", direccion: { ciudad: "Bilbao" } }
-        </pre>
         <p>Todos conviven en la misma colección sin problemas</p>
     </section>
 
     <section class="slide">
         <h2>find(): consultar documentos</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find()
-
-db.alumnos.find({ edad: 21 })
-
-db.alumnos.find({ nombre: "Ana García" })
-
-// findOne() devuelve solo el primer resultado
-db.alumnos.findOne({ nombre: "Ana García" })
+db.alumnos.find()<br>
+<br>
+db.alumnos.find({ edad: 20 })<br>
+<br>
+db.alumnos.find({ nombre: "Jon Aguirre" })<br>
+<br>
+// findOne() devuelve solo el primer resultado<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>Operadores de comparación</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find({ edad: { $gt: 21 } })
-
-db.alumnos.find({ edad: { $gte: 20, $lte: 23 } })
-
-db.alumnos.find({ edad: { $ne: 21 } })
-
-db.alumnos.find({ edad: { $in: [20, 21, 22] } })
+db.alumnos.find({ edad: { $gt: 21 } })<br>
+<br>
+db.alumnos.find({ edad: { $gte: 20, $lte: 23 } })<br>
+<br>
+db.alumnos.find({ edad: { $ne: 21 } })<br>
+<br>
+db.alumnos.find({ edad: { $in: [20, 21, 22] } })<br>
         </pre>
         <p><code>$gt</code>, <code>$gte</code>, <code>$lt</code>, <code>$lte</code>, <code>$eq</code>, <code>$ne</code>, <code>$in</code>, <code>$nin</code></p>
     </section>
@@ -335,58 +322,56 @@ db.alumnos.find({ edad: { $in: [20, 21, 22] } })
     <section class="slide">
         <h2>Operadores lógicos</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find({
-  $and: [
-    { edad: { $gt: 20 } },
-    { nombre: "Ana García" }
-  ]
-})
-
-db.alumnos.find({
-  $or: [
-    { edad: { $lt: 20 } },
-    { becado: true }
-  ]
-})
+db.alumnos.find({<br>
+&nbsp;&nbsp;$and: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ edad: { $gt: 20 } },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ nombre: "Ana García" }<br>
+&nbsp;&nbsp;]<br>
+})<br>
+<br>
+db.alumnos.find({<br>
+&nbsp;&nbsp;$or: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ edad: { $lt: 20 } },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ becado: true }<br>
+&nbsp;&nbsp;]<br>
+})<br>
         </pre>
         <p><code>$and</code>, <code>$or</code>, <code>$not</code>, <code>$nor</code></p>
     </section>
 
     <section class="slide">
         <h2>AND implícito</h2>
+        <p>Cuando hay múltiples campos, MongoDB aplica AND:</p>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Cuando hay múltiples campos, MongoDB aplica AND:
-
-// Esto:
-db.alumnos.find({ edad: 21, nombre: "Ana García" })
-
-// Es equivalente a esto:
-db.alumnos.find({
-  $and: [
-    { edad: 21 },
-    { nombre: "Ana García" }
-  ]
-})
+db.alumnos.find({ edad: 21, nombre: "Ana García" })<br>
+<br>
+<br>
+db.alumnos.find({<br>
+&nbsp;&nbsp;$and: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ edad: 21 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ nombre: "Ana García" }<br>
+&nbsp;&nbsp;]<br>
+})<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>Proyección (elegir campos)</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find(
-  {},                          // filtro: todos
-  { nombre: 1, email: 1 }     // proyección: solo estos campos
-)
-
-// Excluir campos (mostrar todos menos email):
-db.alumnos.find(
-  {},
-  { email: 0 }
-)
-
-// El campo _id se incluye siempre por defecto
-// Para excluirlo:
-db.alumnos.find({}, { nombre: 1, _id: 0 })
+db.alumnos.find(<br>
+&nbsp;&nbsp;{},                          // filtro: todos<br>
+&nbsp;&nbsp;{ nombre: 1, email: 1 }     // proyección: solo estos campos<br>
+)<br>
+<br>
+// Excluir campos (mostrar todos menos email):<br>
+db.alumnos.find(<br>
+&nbsp;&nbsp;{},<br>
+&nbsp;&nbsp;{ email: 0 }<br>
+)<br>
+<br>
+// El campo _id se incluye siempre por defecto<br>
+// Para excluirlo:<br>
+db.alumnos.find({}, { nombre: 1, _id: 0 })<br>
         </pre>
         <p>1 = incluir, 0 = excluir. No se pueden mezclar (excepto <code>_id</code>)</p>
     </section>
@@ -394,69 +379,69 @@ db.alumnos.find({}, { nombre: 1, _id: 0 })
     <section class="slide">
         <h2>Ordenar, limitar y saltar</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find().sort({ edad: 1 })
-
-db.alumnos.find().sort({ edad: -1 })
-
-db.alumnos.find().limit(5)
-
-db.alumnos.find().skip(10).limit(5)
-
-// Se pueden encadenar:
-db.alumnos.find().sort({ edad: -1 }).limit(3)
-// Los 3 alumnos más mayores
+db.alumnos.find().sort({ edad: 1 })<br>
+<br>
+db.alumnos.find().sort({ edad: -1 })<br>
+<br>
+db.alumnos.find().limit(5)<br>
+<br>
+db.alumnos.find().skip(10).limit(5)<br>
+<br>
+// Se pueden encadenar:<br>
+db.alumnos.find().sort({ edad: -1 }).limit(3)<br>
+// Los 3 alumnos más mayores<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>Contar documentos</h2>
         <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.countDocuments()
-
-db.alumnos.countDocuments({ edad: { $gt: 21 } })
-
-// Contar con estimación rápida (para colecciones grandes):
-db.alumnos.estimatedDocumentCount()
+db.alumnos.countDocuments()<br>
+<br>
+db.alumnos.countDocuments({ edad: { $gt: 21 } })<br>
+<br>
+// Contar con estimación rápida (para colecciones grandes):<br>
+db.alumnos.estimatedDocumentCount()<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>updateOne()</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.updateOne(
-  { nombre: "Ana García" },    // filtro
-  { $set: { edad: 22 } }       // actualización
-)
-
-// $set modifica solo los campos indicados
-// Si el campo no existe, lo crea:
-db.alumnos.updateOne(
-  { nombre: "Ana García" },
-  { $set: { telefono: "666111222" } }
-)
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Ana García" },    // filtro<br>
+&nbsp;&nbsp;{ $set: { edad: 22 } }       // actualización<br>
+)<br>
+<br>
+// $set modifica solo los campos indicados<br>
+// Si el campo no existe, lo crea:<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Ana García" },<br>
+&nbsp;&nbsp;{ $set: { telefono: "666111222" } }<br>
+)<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>Operadores de actualización</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Incrementar un valor numérico
-db.alumnos.updateOne(
-  { nombre: "Jon Aguirre" },
-  { $inc: { edad: 1 } }
-)
-
-// Eliminar un campo del documento
-db.alumnos.updateOne(
-  { nombre: "Unai López" },
-  { $unset: { becado: "" } }
-)
-
-// Renombrar un campo
-db.alumnos.updateOne(
-  { nombre: "Ana García" },
-  { $rename: { "telefono": "tlfno" } }
-)
+// Incrementar un valor numérico<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $inc: { edad: 1 } }<br>
+)<br>
+<br>
+// Eliminar un campo del documento<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Unai López" },<br>
+&nbsp;&nbsp;{ $unset: { becado: "" } }<br>
+)<br>
+<br>
+// Renombrar un campo<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Ana García" },<br>
+&nbsp;&nbsp;{ $rename: { "telefono": "tlfno" } }<br>
+)<br>
         </pre>
         <p><code>$set</code>, <code>$unset</code>, <code>$inc</code>, <code>$rename</code>, <code>$min</code>, <code>$max</code>, <code>$mul</code></p>
     </section>
@@ -464,15 +449,15 @@ db.alumnos.updateOne(
     <section class="slide">
         <h2>updateMany()</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.updateMany(
-  { edad: { $gte: 20 } },
-  { $set: { activo: true } }
-)
-
-// Resultado:
-// { acknowledged: true,
-//   matchedCount: 3,
-//   modifiedCount: 3 }
+db.alumnos.updateMany(<br>
+&nbsp;&nbsp;{ edad: { $gte: 20 } },<br>
+&nbsp;&nbsp;{ $set: { activo: true } }<br>
+)<br>
+<br>
+// Resultado:<br>
+// { acknowledged: true,<br>
+//   matchedCount: 3,<br>
+//   modifiedCount: 3 }<br>
         </pre>
         <p><code>updateOne</code> modifica solo el primer documento que coincida</p>
         <p><code>updateMany</code> modifica todos los documentos que coincidan</p>
@@ -481,26 +466,26 @@ db.alumnos.updateMany(
     <section class="slide">
         <h2>Operaciones sobre arrays</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Añadir un elemento a un array
-db.alumnos.updateOne(
-  { nombre: "Jon Aguirre" },
-  { $push: { notas: { asignatura: "SI", nota: 8.0 } } }
-)
-
-// Añadir varios elementos a un array
-db.alumnos.updateOne(
-  { nombre: "Jon Aguirre" },
-  { $push: { notas: { $each: [
-    { asignatura: "ED", nota: 6.5 },
-    { asignatura: "SO", nota: 7.0 }
-  ]}}}
-)
-
-// Eliminar un elemento de un array
-db.alumnos.updateOne(
-  { nombre: "Jon Aguirre" },
-  { $pull: { notas: { asignatura: "ED" } } }
-)
+// Añadir un elemento a un array<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $push: { notas: { asignatura: "SI", nota: 8.0 } } }<br>
+)<br>
+<br>
+// Añadir varios elementos a un array<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $push: { notas: { $each: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "ED", nota: 6.5 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "SO", nota: 7.0 }<br>
+&nbsp;&nbsp;]}}}<br>
+)<br>
+<br>
+// Eliminar un elemento de un array<br>
+db.alumnos.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $pull: { notas: { asignatura: "ED" } } }<br>
+)<br>
         </pre>
         <p><code>$push</code>, <code>$pull</code>, <code>$addToSet</code>, <code>$pop</code>, <code>$each</code></p>
     </section>
@@ -508,34 +493,34 @@ db.alumnos.updateOne(
     <section class="slide">
         <h2>deleteOne() y deleteMany()</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.deleteOne({ nombre: "Unai López" })
-
-db.alumnos.deleteMany({ edad: { $lt: 20 } })
-
-  // Borrar todos los documentos de la colección
-db.alumnos.deleteMany({})
-
-  // Eliminar la colección completa
-db.alumnos.drop()
-
-  // Eliminar la base de datos actual
-db.dropDatabase()
+db.alumnos.deleteOne({ nombre: "Unai López" })<br>
+<br>
+db.alumnos.deleteMany({ edad: { $lt: 20 } })<br>
+<br>
+// Borrar todos los documentos de la colección<br>
+db.alumnos.deleteMany({})<br>
+<br>
+// Eliminar la colección completa<br>
+db.alumnos.drop()<br>
+<br>
+// Eliminar la base de datos actual<br>
+db.dropDatabase()<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>replaceOne()</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Reemplaza un documento ENTERO (no campos individuales)
-db.alumnos.replaceOne(
-  { nombre: "Ana García" },
-  {
-    nombre: "Ana García Fernández",
-    email: "ana.garcia@ehu.eus",
-    edad: 22,
-    grado: "Ingeniería Informática"
-  }
-)
+// Reemplaza un documento ENTERO (no campos individuales)<br>
+db.alumnos.replaceOne(<br>
+&nbsp;&nbsp;{ nombre: "Ana García" },<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Ana García Fernández",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "ana.garcia@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 22,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;grado: "Ingeniería Informática"<br>
+&nbsp;&nbsp;}<br>
+)<br>
         </pre>
         <p><strong>Cuidado:</strong> <code>replaceOne()</code> sustituye todo el documento</p>
         <p>A diferencia de <code>updateOne()</code> con <code>$set</code>, que modifica solo campos específicos</p>
@@ -544,12 +529,12 @@ db.alumnos.replaceOne(
     <section class="slide">
         <h2>Consultas en documentos anidados</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Datos:
-{ nombre: "Ana", direccion: { ciudad: "Bilbao", cp: "48001" } }
-{ nombre: "Jon", direccion: { ciudad: "Donostia", cp: "20001" } }
-
-// Buscar por campo anidado (dot notation):
-db.alumnos.find({ "direccion.ciudad": "Bilbao" })
+// Datos:<br>
+{ nombre: "Ana", direccion: { ciudad: "Bilbao", cp: "48001" } }<br>
+{ nombre: "Jon", direccion: { ciudad: "Donostia", cp: "20001" } }<br>
+<br>
+// Buscar por campo anidado (dot notation):<br>
+db.alumnos.find({ "direccion.ciudad": "Bilbao" })<br>
         </pre>
         <p>Dot notation: <code>"campo.subcampo"</code> para acceder a campos anidados</p>
     </section>
@@ -557,66 +542,65 @@ db.alumnos.find({ "direccion.ciudad": "Bilbao" })
     <section class="slide">
         <h2>Consultas en arrays</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Datos:
-{ nombre: "Jon", idiomas: ["euskera", "castellano", "inglés"] }
-{ nombre: "Ana", idiomas: ["castellano", "francés"] }
-
-// Buscar documentos que contengan "euskera" en el array:
-db.alumnos.find({ idiomas: "euskera" })
-// Resultado: Jon
-
-// Buscar documentos con el array exacto:
-db.alumnos.find({ idiomas: ["castellano", "francés"] })
-// Resultado: Ana (orden importa)
-
-// Buscar por tamaño del array:
-db.alumnos.find({ idiomas: { $size: 3 } })
-// Resultado: Jon (tiene 3 idiomas)
+// Datos:<br>
+{ nombre: "Jon", idiomas: ["euskera", "castellano", "inglés"] }<br>
+{ nombre: "Ana", idiomas: ["castellano", "francés"] }<br>
+<br>
+// Buscar documentos que contengan "euskera" en el array:<br>
+db.alumnos.find({ idiomas: "euskera" })<br>
+// Resultado: Jon<br>
+<br>
+// Buscar documentos con el array exacto:<br>
+db.alumnos.find({ idiomas: ["castellano", "francés"] })<br>
+// Resultado: Ana (orden importa)<br>
+<br>
+// Buscar por tamaño del array:<br>
+db.alumnos.find({ idiomas: { $size: 3 } })<br>
+// Resultado: Jon (tiene 3 idiomas)<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>Consultas en arrays de objetos</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Datos:
-{
-  nombre: "Jon",
-  notas: [
-    { asignatura: "ABD", nota: 7.5 },
-    { asignatura: "SI", nota: 8.0 }
-  ]
-}
-
-// Buscar alumnos con nota > 7 en alguna asignatura:
-db.alumnos.find({ "notas.nota": { $gt: 7 } })
-
-// Buscar alumnos con nota > 7 en ABD específicamente:
-db.alumnos.find({
-  notas: {
-    $elemMatch: {
-      asignatura: "ABD",
-      nota: { $gt: 7 }
-    }
-  }
-})
+{<br>
+&nbsp;&nbsp;nombre: "Jon",<br>
+&nbsp;&nbsp;notas: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "ABD", nota: 7.5 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "SI", nota: 8.0 }<br>
+&nbsp;&nbsp;]<br>
+}<br>
+<br>
+// Buscar alumnos con nota > 7 en alguna asignatura:<br>
+db.alumnos.find({ "notas.nota": { $gt: 7 } })<br>
+<br>
+// Buscar alumnos con nota > 7 en ABD específicamente:<br>
+db.alumnos.find({<br>
+&nbsp;&nbsp;notas: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$elemMatch: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;asignatura: "ABD",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nota: { $gt: 7 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+})<br>
         </pre>
-        <p><code>$elemMatch</code>: el mismo elemento del array debe cumplir todas las condiciones</p>
+        <p><code>$elemMatch</code>: el mismo elemento debe cumplir todas las condiciones</p>
     </section>
 
     <section class="slide">
         <h2>$exists y $type</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Buscar documentos que TENGAN el campo "becado":
-db.alumnos.find({ becado: { $exists: true } })
-
-// Buscar documentos que NO tengan el campo "telefono":
-db.alumnos.find({ telefono: { $exists: false } })
-
-// Buscar documentos donde "edad" sea de tipo numérico:
-db.alumnos.find({ edad: { $type: "number" } })
-
-// Buscar documentos donde "nombre" sea un string:
-db.alumnos.find({ nombre: { $type: "string" } })
+// Buscar documentos que TENGAN el campo "becado":<br>
+db.alumnos.find({ becado: { $exists: true } })<br>
+<br>
+// Buscar documentos que NO tengan el campo "telefono":<br>
+db.alumnos.find({ telefono: { $exists: false } })<br>
+<br>
+// Buscar documentos donde "edad" sea de tipo numérico:<br>
+db.alumnos.find({ edad: { $type: "number" } })<br>
+<br>
+// Buscar documentos donde "nombre" sea un string:<br>
+db.alumnos.find({ nombre: { $type: "string" } })<br>
         </pre>
         <p>Muy útiles en colecciones schemaless donde no todos los documentos tienen los mismos campos</p>
     </section>
@@ -624,14 +608,14 @@ db.alumnos.find({ nombre: { $type: "string" } })
     <section class="slide">
         <h2>Expresiones regulares</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find({ nombre: /^Ana/ })
-
-db.alumnos.find({ email: /ehu\.eus$/ })
-
-// Búsqueda case-insensitive:
-db.alumnos.find({ nombre: { $regex: "garcia", $options: "i" } })
+db.alumnos.find({ nombre: /^Ana/ })<br>
+<br>
+db.alumnos.find({ email: /ehu\.eus$/ })<br>
+<br>
+// Búsqueda case-insensitive:<br>
+db.alumnos.find({ nombre: { $regex: "garcia", $options: "i" } })<br>
         </pre>
-        <p>MongoDB soporta expresiones regulares PCRE (Perl Compatible Regular Expressions)</p>
+        <p>Expresiones regulares PCRE (Perl Compatible Regular Expressions)</p>
     </section>
 
     <section class="slide">
@@ -690,36 +674,36 @@ db.coleccion.aggregate([
     <section class="slide">
         <h2>$match: filtrar</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.aggregate([
-  { $match: { edad: { $gt: 20 } } }
-])
-
-// La sintaxis del filtro es la misma que en find()
-// $match debería ir lo antes posible para reducir
-// el número de documentos que pasan a las siguientes etapas
+db.alumnos.aggregate([<br>
+&nbsp;&nbsp;{ $match: { edad: { $gt: 20 } } }<br>
+])<br>
+<br>
+// La sintaxis del filtro es la misma que en find()<br>
+// $match debería ir lo antes posible para reducir<br>
+// el número de documentos que pasan a las siguientes etapas<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>$group: agrupar y calcular</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Datos en colección "pedidos":
-{ cliente: "Ana", producto: "Monitor", precio: 250 }
-{ cliente: "Jon", producto: "Teclado", precio: 45 }
-{ cliente: "Ana", producto: "Ratón", precio: 25 }
-{ cliente: "Jon", producto: "Monitor", precio: 250 }
-
-db.pedidos.aggregate([
-  {
-    $group: {
-      _id: "$cliente",
-      total: { $sum: "$precio" },
-      num_pedidos: { $sum: 1 }
-    }
-  }
-])
-// Resultado: { _id: "Ana", total: 275, num_pedidos: 2 }
-//            { _id: "Jon", total: 295, num_pedidos: 2 }
+// Datos en colección "pedidos":<br>
+{ cliente: "Ana", producto: "Monitor", precio: 250 }<br>
+{ cliente: "Jon", producto: "Teclado", precio: 45 }<br>
+{ cliente: "Ana", producto: "Ratón", precio: 25 }<br>
+{ cliente: "Jon", producto: "Monitor", precio: 250 }<br>
+<br>
+db.pedidos.aggregate([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$group: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$cliente",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total: { $sum: "$precio" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_pedidos: { $sum: 1 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+])<br>
+// Resultado: { _id: "Ana", total: 275, num_pedidos: 2 }<br>
+//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ _id: "Jon", total: 295, num_pedidos: 2 }<br>
         </pre>
     </section>
 
@@ -760,15 +744,15 @@ db.pedidos.aggregate([
     <section class="slide">
         <h2>Pipeline completo: ejemplo</h2>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.pedidos.aggregate([
-  { $match: { precio: { $gt: 30 } } },           // WHERE
-  { $group: {                                      // GROUP BY
-      _id: "$cliente",
-      total: { $sum: "$precio" }
-  }},
-  { $match: { total: { $gt: 200 } } },            // HAVING
-  { $sort: { total: -1 } }                         // ORDER BY
-])
+db.pedidos.aggregate([<br>
+&nbsp;&nbsp;{ $match: { precio: { $gt: 30 } } },&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// WHERE<br>
+&nbsp;&nbsp;{ $group: {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// GROUP BY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$cliente",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total: { $sum: "$precio" }<br>
+&nbsp;&nbsp;}},<br>
+&nbsp;&nbsp;{ $match: { total: { $gt: 200 } } },&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// HAVING<br>
+&nbsp;&nbsp;{ $sort: { total: -1 } }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ORDER BY<br>
+])<br>
         </pre>
         <p>El pipeline permite construir consultas complejas paso a paso</p>
     </section>
@@ -970,22 +954,22 @@ db.pedidos.aggregate([
     <section class="slide">
         <h2>Crear y gestionar índices</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.createIndex({ email: 1 })   // 1 = ascendente
-
-// Índice descendente:
-db.alumnos.createIndex({ edad: -1 })
-
-// Índice compuesto (sobre múltiples campos):
-db.alumnos.createIndex({ nombre: 1, edad: -1 })
-
-// Índice único (no permite duplicados):
-db.alumnos.createIndex({ email: 1 }, { unique: true })
-
-// Ver índices existentes:
-db.alumnos.getIndexes()
-
-// Eliminar un índice:
-db.alumnos.dropIndex({ email: 1 })
+db.alumnos.createIndex({ email: 1 })   // 1 = ascendente<br>
+<br>
+// Índice descendente:<br>
+db.alumnos.createIndex({ edad: -1 })<br>
+<br>
+// Índice compuesto (sobre múltiples campos):<br>
+db.alumnos.createIndex({ nombre: 1, edad: -1 })<br>
+<br>
+// Índice único (no permite duplicados):<br>
+db.alumnos.createIndex({ email: 1 }, { unique: true })<br>
+<br>
+// Ver índices existentes:<br>
+db.alumnos.getIndexes()<br>
+<br>
+// Eliminar un índice:<br>
+db.alumnos.dropIndex({ email: 1 })<br>
         </pre>
     </section>
 
@@ -1010,19 +994,19 @@ db.alumnos.find({ email: "ana@ehu.eus" }).explain("executionStats")
     <section class="slide">
         <h2>Índice de texto</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Crear un índice de texto para búsquedas full-text:
-db.posts.createIndex({ contenido: "text", titulo: "text" })
-
-db.posts.find({ $text: { $search: "MongoDB NoSQL" } })
-
-// Buscar una frase exacta:
-db.posts.find({ $text: { $search: "\"base de datos\"" } })
-
-// Ordenar por relevancia:
-db.posts.find(
-  { $text: { $search: "MongoDB" } },
-  { score: { $meta: "textScore" } }
-).sort({ score: { $meta: "textScore" } })
+// Crear un índice de texto para búsquedas full-text:<br>
+db.posts.createIndex({ contenido: "text", titulo: "text" })<br>
+<br>
+db.posts.find({ $text: { $search: "MongoDB NoSQL" } })<br>
+<br>
+// Buscar una frase exacta:<br>
+db.posts.find({ $text: { $search: "\"base de datos\"" } })<br>
+<br>
+// Ordenar por relevancia:<br>
+db.posts.find(<br>
+&nbsp;&nbsp;{ $text: { $search: "MongoDB" } },<br>
+&nbsp;&nbsp;{ score: { $meta: "textScore" } }<br>
+).sort({ score: { $meta: "textScore" } })<br>
         </pre>
     </section>
 
@@ -1053,23 +1037,23 @@ db.createCollection("alumnos", {
     <section class="slide">
         <h2>Validación: niveles</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Nivel "strict" (por defecto): valida en insert y update
-// Nivel "moderate": valida solo docs nuevos o válidos existentes
-
-db.runCommand({
-  collMod: "alumnos",
-  validator: {
-    $jsonSchema: {
-      required: ["nombre", "email"],
-      properties: {
-        nombre: { bsonType: "string" },
-        email: { bsonType: "string" }
-      }
-    }
-  },
-  validationLevel: "moderate",
-  validationAction: "warn"    // "error" rechaza, "warn" avisa
-})
+// Nivel "strict" (por defecto): valida en insert y update<br>
+// Nivel "moderate": valida solo docs nuevos o válidos existentes<br>
+<br>
+db.runCommand({<br>
+&nbsp;&nbsp;collMod: "alumnos",<br>
+&nbsp;&nbsp;validator: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$jsonSchema: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: ["nombre", "email"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nombre: { bsonType: "string" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email: { bsonType: "string" }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;validationLevel: "moderate",<br>
+&nbsp;&nbsp;validationAction: "warn"    // "error" rechaza, "warn" avisa<br>
+})<br>
         </pre>
         <p>Permite equilibrar flexibilidad de esquema e integridad de datos</p>
     </section>
@@ -1397,23 +1381,23 @@ for r in resultados:
     <section class="slide">
         <h2>Importar y exportar datos</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-# Importar un archivo JSON a una colección:
-mongoimport --db universidad --collection alumnos \
-            --file alumnos.json --jsonArray
-
-# Importar un CSV:
-mongoimport --db universidad --collection alumnos \
-            --type csv --headerline --file alumnos.csv
-
-# Exportar una colección a JSON:
-mongoexport --db universidad --collection alumnos \
-            --out alumnos.json
-
-# Backup completo de una BD:
-mongodump --db universidad --out ./backup/
-
-# Restaurar un backup:
-mongorestore --db universidad ./backup/universidad/
+# Importar un archivo JSON a una colección:<br>
+mongoimport --db universidad --collection alumnos \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--file alumnos.json --jsonArray<br>
+<br>
+# Importar un CSV:<br>
+mongoimport --db universidad --collection alumnos \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--type csv --headerline --file alumnos.csv<br>
+<br>
+# Exportar una colección a JSON:<br>
+mongoexport --db universidad --collection alumnos \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--out alumnos.json<br>
+<br>
+# Backup completo de una BD:<br>
+mongodump --db universidad --out ./backup/<br>
+<br>
+# Restaurar un backup:<br>
+mongorestore --db universidad ./backup/universidad/<br>
         </pre>
     </section>
 
@@ -1488,8 +1472,6 @@ mongorestore --db universidad ./backup/universidad/
             </tr>
         </table>
     </section>
-
-    <!-- ===== Cierre ===== -->
 
     <section class="slide">
         <h2>Referencias</h2>
