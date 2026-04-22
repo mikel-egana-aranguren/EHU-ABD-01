@@ -760,69 +760,69 @@ db.pedidos.aggregate([<br>
     <section class="slide">
         <h2>$project: transformar campos</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.aggregate([
-  {
-    $project: {
-      nombre: 1,
-      email_mayus: { $toUpper: "$email" },
-      anio_nacimiento: {
-        $subtract: [2026, "$edad"]
-      },
-      _id: 0
-    }
-  }
-])
-// Resultado:
-// { nombre: "Ana García", email_mayus: "ANA@EHU.EUS",
-//   anio_nacimiento: 2005 }
+db.alumnos.aggregate([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$project: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nombre: 1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email_mayus: { $toUpper: "$email" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anio_nacimiento: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$subtract: [2026, "$edad"]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+])<br>
+// Resultado:<br>
+// { nombre: "Ana García", email_mayus: "ANA@EHU.EUS",<br>
+//&nbsp;&nbsp;&nbsp;anio_nacimiento: 2005 }<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>$unwind: descomponer arrays</h2>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Dato: { nombre: "Jon", notas: [{asig: "ABD", nota: 7.5},
-//                                 {asig: "SI", nota: 8.0}] }
-// $unwind crea un documento por cada elemento del array:
-
-db.alumnos.aggregate([
-  { $unwind: "$notas" }
-])
-// Resultado:
-// { nombre: "Jon", notas: { asig: "ABD", nota: 7.5 } }
-// { nombre: "Jon", notas: { asig: "SI", nota: 8.0 } }
-
-// Útil para después hacer $group por asignatura:
-db.alumnos.aggregate([
-  { $unwind: "$notas" },
-  { $group: {
-      _id: "$notas.asig",
-      media: { $avg: "$notas.nota" }
-  }}
-])
+// Dato: { nombre: "Jon", notas: [{asig: "ABD", nota: 7.5},<br>
+//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{asig: "SI", nota: 8.0}] }<br>
+// $unwind crea un documento por cada elemento del array:<br>
+<br>
+db.alumnos.aggregate([<br>
+&nbsp;&nbsp;{ $unwind: "$notas" }<br>
+])<br>
+// Resultado:<br>
+// { nombre: "Jon", notas: { asig: "ABD", nota: 7.5 } }<br>
+// { nombre: "Jon", notas: { asig: "SI", nota: 8.0 } }<br>
+<br>
+// Útil para después hacer $group por asignatura:<br>
+db.alumnos.aggregate([<br>
+&nbsp;&nbsp;{ $unwind: "$notas" },<br>
+&nbsp;&nbsp;{ $group: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$notas.asig",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;media: { $avg: "$notas.nota" }<br>
+&nbsp;&nbsp;}}<br>
+])<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>$lookup: unión entre colecciones</h2>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Si tuviéramos datos separados en dos colecciones:
-// pedidos: { cliente_id: 1, producto: "Monitor", precio: 250 }
-// clientes: { _id: 1, nombre: "Ana García" }
-
-db.pedidos.aggregate([
-  {
-    $lookup: {
-      from: "clientes",           // colección a unir
-      localField: "cliente_id",    // campo en pedidos
-      foreignField: "_id",         // campo en clientes
-      as: "info_cliente"           // nombre del array resultado
-    }
-  }
-])
-// Resultado:
-// { cliente_id: 1, producto: "Monitor", precio: 250,
-//   info_cliente: [{ _id: 1, nombre: "Ana García" }] }
+// Si tuviéramos datos separados en dos colecciones:<br>
+// pedidos: { cliente_id: 1, producto: "Monitor", precio: 250 }<br>
+// clientes: { _id: 1, nombre: "Ana García" }<br>
+<br>
+db.pedidos.aggregate([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$lookup: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from: "clientes",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// colección a unir<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localField: "cliente_id",&nbsp;&nbsp;&nbsp;&nbsp;// campo en pedidos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreignField: "_id",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// campo en clientes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as: "info_cliente"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// nombre del array resultado<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+])<br>
+// Resultado:<br>
+// { cliente_id: 1, producto: "Monitor", precio: 250,<br>
+//&nbsp;&nbsp;&nbsp;info_cliente: [{ _id: 1, nombre: "Ana García" }] }<br>
         </pre>
     </section>
 
@@ -840,18 +840,18 @@ db.pedidos.aggregate([
     <section class="slide">
         <h2>Embeber (desnormalizar)</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Toda la información en un solo documento
-{
-  nombre: "Ana García",
-  direccion: {
-    calle: "Gran Vía 1",
-    ciudad: "Bilbao"
-  },
-  pedidos: [
-    { producto: "Monitor", precio: 250, fecha: "2026-01-15" },
-    { producto: "Ratón", precio: 25, fecha: "2026-02-20" }
-  ]
-}
+// Toda la información en un solo documento<br>
+{<br>
+&nbsp;&nbsp;nombre: "Ana García",<br>
+&nbsp;&nbsp;direccion: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;calle: "Gran Vía 1",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ciudad: "Bilbao"<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;pedidos: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ producto: "Monitor", precio: 250, fecha: "2026-01-15" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ producto: "Ratón", precio: 25, fecha: "2026-02-20" }<br>
+&nbsp;&nbsp;]<br>
+}<br>
         </pre>
         <p><strong>Ventajas:</strong> lectura muy rápida (una sola consulta)</p>
         <p><strong>Inconvenientes:</strong> datos duplicados, documentos muy grandes (límite 16 MB)</p>
@@ -860,20 +860,20 @@ db.pedidos.aggregate([
     <section class="slide">
         <h2>Referenciar (normalizar)</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Colección "clientes"
-{
-  _id: ObjectId("aaa..."),
-  nombre: "Ana García",
-  direccion: { calle: "Gran Vía 1", ciudad: "Bilbao" }
-}
-
-// Colección "pedidos"
-{
-  cliente_id: ObjectId("aaa..."),
-  producto: "Monitor",
-  precio: 250,
-  fecha: "2026-01-15"
-}
+// Colección "clientes"<br>
+{<br>
+&nbsp;&nbsp;_id: ObjectId("aaa..."),<br>
+&nbsp;&nbsp;nombre: "Ana García",<br>
+&nbsp;&nbsp;direccion: { calle: "Gran Vía 1", ciudad: "Bilbao" }<br>
+}<br>
+<br>
+// Colección "pedidos"<br>
+{<br>
+&nbsp;&nbsp;cliente_id: ObjectId("aaa..."),<br>
+&nbsp;&nbsp;producto: "Monitor",<br>
+&nbsp;&nbsp;precio: 250,<br>
+&nbsp;&nbsp;fecha: "2026-01-15"<br>
+}<br>
         </pre>
         <p><strong>Ventajas:</strong> sin duplicación, documentos más pequeños</p>
         <p><strong>Inconvenientes:</strong> requiere $lookup (más lento), múltiples consultas</p>
@@ -918,28 +918,28 @@ db.pedidos.aggregate([
     <section class="slide">
         <h2>Ejemplo completo: Blog</h2>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-  // Documento de blog con datos embebidos
-
-{
-  titulo: "Introducción a MongoDB",
-  autor: "Ana García",
-  fecha: ISODate("2026-04-15"),
-  contenido: "MongoDB es una base de datos NoSQL...",
-  tags: ["NoSQL", "MongoDB", "bases de datos"],
-  comentarios: [
-    {
-      usuario: "Jon",
-      texto: "Muy buen artículo",
-      fecha: ISODate("2026-04-16")
-    },
-    {
-      usuario: "Miren",
-      texto: "Me ha ayudado mucho",
-      fecha: ISODate("2026-04-17")
-    }
-  ],
-  likes: 42
-}
+&nbsp;&nbsp;// Documento de blog con datos embebidos<br>
+<br>
+{<br>
+&nbsp;&nbsp;titulo: "Introducción a MongoDB",<br>
+&nbsp;&nbsp;autor: "Ana García",<br>
+&nbsp;&nbsp;fecha: ISODate("2026-04-15"),<br>
+&nbsp;&nbsp;contenido: "MongoDB es una base de datos NoSQL...",<br>
+&nbsp;&nbsp;tags: ["NoSQL", "MongoDB", "bases de datos"],<br>
+&nbsp;&nbsp;comentarios: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usuario: "Jon",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;texto: "Muy buen artículo",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fecha: ISODate("2026-04-16")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usuario: "Miren",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;texto: "Me ha ayudado mucho",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fecha: ISODate("2026-04-17")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;likes: 42<br>
+}<br>
         </pre>
     </section>
 
@@ -976,16 +976,16 @@ db.alumnos.dropIndex({ email: 1 })<br>
     <section class="slide">
         <h2>explain(): analizar consultas</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumnos.find({ email: "ana@ehu.eus" }).explain("executionStats")
-
-// Sin índice → COLLSCAN (escaneo completo):
-// "winningPlan": { "stage": "COLLSCAN" }
-// "totalDocsExamined": 10000
-
-// Con índice → IXSCAN (escaneo de índice):
-// "winningPlan": { "stage": "IXSCAN",
-//                  "indexName": "email_1" }
-// "totalDocsExamined": 1
+db.alumnos.find({ email: "ana@ehu.eus" }).explain("executionStats")<br>
+<br>
+// Sin índice → COLLSCAN (escaneo completo):<br>
+// "winningPlan": { "stage": "COLLSCAN" }<br>
+// "totalDocsExamined": 10000<br>
+<br>
+// Con índice → IXSCAN (escaneo de índice):<br>
+// "winningPlan": { "stage": "IXSCAN",<br>
+//                  "indexName": "email_1" }<br>
+// "totalDocsExamined": 1<br>
         </pre>
         <p>Crear índices en campos que se usan frecuentemente en consultas</p>
         <p>Los índices aceleran las lecturas pero ralentizan las escrituras</p>
@@ -1015,22 +1015,22 @@ db.posts.find(<br>
         <p>Aunque MongoDB es schemaless, se puede definir validación opcional</p>
         <p>Usar JSON Schema para definir reglas sobre los documentos</p>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.createCollection("alumnos", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["nombre", "email", "edad"],
-      properties: {
-        nombre: { bsonType: "string",
-                   description: "debe ser un string" },
-        email:  { bsonType: "string",
-                   pattern: "^.+@.+$" },
-        edad:   { bsonType: "int",
-                   minimum: 16, maximum: 99 }
-      }
-    }
-  }
-})
+db.createCollection("alumnos", {<br>
+&nbsp;&nbsp;validator: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$jsonSchema: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bsonType: "object",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: ["nombre", "email", "edad"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nombre: { bsonType: "string",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description: "debe ser un string" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email:&nbsp;&nbsp;{ bsonType: "string",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pattern: "^.+@.+$" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edad:&nbsp;&nbsp;&nbsp;{ bsonType: "int",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum: 16, maximum: 99 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+})<br>
         </pre>
     </section>
 
@@ -1206,28 +1206,28 @@ db.pedidos.aggregate([
         <h2>Transacciones en MongoDB</h2>
         <p>Desde MongoDB 4.0, se soportan <strong>transacciones ACID multi-documento</strong></p>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-const session = db.getMongo().startSession()
-session.startTransaction()
-
-try {
-  const pedidosCol = session.getDatabase("tienda")
-                            .getCollection("pedidos")
-  const productosCol = session.getDatabase("tienda")
-                              .getCollection("productos")
-
-  pedidosCol.insertOne({ cliente: "Ana", total: 250 })
-  productosCol.updateOne(
-    { nombre: "Monitor" }, { $inc: { stock: -1 } }
-  )
-
-  session.commitTransaction()  // COMMIT
-} catch (error) {
-  session.abortTransaction()   // ROLLBACK
-}
+const session = db.getMongo().startSession()<br>
+session.startTransaction()<br>
+<br>
+try {<br>
+&nbsp;&nbsp;const pedidosCol = session.getDatabase("tienda")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.getCollection("pedidos")<br>
+&nbsp;&nbsp;const productosCol = session.getDatabase("tienda")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.getCollection("productos")<br>
+<br>
+&nbsp;&nbsp;pedidosCol.insertOne({ cliente: "Ana", total: 250 })<br>
+&nbsp;&nbsp;productosCol.updateOne(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ nombre: "Monitor" }, { $inc: { stock: -1 } }<br>
+&nbsp;&nbsp;)<br>
+<br>
+&nbsp;&nbsp;session.commitTransaction()&nbsp;&nbsp;// COMMIT<br>
+} catch (error) {<br>
+&nbsp;&nbsp;session.abortTransaction()&nbsp;&nbsp; // ROLLBACK<br>
+}<br>
         </pre>
     </section>
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>Replicación: Replica Set</h2>
         <p>MongoDB garantiza alta disponibilidad mediante <strong>Replica Sets</strong></p>
         <ul>
@@ -1236,9 +1236,9 @@ try {
             <li>Si el Primary cae, se elige automáticamente un nuevo Primary</li>
         </ul>
         <p>En MongoDB viene integrado y es automático</p>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>Sharding: escalabilidad horizontal</h2>
         <p><strong>Sharding</strong> = distribuir datos entre múltiples servidores</p>
         <p>Cada servidor (shard) contiene un subconjunto de los datos</p>
@@ -1247,9 +1247,9 @@ try {
             <li>MongoDB distribuye automáticamente los datos según una <strong>shard key</strong></li>
             <li>Las consultas se distribuyen entre los shards relevantes</li>
         </ul>
-    </section>
+    </section> -->
 
-    <section class="slide source-slide">
+    <!-- <section class="slide source-slide">
       <h2>MongoDB: resumen</h2>
         <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 13px;">
             <tr style="background-color: #f0f0f0;">
@@ -1285,9 +1285,9 @@ try {
           <td style="border: 1px solid #ccc; padding: 5px;">Flexibilidad, escalabilidad y buen encaje con datos semiestructurados</td>
             </tr>
         </table>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>¿Cuándo usar MongoDB?</h2>
         <ul>
             <li>Datos semi-estructurados o con esquema variable</li>
@@ -1297,7 +1297,7 @@ try {
             <li>Prototipado rápido (no necesitas definir esquema)</li>
             <li>Grandes volúmenes de datos que requieren escalabilidad horizontal</li>
         </ul>
-    </section>
+    </section> -->
 
     <section class="slide">
       <h2>Buenas prácticas con MongoDB</h2>
@@ -1310,7 +1310,7 @@ try {
       </ul>
     </section>
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>MongoDB desde aplicaciones</h2>
         <p>MongoDB ofrece <strong>drivers oficiales</strong> para muchos lenguajes:</p>
         <ul>
@@ -1320,9 +1320,9 @@ try {
             <li>C#, Go, PHP, Ruby, Rust, ...</li>
         </ul>
           <p>Todos comparten las mismas operaciones base: insertar, consultar, actualizar y borrar</p>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>Ejemplo: Python con PyMongo</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
 from pymongo import MongoClient
@@ -1348,9 +1348,9 @@ db.alumnos.update_one(
     {"$set": {"edad": 22}}
 )
         </pre>
-    </section>
+    </section> -->
 
-    <section class="slide">
+    <!-- <section class="slide">
         <h2>Ejemplo: Python — Agregación</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
 from pymongo import MongoClient
@@ -1376,7 +1376,7 @@ resultados = db.pedidos.aggregate(pipeline)
 for r in resultados:
     print(f"{r['_id']}: {r['total']:.2f} €")
         </pre>
-    </section>
+    </section> -->
 
     <section class="slide">
         <h2>Importar y exportar datos</h2>
@@ -1401,7 +1401,7 @@ mongorestore --db universidad ./backup/universidad/<br>
         </pre>
     </section>
 
-    <section class="slide source-slide">
+    <!-- <section class="slide source-slide">
         <h2>Resumen: operadores de consulta</h2>
         <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
             <tr style="background-color: #f0f0f0;">
@@ -1435,9 +1435,9 @@ mongorestore --db universidad ./backup/universidad/<br>
                 <td style="border: 1px solid #ccc; padding: 4px;"><code>{ tags: {$all: ["a","b"]} }</code></td>
             </tr>
         </table>
-    </section>
+    </section> -->
 
-    <section class="slide source-slide">
+    <!-- <section class="slide source-slide">
         <h1>Resumen: operadores de actualización</h1>
         <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
             <tr style="background-color: #f0f0f0;">
@@ -1471,7 +1471,7 @@ mongorestore --db universidad ./backup/universidad/<br>
                 <td style="border: 1px solid #ccc; padding: 4px;">Descomponer arrays, unir colecciones, contar</td>
             </tr>
         </table>
-    </section>
+    </section> -->
 
     <section class="slide">
         <h2>Referencias</h2>
