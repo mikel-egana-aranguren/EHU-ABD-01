@@ -757,7 +757,7 @@ db.alumni.aggregate([<br>
 db.alumni.aggregate([<br>
 &nbsp;&nbsp;{ $unwind: "$notas" },<br>
 &nbsp;&nbsp;{ $group: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$notas.asig",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$notas.asignatura",<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;media: { $avg: "$notas.nota" }<br>
 &nbsp;&nbsp;}}<br>
 ])<br>
