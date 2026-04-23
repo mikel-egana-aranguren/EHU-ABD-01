@@ -880,68 +880,44 @@ db.pedidos.aggregate([<br>
     <section class="slide">
         <h2>Crear y gestionar índices</h2>
         <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumni.createIndex({ email: 1 })   // 1 = ascendente<br>
-<br>
-// Índice descendente:<br>
-db.alumni.createIndex({ edad: -1 })<br>
-<br>
-// Índice compuesto (sobre múltiples campos):<br>
-db.alumni.createIndex({ nombre: 1, edad: -1 })<br>
-<br>
-// Índice único (no permite duplicados):<br>
-db.alumni.createIndex({ email: 1 }, { unique: true })<br>
+// Cargar ehu.alumni.json en coleccion ehu.alumni1000<br>
 <br>
 // Ver índices existentes:<br>
-db.alumni.getIndexes()<br>
+db.alumni1000.getIndexes()<br>
+<br>
+// Crear un índice simple:<br>
+db.alumni1000.createIndex({ email: 1 })   // 1 = ascendente; -1 = descendente<br>
+<br>
+// Índice compuesto (sobre múltiples campos):<br>
+db.alumni1000.createIndex({ nombre: 1, edad: -1 })<br>
+<br>
+// Índice único (no permite duplicados):<br>
+db.alumni1000.createIndex({ email: 1 }, { unique: true })<br>
 <br>
 // Eliminar un índice:<br>
-db.alumni.dropIndex({ email: 1 })<br>
+db.alumni1000.dropIndex({ email: 1 })<br>
         </pre>
     </section>
 
     <section class="slide">
         <h2>explain(): analizar consultas</h2>
         <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.alumni.find({ email: "javi@ehu.eus" }).explain("executionStats")<br>
-<br>
-// Sin índice → COLLSCAN (escaneo completo):<br>
-// "winningPlan": { "stage": "COLLSCAN" }<br>
-// "totalDocsExamined": 10000<br>
-<br>
-// Con índice → IXSCAN (escaneo de índice):<br>
-// "winningPlan": { "stage": "IXSCAN",<br>
-//                  "indexName": "email_1" }<br>
-// "totalDocsExamined": 1<br>
+db.alumni1000.find({ email: "alumno0680@ikasle.ehu.eus" }).explain("executionStats")<br>
+// COLLSCAN: sin índice, escanea toda la colección<br>
+// IXSCAN: con índice, busca directamente<br>
         </pre>
+        
         <p>Crear índices en campos que se usan frecuentemente en consultas</p>
         <p>Los índices aceleran las lecturas pero ralentizan las escrituras</p>
     </section>
 
-    <section class="slide">
-        <h2>Índice de texto</h2>
-        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Crear un índice de texto para búsquedas full-text:<br>
-db.posts.createIndex({ contenido: "text", titulo: "text" })<br>
-<br>
-db.posts.find({ $text: { $search: "MongoDB NoSQL" } })<br>
-<br>
-// Buscar una frase exacta:<br>
-db.posts.find({ $text: { $search: "\"base de datos\"" } })<br>
-<br>
-// Ordenar por relevancia:<br>
-db.posts.find(<br>
-&nbsp;&nbsp;{ $text: { $search: "MongoDB" } },<br>
-&nbsp;&nbsp;{ score: { $meta: "textScore" } }<br>
-).sort({ score: { $meta: "textScore" } })<br>
-        </pre>
-    </section>
-
+    
     <section class="slide">
         <h2>Validación de esquema</h2>
         <p>Aunque MongoDB es schemaless, se puede definir validación opcional</p>
         <p>Usar JSON Schema para definir reglas sobre los documentos</p>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-db.createCollection("ehu", {<br>
+db.createCollection("ehu-schema", {<br>
 &nbsp;&nbsp;validator: {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;$jsonSchema: {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bsonType: "object",<br>
@@ -962,124 +938,11 @@ db.createCollection("ehu", {<br>
 
     <section class="slide">
         <h2>Validación: niveles</h2>
-        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-// Nivel "strict" (por defecto): valida en insert y update<br>
-// Nivel "moderate": valida solo docs nuevos o válidos existentes<br>
-<br>
-db.runCommand({<br>
-&nbsp;&nbsp;collMod: "ehu",<br>
-&nbsp;&nbsp;validator: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;$jsonSchema: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: ["nombre", "email"],<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nombre: { bsonType: "string" },<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email: { bsonType: "string" }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;validationLevel: "moderate",<br>
-&nbsp;&nbsp;validationAction: "warn"    // "error" rechaza, "warn" avisa<br>
-})<br>
-        </pre>
-        <p>Permite equilibrar flexibilidad de esquema e integridad de datos</p>
+<p>Nivel "strict" (por defecto): valida en insert y update</p>
+<p>Nivel "moderate": valida solo docs nuevos o válidos existentes</p>
+<p>Permite equilibrar flexibilidad de esquema e integridad de datos</p>
+<p>collMod_moderate, collMod_strict, productos_ejemplo, invalid_productos</p>
     </section>
-
-    <!-- <section class="slide">
-        <h2>Transacciones en MongoDB</h2>
-        <p>Desde MongoDB 4.0, se soportan <strong>transacciones ACID multi-documento</strong></p>
-        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-const session = db.getMongo().startSession()<br>
-session.startTransaction()<br>
-<br>
-try {<br>
-&nbsp;&nbsp;const pedidosCol = session.getDatabase("tienda")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.getCollection("pedidos")<br>
-&nbsp;&nbsp;const productosCol = session.getDatabase("tienda")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.getCollection("productos")<br>
-<br>
-&nbsp;&nbsp;pedidosCol.insertOne({ cliente: "Ana", total: 250 })<br>
-&nbsp;&nbsp;productosCol.updateOne(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{ nombre: "Monitor" }, { $inc: { stock: -1 } }<br>
-&nbsp;&nbsp;)<br>
-<br>
-&nbsp;&nbsp;session.commitTransaction()&nbsp;&nbsp;// COMMIT<br>
-} catch (error) {<br>
-&nbsp;&nbsp;session.abortTransaction()&nbsp;&nbsp; // ROLLBACK<br>
-}<br>
-        </pre>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>Replicación: Replica Set</h2>
-        <p>MongoDB garantiza alta disponibilidad mediante <strong>Replica Sets</strong></p>
-        <ul>
-            <li><strong>Primary:</strong> recibe todas las escrituras</li>
-            <li><strong>Secondary(s):</strong> copias de los datos del Primary</li>
-            <li>Si el Primary cae, se elige automáticamente un nuevo Primary</li>
-        </ul>
-        <p>En MongoDB viene integrado y es automático</p>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>Sharding: escalabilidad horizontal</h2>
-        <p><strong>Sharding</strong> = distribuir datos entre múltiples servidores</p>
-        <p>Cada servidor (shard) contiene un subconjunto de los datos</p>
-        <ul>
-            <li>Permite manejar volúmenes de datos que no caben en un servidor</li>
-            <li>MongoDB distribuye automáticamente los datos según una <strong>shard key</strong></li>
-            <li>Las consultas se distribuyen entre los shards relevantes</li>
-        </ul>
-    </section> -->
-
-    <!-- <section class="slide source-slide">
-      <h2>MongoDB: resumen</h2>
-        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 13px;">
-            <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #ccc; padding: 5px;">Característica</th>
-          <th style="border: 1px solid #ccc; padding: 5px;">Descripción</th>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 5px;">Modelo</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">Documentos (JSON/BSON)</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 5px;">Esquema</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">Flexible (schemaless con validación opcional)</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 5px;">Lenguaje</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">API JavaScript (MQL)</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 5px;">Relaciones</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">Embebido / referencias / $lookup</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 5px;">Escalabilidad</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">Horizontal (sharding)</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 5px;">Transacciones</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">ACID multi-documento (desde v4.0)</td>
-            </tr>
-            <tr>
-          <td style="border: 1px solid #ccc; padding: 5px;">Fortalezas</td>
-          <td style="border: 1px solid #ccc; padding: 5px;">Flexibilidad, escalabilidad y buen encaje con datos semiestructurados</td>
-            </tr>
-        </table>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>¿Cuándo usar MongoDB?</h2>
-        <ul>
-            <li>Datos semi-estructurados o con esquema variable</li>
-            <li>Catálogos de productos con atributos diferentes por categoría</li>
-            <li>Gestión de contenido (CMS, blogs)</li>
-            <li>Aplicaciones en tiempo real (chats, logs, IoT)</li>
-            <li>Prototipado rápido (no necesitas definir esquema)</li>
-            <li>Grandes volúmenes de datos que requieren escalabilidad horizontal</li>
-        </ul>
-    </section> -->
 
     <section class="slide">
       <h2>Buenas prácticas con MongoDB</h2>
@@ -1092,182 +955,10 @@ try {<br>
       </ul>
     </section>
 
-    <!-- <section class="slide">
-        <h2>MongoDB desde aplicaciones</h2>
-        <p>MongoDB ofrece <strong>drivers oficiales</strong> para muchos lenguajes:</p>
-        <ul>
-            <li>Python (<code>pymongo</code>)</li>
-            <li>JavaScript/Node.js (<code>mongodb</code>)</li>
-            <li>Java (<code>mongodb-driver</code>)</li>
-            <li>C#, Go, PHP, Ruby, Rust, ...</li>
-        </ul>
-          <p>Todos comparten las mismas operaciones base: insertar, consultar, actualizar y borrar</p>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>Ejemplo: Python con PyMongo</h2>
-        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-from pymongo import MongoClient
-
-# Conectar
-client = MongoClient("mongodb://localhost:27017/")
-db = client["universidad"]
-
-# Insertar
-db.alumni.insert_one({
-    "nombre": "Javier Cansado",
-    "email": "javi@ehu.eus",
-    "edad": 21
-})
-
-# Consultar
-for alumno in db.alumni.find({"edad": {"$gt": 20}}):
-    print(alumno["nombre"])
-
-# Actualizar
-db.alumni.update_one(
-    {"nombre": "Javier Cansado"},
-    {"$set": {"edad": 22}}
-)
-        </pre>
-    </section> -->
-
-    <!-- <section class="slide">
-        <h2>Ejemplo: Python — Agregación</h2>
-        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-from pymongo import MongoClient
-
-client = MongoClient("mongodb://localhost:27017/")
-db = client["tienda"]
-
-# Pipeline de agregación en Python
-pipeline = [
-    {"$unwind": "$productos"},
-    {"$group": {
-        "_id": "$productos.nombre",
-        "total": {"$sum": {
-            "$multiply": ["$productos.precio",
-                           "$productos.cantidad"]
-        }}
-    }},
-    {"$sort": {"total": -1}},
-    {"$limit": 5}
-]
-
-resultados = db.pedidos.aggregate(pipeline)
-for r in resultados:
-    print(f"{r['_id']}: {r['total']:.2f} €")
-        </pre>
-    </section> -->
-
     <section class="slide">
-        <h2>Importar y exportar datos</h2>
-        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
-# Importar un archivo JSON a una colección:<br>
-mongoimport --db universidad --collection ehu \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--file ehu.json --jsonArray<br>
-<br>
-# Importar un CSV:<br>
-mongoimport --db universidad --collection ehu \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--type csv --headerline --file ehu.csv<br>
-<br>
-# Exportar una colección a JSON:<br>
-mongoexport --db universidad --collection ehu \<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--out ehu.json<br>
-<br>
-# Backup completo de una BD:<br>
-mongodump --db universidad --out ./backup/<br>
-<br>
-# Restaurar un backup:<br>
-mongorestore --db universidad ./backup/universidad/<br>
-        </pre>
-    </section>
-
-    <!-- <section class="slide source-slide">
-        <h2>Resumen: operadores de consulta</h2>
-        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
-            <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #ccc; padding: 4px;">Tipo</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Operador</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Ejemplo</th>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Comparación</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$eq $gt $gte $lt $lte $ne $in $nin</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>{ edad: { $gt: 20 } }</code></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Lógicos</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$and $or $not $nor</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>{ $or: [{a:1}, {b:2}] }</code></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Elemento</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$exists $type</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>{ campo: {$exists: true} }</code></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Evaluación</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$regex $text $expr</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>{ nombre: /^Ana/i }</code></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Array</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$all $elemMatch $size</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>{ tags: {$all: ["a","b"]} }</code></td>
-            </tr>
-        </table>
-    </section> -->
-
-    <!-- <section class="slide source-slide">
-        <h1>Resumen: operadores de actualización</h1>
-        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
-            <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #ccc; padding: 4px;">Tipo</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Operador</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Descripción</th>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Campo</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$set $unset $inc $rename $min $max $mul</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;">Modificar campos individuales</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;">Array</td>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$push $pull $pop $addToSet $each</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;">Modificar elementos de arrays</td>
-            </tr>
-        </table>
-        <h2 style="margin-top: 0.5em;">Resumen: pipeline de agregación</h2>
-        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 12px;">
-            <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #ccc; padding: 4px;">Etapa</th>
-                <th style="border: 1px solid #ccc; padding: 4px;">Descripción</th>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$match $group $project $sort $limit $skip</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;">Filtrar, agrupar, proyectar, ordenar</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ccc; padding: 4px;"><code>$unwind $lookup $count $addFields</code></td>
-                <td style="border: 1px solid #ccc; padding: 4px;">Descomponer arrays, unir colecciones, contar</td>
-            </tr>
-        </table>
-    </section> -->
-
-    <section class="slide">
-        <h2>Referencias</h2>
-        JSON-LD
-    </section>
-
-    <section class="slide">
-        <h2>Referencias</h2>
-        <ul>
-            <li>Documentación oficial: <a href="https://www.mongodb.com/docs/manual/">mongodb.com/docs/manual</a></li>
-            <li>MongoDB University (cursos gratuitos): <a href="https://learn.mongodb.com/">learn.mongodb.com</a></li>
-            <li>MongoDB Playground (probar online): <a href="https://mongoplayground.net/">mongoplayground.net</a></li>
-            <li>Cheatsheet MQL: <a href="https://www.mongodb.com/developer/products/mongodb/cheat-sheet/">mongodb.com/developer/cheat-sheet</a></li>
-        </ul>
+        <h2>MongoDB / Triple Stores</h2>
+        ¿Se puede cargar un archivo RDF (JSON-LD) en MongoDB?<br>
+        ¿GraphDB / Ontop?
     </section>
 
     <footer class="badge">
