@@ -767,23 +767,16 @@ db.alumni.aggregate([<br>
     <section class="slide">
         <h2>$lookup: unión entre colecciones</h2>
         <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-// Si tuviéramos datos separados en dos colecciones:<br>
-// pedidos: { cliente_id: 1, producto: "Monitor", precio: 250 }<br>
-// clientes: { _id: 1, nombre: "Javier Cansado" }<br>
-<br>
 db.pedidos.aggregate([<br>
-&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;$lookup: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from: "clientes",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// colección a unir<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localField: "cliente_id",&nbsp;&nbsp;&nbsp;&nbsp;// campo en pedidos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreignField: "_id",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// campo en clientes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as: "info_cliente"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// nombre del array resultado<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from: "alumni",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localField: "cliente",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreignField: "nombre",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as: "alumniMatch"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;}<br>
 ])<br>
-// Resultado:<br>
-// { cliente_id: 1, producto: "Monitor", precio: 250,<br>
-//&nbsp;&nbsp;&nbsp;info_cliente: [{ _id: 1, nombre: "Javier Cansado" }] }<br>
         </pre>
     </section>
 
@@ -815,7 +808,7 @@ db.pedidos.aggregate([<br>
 }<br>
         </pre>
         <p><strong>Ventajas:</strong> lectura muy rápida (una sola consulta)</p>
-        <p><strong>Inconvenientes:</strong> datos duplicados, documentos muy grandes (límite 16 MB)</p>
+        <p><strong>Inconvenientes:</strong> datos duplicados, documentos muy grandes</p>
     </section>
 
     <section class="slide">
@@ -874,34 +867,6 @@ db.pedidos.aggregate([<br>
                 <td style="border: 1px solid #ccc; padding: 6px;">Consistencia</td>
             </tr>
         </table>
-    </section>
-
-    <section class="slide">
-        <h2>Ejemplo completo: Blog</h2>
-        <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
-&nbsp;&nbsp;// Documento de blog con datos embebidos<br>
-<br>
-{<br>
-&nbsp;&nbsp;titulo: "Introducción a MongoDB",<br>
-&nbsp;&nbsp;autor: "Javier Cansado",<br>
-&nbsp;&nbsp;fecha: ISODate("2026-04-15"),<br>
-&nbsp;&nbsp;contenido: "MongoDB es una base de datos NoSQL...",<br>
-&nbsp;&nbsp;tags: ["NoSQL", "MongoDB", "bases de datos"],<br>
-&nbsp;&nbsp;comentarios: [<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usuario: "Jon",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;texto: "Muy buen artículo",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fecha: ISODate("2026-04-16")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usuario: "Miren",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;texto: "Me ha ayudado mucho",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fecha: ISODate("2026-04-17")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;],<br>
-&nbsp;&nbsp;likes: 42<br>
-}<br>
-        </pre>
     </section>
 
     <section class="slide">
