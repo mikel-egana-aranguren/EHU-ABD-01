@@ -1,5 +1,13 @@
 # Releases
 
+## 2025-2026-5
+
+* Intro NoSQL, Grafos, RDF
+* SPARQL
+* OWL
+* SHACL
+* MongoDB
+
 ## 2025-2026-4
 
 * Intro NoSQL, Grafos, RDF
