@@ -6,7 +6,17 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://vocab.ehu.eus/> .
 
-<http://vocab.ehu.eus> rdf:type owl:Ontology .
+<http://vocab.ehu.eus> rdf:type owl:Ontology ;
+                        owl:imports :estudiante ,
+                                    :pdi .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://vocab.ehu.eus/estudiante/ESTUDIANTE
+<http://vocab.ehu.eus/estudiante/ESTUDIANTE> owl:equivalentClass <http://vocab.ehu.eus/pdi/PDI> .
+
 
 #################################################################
 #    Individuals
@@ -18,8 +28,6 @@
 
 
 ###  http://vocab.ehu.eus/pdi/Mikel
-<http://vocab.ehu.eus/pdi/Mikel> rdf:type owl:NamedIndividual .
-
 
 ###  http://vocab.ehu.eus/pdi/Mikel
 <http://vocab.ehu.eus/pdi/Mikel> rdf:type owl:NamedIndividual .

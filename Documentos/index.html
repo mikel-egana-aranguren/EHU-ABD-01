@@ -53,2488 +53,912 @@
 <body class="shower list">
 
     <header class="caption">
-        <h1>Documentos</h1>
+        <h1>Documentos: MongoDB</h1>
         <p>Mikel Egaña Aranguren</p>
     </header>
 
     <section class="slide" id="cover">
-        <h2>Documentos</h2>
+        <h2>Documentos: MongoDB</h2>
         <p>Mikel Egaña Aranguren</p>
         <p><a href="https://mikel-egana-aranguren.github.io/">mikel-egana-aranguren.github.io</a></p>
-        <p><a href="mailto:mikel.egana@ehu.eus">mikel.egana@ehu.eus</a></p>
+        <p><a href="mailto:mikel.egjavi@ehu.eus">mikel.egjavi@ehu.eus</a></p>
         <img src="../ShowerTemplate/pictures/ehu.png" alt="UPV/EHU ingenieros San Mames" height="25%" style="border: 1px solid #555;">
     </section>
 
     <section class="slide">
-        <h2>Documentos</h2>
+        <h2>Documentos: MongoDB</h2>
         <p><a href="https://github.com/mikel-egana-aranguren/ABD">https://github.com/mikel-egana-aranguren/ABD</a></p>
         <img src="../ShowerTemplate/pictures/by.png" alt="Creative Commons BY" height="10%">
     </section>
 
-    <section class="slide source-slide">
-        <h1>Introducción a MongoDB</h1>
-        <p>Administración de Bases de Datos</p>
-        <p>Departamento de Lenguajes y Sistemas Informáticos</p>
+    <section class="slide">
+        <h2>MongoDB</h2>
+        <p>Base de datos NoSQL orientada a <strong>documentos</strong>: Los datos se almacenan como documentos JSON</p>
+        <p>No requiere un esquema fijo (schemaless)</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Contenido</h1>
+
+    <section class="slide">
+        <h2>Herramientas</h2>
         <ul>
-        <li>Introducción a NoSQL</li>
-        <li>MongoDB</li>
-        <ul>
-        <li>Instalación</li>
-        <li>Estructura de los datos</li>
-        <li>Comandos CRUD</li>
-        <li>Relaciones</li>
-        <li>Esquemas</li>
-        </ul>
+            <li><strong>mongod</strong> — el servidor de base de datos</li>
+        <li><strong>mongosh</strong> — shell interactiva para ejecutar comandos</li>
+        <li><strong>MongoDB Compass</strong> — interfaz gráfica para explorar colecciones</li>
+            <li><strong>MongoDB Atlas</strong> — servicio cloud gestionado</li>
         </ul>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <ul>
-        <li>En ciertos entornos, las BBDD SQL pueden ser demasiado rígidas.</li>
-        <li>Ejemplos:</li>
-        <ul>
-        <li>Almacenar correos electrónicos o mensajes de texto.</li>
-        <ul>
-        <li>La longitud del texto puede variar mucho.</li>
-        <li>Los mensajes pueden tener ficheros adjuntos.</li>
-        </ul>
-        <li>Gestionar mensajes de log de servidores</li>
-        <ul>
-        <li>Cada mensaje de log puede contener campos diferentes</li>
-        <li>La longitud de cada campo puede variar</li>
-        </ul>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <ul>
-        <li>Los sistemas NoSQL (Not Only SQL) ofrecen una alternativa a las BBDD SQL.</li>
-        <li>Características relevantes:</li>
-        <ul>
-        <li>No requieren esquema</li>
-        <ul>
-        <li>No es necesario definir explícitamente el formato de los datos</li>
-        </ul>
-        <li>Facilidad para escalabilidad horizontal</li>
-        <ul>
-        <li>Preparados para crecer añadiendo más nodos/VMs</li>
-        </ul>
-        <li>Particionado horizontal (sharding)</li>
-        <ul>
-        <li>Los datos se distribuyen entre los nodos disponibles</li>
-        <li>Favorece el acceso concurrente</li>
-        </ul>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <ul>
-        <li>Tipos de SGBDs en entornos empresariales</li>
-        <ul>
-        <li>Según “2021 State of Database DevOps Survey” de Redgate1</li>
-        </ul>
-        </ul>
-        <p>4</p>
-        <p>1 a 100</p>
-        <p>empleados</p>
-        <p>101 a 1000</p>
-        <p>empleados</p>
-        <p>Más de 1000 empleados</p>
-        <p>1: Redgate “2021 State of Database Devops”: <u>https://<a href="http://www.red-gate.com/solutions/database-devops/report-2021">www.red-gate.com/solutions/database-devops/report-2021</u></a></p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <ul>
-        <li>Categorías de sistemas NoSQL:</li>
-        <li>Basados en documentos</li>
-        <ul>
-        <li>Organizan los datos utilizando formatos como JSON</li>
-        <li>P.e. MongoDB</li>
-        </ul>
-        <li>Clave-valor</li>
-        <ul>
-        <li>Cada dato tiene una clave asociada</li>
-        <li>P.e. Redis</li>
-        </ul>
-        </ul>
-        <p>5</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <p>1: Row vs Column Oriented Databases: <u>https://dataschool.com/data-modeling-101/row-vs-column-oriented-databases/</u></p>
-        <ul>
-        <li>Categorías de sistemas NoSQL:</li>
-        <li>Basados en columnas</li>
-        <ul>
-        <li>Organizan los datos en filas1</li>
-        <li>P.e. Apache Druid</li>
-        </ul>
-        <li>Basados en grafos</li>
-        <ul>
-        <li>Los datos se representan como grafos</li>
-        <ul>
-        <li>Se recorren utilizando expresiones de rutas.</li>
-        </ul>
-        <li>P.e. Neo4J</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <ul>
-        <li>En este tema utilizaremos <b>MongoDB</b></li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/">www.mongodb.com/</u></a></li>
-        </ul>
-        <li>BD NoSQL orientada a documentos</li>
-        <ul>
-        <li>Creada en 2009</li>
-        <li>Última versión: 6.0</li>
-        <li>Su nombre viene de la palabra Humongous (“<i>gigantesco</i>”)</li>
-        </ul>
-        <li>Nació de la frustración de usar SQL1</li>
-        </ul>
-        <p>1: When to Use a NoSQL Database: <u> https://<a href="http://www.mongodb.com/nosql-explained/when-to-use-nosql">www.mongodb.com/nosql-explained/when-to-use-nosql</u></a></p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Introducción</h1>
-        <ul>
-        <li>Ranking de popularidad de SGBDs</li>
-        <ul>
-        <li>Según DB-Engines.com: <u>db-engines.com/en/ranking_trend</u></li>
-        <ul>
-        <li>Fecha: 18 de abril de 2023</li>
-        </ul>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB</h1>
-        <p>Ecosistema de productos MongoDB:</p>
-        <ul>
-        <li>MongoDB Community Edition</li>
-        <ul>
-        <li>Versión libre de la BD</li>
-        <ul>
-        <li>En este tema usaremos esta versión</li>
-        </ul>
-        </ul>
-        <li>MongoDB Enterprise</li>
-        <ul>
-        <li>Versión comercial de la DB</li>
-        </ul>
-        <li>Atlas</li>
-        <ul>
-        <li>Servicio de BD en la nube</li>
-        </ul>
-        <li>Herramientas adicionales</li>
-        <ul>
-        <li>P.e. Compass (GUI para MongoDB)</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Instalación</h1>
-        <ul>
-        <li>Instalación de Community Edition en Ubuntu 22.04:</li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/docs/manual/tutorial/install-">www.mongodb.com/docs/manual/tutorial/install-</u></a>  <u>mongodb-on-ubuntu/#install-mongodb-community-edition</u></li>
-        </ul>
-        <li>Pasos:</li>
-        <li>Importar la clave pública del repositorio en <i>apt</i>.</li>
-        <li>Crear un fichero de listado para MongoDB.</li>
-        <li>Recargar el listado de paquetes disponibles en <i>apt</i>.</li>
-        <li>Instalar usando <i>apt</i>.</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Instalación</h1>
-        <ul>
-        <li>Comprobar el estado de MongoDB:</li>
-        </ul>
-        <ul>
-        <li>Iniciar/detener MongoDB manualmente:</li>
-        <ul>
-        <li>Utilizar <i>start </i>para iniciar o <i>stop </i>para detener</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Iniciar MongoDB con el arranque del sistema:</li>
-        </ul>
-        <ul>
-        <li>Abrir una consola de MongoDB:</li>
-        </ul>
-        <p>sudo service mongod status</p>
-        <p>sudo service mongod start|stop</p>
-        <p>sudo systemctl enable mongod.service</p>
-        <p>mongosh</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB</h1>
-        <ul>
-        <li>Estructura de los datos</li>
-        <ul>
-        <li>Ejemplo con la BD “Tienda”</li>
-        </ul>
-        </ul>
-        <p>Tienda</p>
-        <p>Clientes</p>
-        <p>Pedidos</p>
-        <p>Bases de datos</p>
-        <p>Colecciones</p>
-        <p>Documentos</p>
-        <p>{nombre: “Unai”, DNI: “12345678”}</p>
-        <p>{nombre: “Jon”}</p>
-        <p>{ … }</p>
-        <p>{ … }</p>
-        <p>No tienen los mismos campos</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB</h1>
-        <ul>
-        <li>Estructura de los datos</li>
-        <ul>
-        <li>Un documento se organiza en formato JSON1</li>
-        <ul>
-        <li>JavaScript Object Notation</li>
-        </ul>
-        <li>Cada dato se almacena como clave:valor</li>
-        <ul>
-        <li>Ejemplo para un “cliente”:</li>
-        <p>{</p>
-        </ul>
-        </ul>
-        </ul>
-        <p>13</p>
-        <p>1: Internamente se almacena en formato Binary JSON (BSON)</p>
-        <p>nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>direccion:</p>
-        <p>{</p>
-        <p>ciudad: “Bilbao”</p>
-        <p>}</p>
-        <p>telefonos: [</p>
-        <p>{ despacho: 946014458 },</p>
-        <p>{ movil: 612345678 }</p>
-        <p>]</p>
-        <p>}</p>
-        <p>Un valor puede ser otro documento</p>
-        <p>Un valor puede contener un listado de documentos</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB</h1>
-        <ul>
-        <li>Estructura de los datos</li>
-        <ul>
-        <li>Equivalencia <u>aproximada</u> con el sistema relacional</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Diferencias principales:</li>
-        <ul>
-        <li>No todos los documentos tienen por qué tener las mismas claves</li>
-        <li>No es necesario definir relaciones explícitas entre documentos</li>
-        </ul>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>Sistema relacional</b></p>
-            </td>
-            <td>
-        <p><b>Sistema basado en documentos</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Tabla</p>
-            </td>
-            <td>
-        <p>Colección</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Fila</p>
-            </td>
-            <td>
-        <p>Documento</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Columna/Campo</p>
-            </td>
-            <td>
-        <p>Clave</p>
-            </td>
-          </tr>
+
+    <section class="slide">
+      <h2>Modelo de datos</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 18px;">
+            <tr style="background-color: #f0f0f0;">
+          <th style="border: 1px solid #ccc; padding: 8px;">Concepto</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">MongoDB</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Base de datos</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Base de datos</td>
+            </tr>
+            <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">Unidad de organización</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Colección</td>
+            </tr>
+            <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">Unidad de dato</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Documento</td>
+            </tr>
+            <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">Atributo</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Campo (field)</td>
+            </tr>
+            <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">Identificador</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">_id</td>
+            </tr>
+            <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">Relaciones</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">Relaciones entre documento: embebidos / referencias</td>
+            </tr>
         </table>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
+
+    <section class="slide">
+        <h2>JSON: JavaScript Object Notation</h2>
+        <p>Formato de intercambio de datos ligero, legible por humanos y máquinas</p>
+        <p><a href="https://www.json.org/">JSON</a> (<a href="https://ecma-international.org/publications-and-standards/standards/ecma-404/">ECMA 404</a>)</p>
+        <p>Basado en pares <strong>clave: valor</strong></p>
+        <p>Tipos de datos: strings, números, booleanos, arrays, objetos, null</p>
+        <p>Los objetos pueden contener otros objetos y arrays de objetos: modelar datos jerárquicos de forma directa</p>
+    </section>
+
+    <section class="slide">
+        <h2>Documentos JSON</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+{<br>
+&nbsp;&nbsp;"nombre": "Javier Cansado",<br>
+&nbsp;&nbsp;"direccion": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"calle": "Gran Vía 1",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"ciudad": "Bilbao",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"cp": "48001"<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;"telefonos": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"tipo": "movil", "numero": "666111222"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"tipo": "casa", "numero": "944123456"}<br>
+&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;"viviendas": ["Deusto", "Abando", "Begoña"]<br>
+}
+        </pre>
+
+    </section>
+
+    <section class="slide">
+        <h2>BSON: Binary JSON</h2>
+        <p>MongoDB almacena los documentos internamente en formato <strong>BSON</strong></p>
+        <p>Representación binaria de JSON, más eficiente para almacenamiento</p>
+    </section>
+
+        <section class="slide">
+        <h2>BSON: Binary JSON</h2>
+        <p>Soporta tipos adicionales que JSON no tiene:</p>
         <ul>
-        <li>Limpiar la pantalla</li>
-        </ul>
-        <ul>
-        <li>Mostrar BBDD existentes</li>
-        </ul>
-        <ul>
-        <li>Mostrar BBDD en uso</li>
-        </ul>
-        <ul>
-        <li>Cambiar a una BBDD</li>
-        </ul>
-        <ul>
-        <li>cls</li>
-        </ul>
-        <ul>
-        <li>show dbs</li>
-        </ul>
-        <ul>
-        <li>db</li>
-        </ul>
-        <ul>
-        <li>use &lt;nombre-BBDD&gt;</li>
+            <li><code>ObjectId</code> — identificador único de 12 bytes</li>
+            <li><code>Date</code> — fechas con milisegundos</li>
+            <li><code>NumberInt</code>, <code>NumberLong</code>, <code>NumberDecimal</code></li>
+            <li><code>BinData</code> — datos binarios</li>
+            <li><code>Regex</code> — expresiones regulares</li>
         </ul>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Creación de BBDD y colecciones</li>
-        <ul>
-        <li>Por defecto, MongoDB funciona en modo de creación implícita</li>
-        <ul>
-        <li>Si se accede a un objeto que no existe, se crea automáticamente</li>
-        </ul>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Crear la BBDD “tienda” y la colección “clientes”</li>
-        <li>Es necesario crear un primer documento en “clientes”</li>
-        <ul>
-        <li>use tienda</li>
-        <li>db.clientes.insertOne({ “nombre”: “Unai” })</li>
-        </ul>
-        </ul>
-        </ul>
-        </ul>
-        <p>Nombre de la colección</p>
-        <p>Método para insertar 1 documento</p>
-        <p>Documento con datos de un cliente</p>
+
+    <section class="slide">
+        <h2>ObjectId</h2>
+        <p>Cada documento tiene un campo <code>_id</code> que actúa como clave primaria</p>
+        <p>Si no se proporciona, MongoDB genera un <code>ObjectId</code> automáticamente</p>
+        <p>Es único globalmente, ordenable por tiempo de creación</p>
+        <p>Se genera de forma automática y funciona bien en sistemas distribuidos</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Creación de BBDD y colecciones</li>
-        <ul>
-        <li>En MongoDB, cada documento tiene un identificador único</li>
-        <ul>
-        <li>Se asigna automáticamente en su creación</li>
-        <ul>
-        <li>Aunque también podemos asignar uno de forma manual</li>
-        </ul>
-        </ul>
-        <li>Si la creación ha sido correcta, se mostrará algo similar a:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li><i>Acknowledged:true </i>indica que no ha habido fallos</li>
-        <li><i>insertedId</i>: indica el identificador del documento</li>
-        </ul>
-        </ul>
-        <p>{</p>
-        <p>acknowledged: true,</p>
-        <p>insertedId: ObjectId(&quot;626169bbae7b857469c4514b&quot;)</p>
-        <p>}</p>
+
+    <section class="slide">
+        <h2>Conectar y crear una base de datos</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+// Conectar al servidor (Terminal o GUI)<br>
+$ mongosh<br>
+$ mongodb-compass<br>
+<br>
+// En MongoDB basta con usar la BD (se crea al insertar)<br>
+test> use ehu<br>
+<br>
+// Ver las colecciones de la BD actual<br>
+ehu> show collections<br>
+        </pre>
+        <p>MongoDB crea las bases de datos y colecciones <strong>de forma implícita</strong> al insertar el primer documento</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Creación de BBDD y colecciones</li>
-        <ul>
-        <li>Insertar múltiples documentos en una colección</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>donde &lt;array-docs&gt; es un Array de documentos.</li>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Insertar múltiples documentos en la colección “clientes”:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.insertMany( &lt;array-docs&gt; )</li>
-        </ul>
-        <ul>
-        <li>db.clientes.insertMany( 	[</li>
-        <p>{nombre: &quot;Amaia” , DNI: 33344},</p>
-        <p>{nombre: &quot;Ainhoa&quot;, DNI: 33455}</p>
-        <p>] )</p>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Mostrar el contenido de una colección</li>
-        <ul>
-        <li>Mostrar todos los documentos:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Mostrar los documentos que encajen con un patrón:</li>
-        </ul>
-        <ul>
-        <li>Encontrar el 1er documento que encaje con un patrón:</li>
-        <ul>
-        <li>Sin parámetros mostraría el 1er documento de la colección</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.find()</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.find(&lt;patrón&gt;)</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.findOne(&lt;patrón&gt;)</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Patrones en las operaciones CRUD</li>
-        <ul>
-        <li>Para filtrar los documentos a los que afecta cada operación CRUD se puede proveer un patrón</li>
-        <li>El patrón es un objeto JSON que indica los campos a buscar.</li>
-        <ul>
-        <li>Ejemplo: Buscar en la colección “clientes” los clientes con nombre “Unai”:</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Ejemplo: Buscar en “clientes” los clientes con nombre “Unai” y DNI 12345:</li>
-        </ul>
-        <ul>
-        <li>db.clientes.find( { nombre: &quot;Unai&quot; } )</li>
-        </ul>
-        <ul>
-        <li>db.clientes.find( { nombre: &quot;Unai&quot;, DNI: 12345 } )</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Patrones en las operaciones CRUD</li>
-        <ul>
-        <li>Para filtrar los documentos a los que afecta cada operación CRUD se puede proveer un patrón</li>
-        <li>Se pueden utilizar operadores de comparación</li>
-        <ul>
-        <li>Los más comunes: eq (=), ne (!=), gt (&gt;), gte (&gt;=), lt (&lt;), lte (&lt;=)</li>
-        <li>Ejemplo: Buscar en la colección “clientes” los DNIs mayores que 30000:</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Se pueden utilizar expresiones regulares</li>
-        <ul>
-        <li>Ejemplo: Buscar clientes cuyo nombre empiece por M</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.clientes.find( { DNI: { $gt: 30000 } } )</li>
-        </ul>
-        <ul>
-        <li>db.clientes.find( { nombre: /M./ } )</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Mostrar el contenido de una colección</li>
-        <ul>
-        <li>El 2º parámetro del comando <i>find </i>permite indicar los campos a mostrar para cada objeto.</li>
-        <ul>
-        <li>Evitar leer datos de más, útil en BBDD grandes.</li>
-        <li>Para cada campo, utilizar 1 como valor para mostrarlo o 0 para omitirlo.</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Si se utiliza el 2º parámetro, por defecto todos los campos se omiten.</li>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Recuperar sólo el DNI de los documentos en la colección “clientes”</li>
-        </ul>
-        </ul>
-        <p>{ campoAMostrar: 1, campoAOcultar: 0}</p>
-        <ul>
-        <li>db.clientes.find( {} , {DNI: 1, _id: 0})</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Mostrar el contenido de una colección</li>
-        <ul>
-        <li>Comparación con SQL</li>
-        <li>Ejemplo: Recuperar el nombre del cliente con nº de DNI 33344</li>
-        <ul>
-        <li>En SQL:</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>En MongoDB:</li>
-        </ul>
-        <ul>
-        <li>Más comparaciones de SQL con MongoDB:</li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/docs/manual/reference/sql-comparison/">www.mongodb.com/docs/manual/reference/sql-comparison/</u></a></li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.clientes.find( {DNI: 33344}, {nombre:1, _id:0} )</li>
-        </ul>
-        <p>mysql&gt; SELECT nombre FROM clientes WHERE DNI=3344;</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Eliminar documentos</li>
-        <ul>
-        <li>Eliminar el 1er documento que encaje con &lt;patrón&gt;</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Eliminar los documentos que encajen con &lt;patrón&gt;</li>
-        </ul>
-        <ul>
-        <li>Eliminar todos los documentos de una colección</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.deleteOne(&lt;patrón&gt;)</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.deleteMany(&lt;patrón&gt;)</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.deleteMany( {} )</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Modificar documentos</li>
-        <ul>
-        <li>Modificar documentos en una colección:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;patron-busq&gt;: Patrón para buscar los documentos a modificar</li>
-        <li>&lt;cambios&gt;: Objeton JSON con los campos a modificar</li>
-        </ul>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Para los clientes cuyo DNI sea 22233, actualizar su nombre a “Nagore”:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.updateMany(&lt;patrón-busq&gt;, {$set: &lt;cambios&gt;})</li>
-        </ul>
-        <ul>
-        <li>db.clientes.updateMany({ DNI: 22233 }, {$set:{ nombre: &quot;Nagore&quot; } })</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Modificar documentos</li>
-        <ul>
-        <li>Modificar un documento de una colección:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>donde &lt;patrón-busq&gt; y &lt;cambios&gt; funcionan como se indica en la 	diapositiva anterior.</li>
-        <li>Reemplazar un documento por otro:</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;patrón-busq&gt;: Patrón de búsqueda</li>
-        <li>&lt;nuevo-doc&gt;: Documento que reemplazará a los documentos que encajen 	con &lt;patrón-busq&gt;</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.replaceOne(&lt;patrón-busq&gt;, &lt;nuevo-doc&gt; )</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.updateOne(&lt;patrón-busq&gt;, {$set: &lt;cambios&gt;})</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">MongoDB: Comandos</h1>
-        <ul>
-        <li>Mostrar colecciones en una BD:</li>
-        </ul>
-        <ul>
-        <li>Eliminar una colección completa:</li>
-        </ul>
-        <ul>
-        <li>Eliminar una BD:</li>
-        </ul>
-        <ul>
-        <li>db.&lt;nombre-colección&gt;.drop()</li>
-        </ul>
-        <ul>
-        <li>db.dropDatabase()</li>
-        </ul>
-        <ul>
-        <li>show collections</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 1</h1>
-        <ul>
-        <li>Crear una BBDD llamada “cine” que contenga las siguientes colecciones y documentos:</li>
-        <p>Colección “peliculas”	Colección “actores”</p>
-        </ul>
-        <ul>
-        <li><i>Continúa en la siguiente diapositiva</i></li>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>nombre</b></p>
-            </td>
-            <td>
-        <p><b>año</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Her</p>
-            </td>
-            <td>
-        <p>2013</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Joker</p>
-            </td>
-            <td>
-        <p>2019</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Judy</p>
-            </td>
-            <td>
-        <p>2019</p>
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td>
-        <p><b>nombre</b></p>
-            </td>
-            <td>
-        <p><b>edad</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Joaquín Phoenix</p>
-            </td>
-            <td>
-        <p>12</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Renee Zellweger</p>
-            </td>
-            <td>
-        <p>53</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Keanu Reeves</p>
-            </td>
-            <td>
-        <p>58</p>
-            </td>
-          </tr>
+
+    <section class="slide">
+        <h2>CRUD: Operaciones básicas</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 18px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 8px;">Operación</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">Métodos MongoDB</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Crear</td>
+          <td style="border: 1px solid #ccc; padding: 8px;">insertOne() / insertMany()</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Leer</td>
+          <td style="border: 1px solid #ccc; padding: 8px;">find() / findOne()</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Actualizar</td>
+          <td style="border: 1px solid #ccc; padding: 8px;">updateOne() / updateMany()</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Borrar</td>
+          <td style="border: 1px solid #ccc; padding: 8px;">deleteOne() / deleteMany()</td>
+            </tr>
         </table>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 1</h1>
-        <ul>
-        <li>Modificar la edad de Joaquín Phoenix a 48 años.</li>
-        <li>Eliminar a Keanu Reeves de la colección “actores”.</li>
-        <li>Añadir el siguiente documento a la colección “películas”:</li>
-        <ul>
-        <li>nombre: “Avatar”</li>
-        <li>año: 2009</li>
-        <li>nota: 7.2</li>
-        </ul>
-        <li>Mostrar únicamente los nombres de las películas estrenadas a partir de 2015.</li>
-        </ul>
+
+    <section class="slide">
+        <h2>insertOne()</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.insertOne({<br>
+&nbsp;&nbsp;nombre: "Javier Cansado",<br>
+&nbsp;&nbsp;email: "javi@ehu.eus",<br>
+&nbsp;&nbsp;edad: 21<br>
+})
+        </pre>
+        <p>No hace falta definir la tabla colección previamente</p>
+        <p>No hace falta que todos los documentos tengan los mismos campos</p>
+        <p>MongoDB inserta un ID automáticamente</p>
+        <p>db.alumni.findOne({ _id: ObjectId("XXX") }) / db.alumni.find()</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>Un documento puede contener:</li>
-        <p>Documentos embebidos</p>
-        </ul>
-        <p>nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>direccion: { ciudad: “Bilbao”, CP: 48013,</p>
-        <p>ubicacion: {</p>
-        <p>calle: “R. Moreno”, piso: 3,</p>
-        <p>despacho: 17</p>
-        <p>}</p>
-        <p>}</p>
-        <p>{	{</p>
-        <p>nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>telefonos: [</p>
-        <p>941234567, 612345678, 946014458</p>
-        <p>],</p>
-        <p>coches: [</p>
-        <p>{marca: “Seat”, modelo: “Leon”},</p>
-        <p>{marca: “Audi”, modelo: “A4”}</p>
-        <p>]</p>
-        <p>}</p>
-        <p>Listados</p>
-        <p>Listado de 2 documentos</p>
-        <p>}</p>
-        <p>”dirección” y “ubicación” contienen, cada uno, un documento embebido</p>
-        <p>Listado de 3 integers</p>
+
+    <section class="slide">
+        <h2>insertMany()</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.insertMany([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Jon Aguirre",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "jon@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 22,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;notas: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "ABD", nota: 7.5 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Miren Etxebarria",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "miren@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 20<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Unai López",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "unai@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 23,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;becado: true<br>
+&nbsp;&nbsp;}<br>
+])<br>
+        </pre>
+
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>En un entorno real, es habitual tener:</li>
-        <ul>
-        <li>Varias colecciones</li>
-        <ul>
-        <li>Cada una representa una entidad del contexto.</li>
-        </ul>
-        <li>Relaciones entre los datos de diferentes entidades.</li>
-        <li>P.e. “clientes”, “productos” y ”pedidos”</li>
-        </ul>
-        <li>MongoDB no proporciona una técnica concreta para definir relaciones entre colecciones.</li>
-        <ul>
-        <li>Las debemos definir nosotros.</li>
-        </ul>
-        </ul>
+
+    <section class="slide">
+        <h2>Schemaless: flexibilidad</h2>
+              <p>Cada documento puede tener campos diferentes </p>
+
+        <p>Todos conviven en la misma colección sin problemas</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>En MongoDB, hay 2 formas de relacionar información de diferentes entidades:</li>
-        <ul>
-        <li>Documentos embebidos</li>
-        </ul>
-        </ul>
-        <p><i>Colección “clientes”</i></p>
-        <p>{</p>
-        <p>nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>direccion:</p>
-        <p>{</p>
-        <p>ciudad: “Bilbao”, CP: 48013,</p>
-        <p>...</p>
-        <p>}</p>
-        <p>Características:</p>
-        <ul>
-        <li>Adecuado para datos que no se solapan/repiten</li>
-        <li><i>Ventaja</i>: Los datos se agrupan lógicamente</li>
-        <li><i>Desventaja</i>: Puede generar duplicidades que debemos gestionar</li>
-        </ul>
+
+    <section class="slide">
+        <h2>find(): consultar documentos</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find()<br>
+<br>
+db.alumni.find({ edad: 20 })<br>
+<br>
+db.alumni.find({ nombre: "Jon Aguirre" })<br>
+<br>
+// findOne() devuelve solo el primer resultado<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>En MongoDB, hay 2 formas de relacionar información de diferentes entidades:</li>
-        <p>2) Utilizar campos concretos como referencia</p>
-        </ul>
-        <p><i>Colección “clientes”</i></p>
-        <p>{</p>
-        <p>nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>direcciones: “001”,</p>
-        <p>...</p>
-        <p><i>Colección “direcciones”</i></p>
-        <p>{</p>
-        <p>_id: “001”, ciudad: “Bilbao”, CP: 48013,</p>
-        <p>...</p>
-        <ul>
-        <li>Adecuado para datos que se referencien en diferentes colecciones.</li>
-        <li>Ventaja: Elimina posibles duplicidades</li>
-        <li>Desventajas:</li>
-        <ul>
-        <li>Más complejo de gestionar</li>
-        <li>Requiere agregaciones para obtener datos relacionados</li>
-        </ul>
-        </ul>
-        <p>Características:</p>
+
+    <section class="slide">
+        <h2>Operadores de comparación</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find({ edad: { $gt: 21 } })<br>
+<br>
+db.alumni.find({ edad: { $gte: 20, $lte: 23 } })<br>
+<br>
+db.alumni.find({ edad: { $ne: 21 } })<br>
+<br>
+db.alumni.find({ edad: { $in: [20, 21, 22] } })<br>
+        </pre>
+        <p><code>$gt</code>, <code>$gte</code>, <code>$lt</code>, <code>$lte</code>, <code>$eq</code>, <code>$ne</code>, <code>$in</code>, <code>$nin</code></p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>Se pueden utilizar <u>referencias</u> para resolver 2 escenarios posibles:</li>
-        <li>Relación entre los datos 1 a N:</li>
-        <ul>
-        <li>P.e. un cliente puede tener múltiples direcciones, una dirección pertenece sólo a 1 cliente.</li>
-        </ul>
-        </ul>
-        <p><i>Colección “clientes”</i></p>
-        <p>{</p>
-        <p>nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>direcciones: [“001”, “002”],</p>
-        <p>...</p>
-        <p><i>Colección “direcciones”</i></p>
-        <p>{</p>
-        <p>_id: “001”, ciudad: “Bilbao”, CP: 48013,</p>
-        <p>...</p>
-        <p>Se utiliza el campo</p>
-        <p>_id como referencia</p>
+
+    <section class="slide">
+        <h2>Operadores lógicos</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find({<br>
+&nbsp;&nbsp;$and: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ edad: { $gt: 20 } },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ nombre: "Javier Cansado" }<br>
+&nbsp;&nbsp;]<br>
+})<br>
+<br>
+db.alumni.find({<br>
+&nbsp;&nbsp;$or: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ edad: { $lt: 22 } },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ becado: true }<br>
+&nbsp;&nbsp;]<br>
+})<br>
+        </pre>
+        <p><code>$and</code>, <code>$or</code>, <code>$not</code>, <code>$nor</code></p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>Se pueden utilizar <u>referencias</u> para resolver 2 escenarios posibles:</li>
-        <li>Relación entre los datos N a N:</li>
-        <ul>
-        <li>P.e. un cliente puede comprar múltiples productos,</li>
-        <h2>un producto puede ser comprado por múltiples clientes.</h2>
-        </ul>
-        </ul>
-        <p><i>Colección “clientes”</i></p>
-        <p>{</p>
-        <p>_id = “cli-01” nombre: “Unai”, DNI: “12345678A”,</p>
-        <p>...</p>
-        <p><i>Colección “producto”</i></p>
-        <p>{</p>
-        <p>_id: “pro-02”, marca: “Apple”, modelo: “iPhone 14”</p>
-        <p>}</p>
-        <p><i>Colección “pedidos”</i></p>
-        <p>{</p>
-        <p>_id: “ped-001”, cliente: “cli-01”, productos: [</p>
-        <p>“pro-01”, ”pro-02”</p>
-        <p>]</p>
-        <p>}</p>
+
+    <section class="slide">
+        <h2>AND implícito</h2>
+        <p>Cuando hay múltiples campos, MongoDB aplica AND:</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find({ edad: 21, nombre: "Javier Cansado" })<br>
+<br>
+<br>
+db.alumni.find({<br>
+&nbsp;&nbsp;$and: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ edad: 21 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ nombre: "Javier Cansado" }<br>
+&nbsp;&nbsp;]<br>
+})<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>¿Cuando utilizar cada uno?</li>
-        </ul>
-        <p>Documentos embebidos</p>
-        <p>Referencias</p>
-        <ul>
-        <li>Datos que estén fuertemente relacionados y que no estén duplicados.</li>
-        <li>Relaciones 1 a 1.</li>
-        <ul>
-        <li>P.e. un cliente tendrá sólo una dirección asociada.</li>
-        </ul>
-        <li>Relaciones 1 a N donde no haya duplicidades.</li>
-        </ul>
-        <ul>
-        <li>Datos de entidades independientes pero relacionadas.</li>
-        <li>Relaciones 1 a N.</li>
-        <li>Relaciones N a N.</li>
-        </ul>
+
+    <section class="slide">
+        <h2>Proyección (elegir campos)</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find(<br>
+&nbsp;&nbsp;{},                          // filtro: todos<br>
+&nbsp;&nbsp;{ nombre: 1, email: 1 }     // proyección: solo estos campos<br>
+)<br>
+<br>
+// Excluir campos (mostrar todos menos email):<br>
+db.alumni.find(<br>
+&nbsp;&nbsp;{},<br>
+&nbsp;&nbsp;{ email: 0 }<br>
+)<br>
+<br>
+// El campo _id se incluye siempre por defecto<br>
+// Para excluirlo:<br>
+db.alumni.find({}, { nombre: 1, _id: 0 })<br>
+        </pre>
+        <p>1 = incluir, 0 = excluir. No se pueden mezclar (excepto <code>_id</code>)</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>Se pueden combinar los datos de diferentes colecciones mediante una operación de agregación</li>
-        <ul>
-        <li>Similar a la operación Join relacional.</li>
-        </ul>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Crear una colección que contenga los datos de los pedidos combinados con los datos de los clientes</li>
-        </ul>
-        </ul>
-        <p><i>Colección “pedidos”</i></p>
-        <p>{ _id: “ped-001”, cliente: “cli-01”, productos: [“pro-01”]</p>
-        <p>}</p>
-        <p><i>Colección “clientes”</i></p>
-        <p>{ _id = “cli-01” nombre: “Unai”, DNI: 45823150C	}</p>
-        <p><i>Combinación</i></p>
-        <p>{ _id: “ped-001”, cliente: “cli-01”, productos: [“pro-01”] datosCliente: {</p>
-        <p>_id = “cli-01” nombre: “Unai”, DNI: 45823150C</p>
-        <p>}</p>
+
+    <section class="slide">
+        <h2>Ordenar, limitar</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find().sort({ edad: 1 })<br>
+<br>
+db.alumni.find().sort({ edad: -1 })<br>
+<br>
+db.alumni.find().limit(3)<br>
+<br>
+db.alumni.find().sort({ edad: -1 }).limit(2)<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Relaciones</h1>
-        <ul>
-        <li>La operación de agregación y el operador $lookup para combinar colecciones.</li>
-        <ul>
-        <li>Ejemplo: Crear una colección que contenga los datos de los pedidos combinados con los datos de los clientes</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.pedidos.aggregate([</li>
-        <p>{</p>
-        <p>$lookup: {</p>
-        <p>from: &quot;clientes&quot;, localField: &quot;cliente&quot;, foreignField: &quot;_id&quot;, as: &quot;datosClientes&quot;}</p>
-        <p>}</p>
-        <p>])</p>
-        </ul>
-        <p>Colección a combinar</p>
-        <p><i>Colección “clientes”</i></p>
-        <p>{ _id = “cli-01” nombre: “Unai”, DNI: 45823150C	}</p>
-        <p><i>Colección “pedidos”</i></p>
-        <p>{ _id: “ped-001”, cliente: “cli-01”, productos: [“pro-01”]</p>
-        <p>}</p>
-        <p>Colección origen</p>
-        <p>Campo para combinación en origen</p>
-        <p>Campo para</p>
-        <p>combinación en</p>
-        <p>colección a combinar</p>
-        <p>Nombre para el campo que incluirá combinados</p>
+
+    <section class="slide">
+        <h2>Contar documentos</h2>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.countDocuments()<br>
+<br>
+db.alumni.countDocuments({ edad: { $gt: 21 } })<br>
+<br>
+// Contar con estimación rápida (para colecciones grandes):<br>
+db.alumni.estimatedDocumentCount()<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 2</h1>
-        <ul>
-        <li><i>Utilizando la BD “cine” creada en el ejercicio 1:</i></li>
-        <li>Añadir un campo “premios” a los documentos de “actores” con la siguiente información:</li>
-        <ul>
-        <li>Crear un listado de documentos</li>
-        </ul>
-        </ul>
-        <ul>
-        <li><i>Continúa en la siguiente diapositiva</i></li>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>actor/actriz</b></p>
-            </td>
-            <td>
-        <p><b>nombre</b></p>
-            </td>
-            <td>
-        <p><b>año</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Renée Zellweger</p>
-            </td>
-            <td>
-        <p>Oscar a la mejor actriz</p>
-            </td>
-            <td>
-        <p>2020</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Renée Zellweger</p>
-            </td>
-            <td>
-        <p>Globo de oro a la mejor actriz</p>
-            </td>
-            <td>
-        <p>2020</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Joaquin Phoenix</p>
-            </td>
-            <td>
-        <p>Oscar al mejor actor</p>
-            </td>
-            <td>
-        <p>2020</p>
-            </td>
-          </tr>
+
+    <section class="slide">
+        <h2>updateOne()</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Javier Cansado" },    // filtro<br>
+&nbsp;&nbsp;{ $set: { edad: 22 } }       // actualización (UPSERT)<br>
+)<br>
+<br>
+// $set modifica solo los campos indicados<br>
+// Si el campo no existe, lo crea:<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Javier Cansado" },<br>
+&nbsp;&nbsp;{ $set: { telefono: "666111222" } }<br>
+)<br>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Operadores de actualización</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+// Incrementar un valor numérico<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $inc: { edad: 1 } }<br>
+)<br>
+<br>
+// Eliminar un campo del documento<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Unai López" },<br>
+&nbsp;&nbsp;{ $unset: { becado: "" } }<br>
+)<br>
+<br>
+// Renombrar un campo<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Javier Cansado" },<br>
+&nbsp;&nbsp;{ $rename: { "telefono": "tlfno" } }<br>
+)<br>
+        </pre>
+        <p><code>$set</code>, <code>$unset</code>, <code>$inc</code>, <code>$rename</code>, <code>$min</code>, <code>$max</code>, <code>$mul</code></p>
+    </section>
+
+    <section class="slide">
+        <h2>updateMany()</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.updateMany(<br>
+&nbsp;&nbsp;{ edad: { $gte: 20 } },<br>
+&nbsp;&nbsp;{ $set: { activo: true } }<br>
+)<br>
+<br>
+// Resultado:<br>
+// { acknowledged: true,<br>
+//   matchedCount: 4,<br>
+//   modifiedCount: 4 }<br>
+        </pre>
+        <p><code>updateOne</code> modifica solo el primer documento que coincida</p>
+        <p><code>updateMany</code> modifica todos los documentos que coincidan</p>
+    </section>
+
+    <section class="slide">
+        <h2>Operaciones sobre arrays</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+// Añadir un elemento a un array<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $push: { notas: { asignatura: "SI", nota: 8.0 } } }<br>
+)<br>
+<br>
+// Añadir varios elementos a un array<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $push: { notas: { $each: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "ED", nota: 6.5 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "SO", nota: 7.0 }<br>
+&nbsp;&nbsp;]}}}<br>
+)<br>
+<br>
+// Eliminar un elemento de un array<br>
+db.alumni.updateOne(<br>
+&nbsp;&nbsp;{ nombre: "Jon Aguirre" },<br>
+&nbsp;&nbsp;{ $pull: { notas: { asignatura: "ED" } } }<br>
+)<br>
+        </pre>
+        <p><code>$push</code>, <code>$pull</code>, <code>$addToSet</code>, <code>$pop</code>, <code>$each</code></p>
+    </section>
+
+    <section class="slide">
+        <h2>deleteOne() y deleteMany()</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.deleteOne({ nombre: "Unai López" })<br>
+<br>
+db.alumni.deleteMany({ edad: { $lt: 20 } })<br>
+<br>
+// Borrar todos los documentos de la colección<br>
+db.alumni.deleteMany({})<br>
+<br>
+// Eliminar la colección completa<br>
+db.alumni.drop()<br>
+<br>
+// Eliminar la base de datos actual<br>
+db.dropDatabase()<br>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>replaceOne()</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+// Reemplaza un documento ENTERO (no campos individuales)<br>
+db.alumni.replaceOne(<br>
+&nbsp;&nbsp;{ nombre: "Javier Cansado" },<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre: "Javier Cansado Fernández",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: "javier.cansado.fernandez@ehu.eus",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edad: 22,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;grado: "Ingeniería Informática"<br>
+&nbsp;&nbsp;}<br>
+)<br>
+        </pre>
+        <p><strong>Cuidado:</strong> <code>replaceOne()</code> sustituye todo el documento</p>
+        <p>A diferencia de <code>updateOne()</code> con <code>$set</code>, que modifica solo campos específicos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Consultas en documentos anidados</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+Datos: mongodb-compass; add data; insert document (nested.json)<br>
+<br>
+// Buscar por campo anidado (dot notation):<br>
+db.alumni.find({ "direccion.ciudad": "Bilbao" }) // mongosh<br>
+{ "direccion.ciudad": "Bilbao" } // mongodb-compass<br>
+        </pre>
+        <p>Dot notation: <code>"campo.subcampo"</code> para acceder a campos anidados</p>
+    </section>
+
+    <section class="slide">
+        <h2>Consultas en arrays</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+Datos: nested-arrays.json (mongodb-compass: import)<br>
+<br>
+// Buscar documentos que contengan "euskera" en el array:<br>
+db.alumni.find({ idiomas: "euskera" })<br>
+// Resultado: Jon<br>
+<br>
+// Buscar documentos con el array exacto:<br>
+db.alumni.find({ idiomas: ["castellano", "francés"] })<br>
+// Resultado: Mikel (orden importa)<br>
+<br>
+// Buscar por tamaño del array:<br>
+db.alumni.find({ idiomas: { $size: 3 } })<br>
+// Resultado: Jon (tiene 3 idiomas)<br>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Consultas en arrays de objetos</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+{<br>
+&nbsp;&nbsp;nombre: "Jon",<br>
+&nbsp;&nbsp;notas: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "ABD", nota: 7.5 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "SI", nota: 8.0 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ asignatura: "SO", nota: 7.0 }<br>
+&nbsp;&nbsp;]<br>
+}<br>
+<br>
+// Buscar ehu con nota > 7 en alguna asignatura:<br>
+db.alumni.find({ "notas.nota": { $gt: 7 } })<br>
+<br>
+// Buscar ehu con nota > 7 en ABD específicamente:<br>
+db.alumni.find({<br>
+&nbsp;&nbsp;notas: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$elemMatch: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;asignatura: "ABD",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nota: { $gt: 7 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+})<br>
+        </pre>
+        <p><code>$elemMatch</code>: el mismo elemento debe cumplir todas las condiciones</p>
+    </section>
+
+    <section class="slide">
+        <h2>$exists y $type</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+// Buscar documentos que TENGAN el campo "becado":<br>
+db.alumni.find({ becado: { $exists: true } })<br>
+<br>
+// Buscar documentos que NO tengan el campo "telefono":<br>
+db.alumni.find({ telefono: { $exists: false } })<br>
+<br>
+// Buscar documentos donde "edad" sea de tipo numérico:<br>
+db.alumni.find({ edad: { $type: "number" } })<br>
+<br>
+// Buscar documentos donde "nombre" sea un string:<br>
+db.alumni.find({ nombre: { $type: "string" } })<br>
+        </pre>
+        <p>Muy útiles en colecciones schemaless donde no todos los documentos tienen los mismos campos</p>
+    </section>
+
+    <section class="slide">
+        <h2>Expresiones regulares</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.find({ nombre: /^Mi*/ })<br>
+<br>
+db.alumni.find({ email: /ehu\.eus$/ })<br>
+<br>
+// Búsqueda case-insensitive:<br>
+db.alumni.find({ nombre: { $regex: "Cansado", $options: "i" } })<br>
+        </pre>
+        <p>Expresiones regulares PCRE (Perl Compatible Regular Expressions)</p>
+    </section>
+
+    <section class="slide">
+        <h2>Aggregation Pipeline</h2>
+        <p>Sistema de procesamiento de datos en etapas (stages)</p>
+        <p>Los documentos pasan por una cadena de transformaciones</p>
+      <p>Permite filtrar, transformar, agrupar y enriquecer datos paso a paso</p>
+        <pre style="font-size:14px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.coleccion.aggregate([
+  { $etapa1: { ... } },
+  { $etapa2: { ... } },
+  { $etapa3: { ... } }
+])
+        </pre>
+        <p>La salida de una etapa es la entrada de la siguiente</p>
+    </section>
+
+    <section class="slide">
+        <h2>Etapas principales del Pipeline</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 6px;">Etapa</th>
+                <th style="border: 1px solid #ccc; padding: 6px;">Descripción</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$match</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Filtra documentos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$group</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Agrupa y calcula</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$project</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Selecciona/transforma campos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$sort</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Ordena resultados</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$limit</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Limita resultados</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$unwind</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Descompone arrays</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$lookup</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Une colecciones</td>
+            </tr>
         </table>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 2</h1>
-        <ul>
-        <li>Añadir un campo “participa” a los documentos de “actores” donde se referencie a las películas en las que ha participado:</li>
-        <ul>
-        <li>Crear un listado de “ObjectId”s</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Mostrar los datos de Joaquin y Renée, incluyendo todos los datos de las películas en las que han participado</li>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>actor/actriz</b></p>
-            </td>
-            <td>
-        <p><b>película</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Joaquin Phoenix</p>
-            </td>
-            <td>
-        <p>Her</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Joaquin Phoenix</p>
-            </td>
-            <td>
-        <p>Joker</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Renée Zellweger</p>
-            </td>
-            <td>
-        <p>Judy</p>
-            </td>
-          </tr>
+
+    <section class="slide">
+        <h2>$match: filtrar</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.aggregate([<br>
+&nbsp;&nbsp;{ $match: { edad: { $gt: 20 } } }<br>
+])<br>
+<br>
+// La sintaxis del filtro es la misma que en find()<br>
+// $match debería ir lo antes posible para reducir<br>
+// el número de documentos que pasan a las siguientes etapas<br>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>$group: agrupar y calcular</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+Nueva colección "pedidos", cargar pedidos.json<br>
+<br>
+db.pedidos.aggregate([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$group: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$cliente",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total: { $sum: "$precio" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_pedidos: { $sum: 1 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+])
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Acumuladores de $group</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 17px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 6px;">MongoDB</th>
+                <th style="border: 1px solid #ccc; padding: 6px;">Descripción</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$sum</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Suma valores o cuenta</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$avg</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Media aritmética</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$min</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Valor mínimo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$max</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Valor máximo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$first</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Primer valor del grupo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;"><code>$push</code></td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Array con todos los valores</td>
+            </tr>
         </table>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas</h1>
-        <p>44</p>
-        <ul>
-        <li>Es posible gestionar BBDD en MongoDB sin definir ningún tipo de estructura.</li>
-        <li><i>pero…</i></li>
-        <li>En algunas situaciones puede que queramos controlar los datos de forma automática</li>
-        <ul>
-        <li>P.e. que todos los documento de una colección “productos” tienen un campo numérico “precio”.</li>
-        </ul>
-        </ul>
+
+    <section class="slide">
+        <h2>Pipeline completo: ejemplo</h2>
+        <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+db.pedidos.aggregate([<br>
+&nbsp;&nbsp;{ $match: { precio: { $gt: 30 } } },&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// WHERE<br>
+&nbsp;&nbsp;{ $group: {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// GROUP BY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$cliente",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total: { $sum: "$precio" }<br>
+&nbsp;&nbsp;}},<br>
+&nbsp;&nbsp;{ $match: { total: { $gt: 200 } } },&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// HAVING<br>
+&nbsp;&nbsp;{ $sort: { total: -1 } }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ORDER BY<br>
+])<br>
+        </pre>
+        <p>El pipeline permite construir consultas complejas paso a paso</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas</h1>
-        <ul>
-        <li>Posibles enfoques de diseño1:</li>
-        </ul>
-        <p>45</p>
-        <p>{</p>
-        <p>nombre: “Libro”, precio: 5.99</p>
-        <p>}</p>
-        <p>{</p>
-        <p>nombre: “Botella”, precio: 2.55, disponible: true</p>
-        <p>}</p>
-        <p>{</p>
-        <p>nombre: “Libro”, precio: 5.99</p>
-        <p>}</p>
-        <p>{</p>
-        <p>nombre: “Botella”, precio: 2.55</p>
-        <p>}</p>
-        <p>{</p>
-        <p>nombre: “Libro”, precio: 5.99</p>
-        <p>}</p>
-        <p>{</p>
-        <p>titulo: “Botella”, disponible: true</p>
-        <p>}</p>
-        <p>Colección: Productos</p>
-        <p>Colección: Productos</p>
-        <p>Colección: Productos</p>
-        <p>Caos total	Punto intermedio	Estilo SQL</p>
-        <p>1Fuente: M. Schwarzmüller</p>
+
+    <section class="slide">
+        <h2>$project: transformar campos</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni.aggregate([<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$project: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nombre: 1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email_mayus: { $toUpper: "$email" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anio_nacimiento: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$subtract: [2026, "$edad"]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+])<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas</h1>
-        <ul>
-        <li>Se puede definir la estructura que deben cumplir los documentos de una colección.</li>
-        <li>Un esquema verifica cada documento insertado en una colección y genera un aviso/error si es incorrecto.</li>
-        </ul>
-        <p>Colección</p>
-        <p>Esquema de validación</p>
-        <p>Insertar documento</p>
-        <p>¿Documento correcto?</p>
-        <p>Generar aviso/error</p>
-        <p>Nueva inserción</p>
-        <p>Si</p>
-        <p>No</p>
+
+    <section class="slide">
+        <h2>$unwind: descomponer arrays</h2>
+        <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+// Dato: { nombre: "Jon", notas: [{asig: "ABD", nota: 7.5},<br>
+//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{asig: "SI", nota: 8.0}] }<br>
+// $unwind crea un documento por cada elemento del array:<br>
+<br>
+db.alumni.aggregate([<br>
+&nbsp;&nbsp;{ $unwind: "$notas" }<br>
+])<br>
+// Resultado:<br>
+// { nombre: "Jon", notas: { asig: "ABD", nota: 7.5 } }<br>
+// { nombre: "Jon", notas: { asig: "SI", nota: 8.0 } }<br>
+<br>
+// Útil para después hacer $group por asignatura:<br>
+db.alumni.aggregate([<br>
+&nbsp;&nbsp;{ $unwind: "$notas" },<br>
+&nbsp;&nbsp;{ $group: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: "$notas.asignatura",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;media: { $avg: "$notas.nota" }<br>
+&nbsp;&nbsp;}}<br>
+])<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas</h1>
-        <ul>
-        <li>Los esquemas de validación tienen 2 opciones que controlan su comportamiento:</li>
-        <ul>
-        <li>validationLevel</li>
-        <ul>
-        <li>Controla cómo de estricta es la validación. 2 opciones:</li>
-        <ul>
-        <li><b>strict </b>(valor por defecto): Se comprueba toda inserción y modificación.</li>
-        <li><b>moderate</b>: Las modificaciones a documentos ya existentes no se comprueban.</li>
-        </ul>
-        </ul>
-        <li>validationAction</li>
-        <ul>
-        <li>Indica qué hacer cuando un documento no cumple el esquema. 2 opciones:</li>
-        <ul>
-        <li><b>error </b>(valor por defecto): Se emite un error y se impide la inserción.</li>
-        <li><b>warn</b>: Se escribe un aviso en el log de MongoDB y se permite la inserción.</li>
-        </ul>
-        </ul>
-        </ul>
-        </ul>
+
+    <section class="slide">
+        <h2>$lookup: unión entre colecciones</h2>
+        <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+db.pedidos.aggregate([<br>
+&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$lookup: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from: "alumni",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localField: "cliente",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreignField: "nombre",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as: "alumniMatch"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;}<br>
+])<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas</h1>
+
+    <section class="slide">
+        <h2>Diseño del esquema en MongoDB</h2>
+        <p>Aunque MongoDB es schemaless, el diseño del esquema es <strong>fundamental</strong></p>
+        <p>La pregunta clave: ¿<strong>embeber</strong> o <strong>referenciar</strong>?</p>
         <ul>
-        <li>Para incluir un esquema, se debe crear una colección de forma explícita con createCollection:</li>
-        <ul>
-        <li>El esquema se define en el 2º parámetro con un campo “validator”.</li>
+            <li><strong>Embeber</strong>: incluir los datos relacionados dentro del documento</li>
+        <li><strong>Referenciar</strong>: guardar el _id del documento relacionado</li>
         </ul>
-        </ul>
-        <ul>
-        <li>db.createCollection(&quot;marcas&quot;, { 	validator: {</li>
-        <p>$jsonSchema: { bsonType: &quot;object&quot;,</p>
-        <p>required: [ &quot;nombre&quot;, &quot;presupuesto&quot; ], properties: {</p>
-        </ul>
-        <p>nombre: { bsonType: &quot;string&quot;, description: &quot;nombre de la marca&quot;}, presupuesto: { bsonType: &quot;int&quot;, minimum: 2000 }},</p>
-        <p>},</p>
-        <p>validationLevel: 'moderate', validationAction: 'error'</p>
-        <p>})</p>
-        <p>Opcionales</p>
-        <p>Listado de campos de la colección</p>
+      <p>La elección depende de patrones de acceso, tamaño y frecuencia de actualización</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas</h1>
-        <ul>
-        <li>Mostrar el esquema de una colección:</li>
-        </ul>
-        <ul>
-        <li>Modificar el esquema de una colección:</li>
-        <ul>
-        <li>También sirve para añadir un esquema a una colección existente.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Si validationAction es “warn”, el resultado se escribe en el log 	de MongoDB.</li>
-        <ul>
-        <li>Por defecto, la ubicación del fichero log es /var/log/mongodb/mongod.log</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.getCollectionInfos({name: &quot;marcas&quot;})</li>
-        </ul>
-        <ul>
-        <li>db.runCommand( {collMod: &quot;marcas&quot;, 	validator: {</li>
-        <p>$jsonSchema: {</p>
-        <p>...</p>
-        </ul>
+
+    <section class="slide">
+        <h2>Embeber (desnormalizar)</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+// Toda la información en un solo documento<br>
+{<br>
+&nbsp;&nbsp;nombre: "Javier Cansado",<br>
+&nbsp;&nbsp;direccion: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;calle: "Gran Vía 1",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ciudad: "Bilbao"<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;pedidos: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ producto: "Monitor", precio: 250, fecha: "2026-01-15" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ producto: "Ratón", precio: 25, fecha: "2026-02-20" }<br>
+&nbsp;&nbsp;]<br>
+}<br>
+        </pre>
+        <p><strong>Ventajas:</strong> lectura muy rápida (una sola consulta)</p>
+        <p><strong>Inconvenientes:</strong> datos duplicados, documentos muy grandes</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas: Tipos de datos</h1>
-        <table>
-          <tr>
-            <td>
-        <p><b>Nombre</b></p>
-            </td>
-            <td>
-        <p><b>Descripción</b></p>
-            </td>
-            <td>
-        <p><b>Ejemplo</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>string</p>
-            </td>
-            <td>
-        <p>Texto plano</p>
-            </td>
-            <td>
-        <p>“Unai”</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Boolean</p>
-            </td>
-            <td>
-        <p>Valor booleano</p>
-            </td>
-            <td>
-        <p>true</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>int</p>
-            </td>
-            <td>
-        <p>Número entero (int32)</p>
-            </td>
-            <td>
-        <p>55</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>NumberLong</p>
-            </td>
-            <td>
-        <p>Número entero grande (int64)</p>
-            </td>
-            <td>
-        <p>1000000000</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>NumberDecimal</p>
-            </td>
-            <td>
-        <p>Números decimales</p>
-            </td>
-            <td>
-        <p>12.99</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>ObjectId</p>
-            </td>
-            <td>
-        <p>Identificador único</p>
-            </td>
-            <td>
-        <p>ObjectId(“74121…”)</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>ISODate</p>
-            </td>
-            <td>
-        <p>Fecha en formato AAAA-MM-DD</p>
-            </td>
-            <td>
-        <p>2022-01-09</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Timestamp</p>
-            </td>
-            <td>
-        <p>Fecha en formato Unix</p>
-            </td>
-            <td>
-        <p>11348822</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>EmbeddedDocument</p>
-            </td>
-            <td>
-        <p>Documento embebido</p>
-            </td>
-            <td>
-        <p>{ “a”: { … } }</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Array</p>
-            </td>
-            <td>
-        <p>Listado de elementos</p>
-            </td>
-            <td>
-        <p>{ “b”: [ … ] }</p>
-            </td>
-          </tr>
+
+    <section class="slide">
+        <h2>Referenciar (normalizar)</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+// Colección "clientes"<br>
+{<br>
+&nbsp;&nbsp;_id: ObjectId("aaa..."),<br>
+&nbsp;&nbsp;nombre: "Javier Cansado",<br>
+&nbsp;&nbsp;direccion: { calle: "Gran Vía 1", ciudad: "Bilbao" }<br>
+}<br>
+<br>
+// Colección "pedidos"<br>
+{<br>
+&nbsp;&nbsp;cliente_id: ObjectId("aaa..."),<br>
+&nbsp;&nbsp;producto: "Monitor",<br>
+&nbsp;&nbsp;precio: 250,<br>
+&nbsp;&nbsp;fecha: "2026-01-15"<br>
+}<br>
+        </pre>
+        <p><strong>Ventajas:</strong> sin duplicación, documentos más pequeños</p>
+        <p><strong>Inconvenientes:</strong> requiere $lookup (más lento), múltiples consultas</p>
+    </section>
+
+    <section class="slide">
+        <h2>¿Cuándo embeber? ¿Cuándo referenciar?</h2>
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-size: 16px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ccc; padding: 6px;">Criterio</th>
+                <th style="border: 1px solid #ccc; padding: 6px;">Embeber</th>
+                <th style="border: 1px solid #ccc; padding: 6px;">Referenciar</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Relación</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">1:1, 1: pocos</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">1: muchos, N:M</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Datos se leen juntos</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Sí</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">No siempre</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Datos cambian mucho</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">No</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Sí</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Tamaño subdatos</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Pequeño/limitado</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Grande/ilimitado</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 6px;">Prioridad</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Velocidad lectura</td>
+                <td style="border: 1px solid #ccc; padding: 6px;">Consistencia</td>
+            </tr>
         </table>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Esquemas: Tipos de datos</h1>
-        <ul>
-        <li>Fechas:</li>
-        <ul>
-        <li>Nuevo fecha tipo ISODate</li>
-        <ul>
-        <li>Recoger la fecha actual del sistema:</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Indicar una fecha concreta:</li>
-        </ul>
-        <ul>
-        <li>Nueva fecha tipo Unix:</li>
-        </ul>
-        <p>{ miFecha: new Date() }</p>
-        <p>{ miMarcaDeTiempo: new Timestamp() }</p>
-        <p>{ miFecha: new Date(&quot;1998-08-08&quot;) }</p>
+
+    <section class="slide">
+        <h2>Índices en MongoDB</h2>
+        <p>Sin índices, MongoDB debe examinar <strong>todos</strong> los documentos (collection scan)</p>
+        <p>Un índice permite encontrar documentos sin escanear toda la colección</p>
+        <p>MongoDB crea automáticamente un índice sobre <code>_id</code></p>
+        <p>Se pueden crear índices sobre cualquier campo o combinación de campos</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 3</h1>
-        <ul>
-        <li><i>Utilizando la BD “cine” de los ejercicios 1 y 2:</i></li>
-        <li>Crear una colección “salas” con el siguiente esquema:</li>
-        <ul>
-        <li>Campos requeridos</li>
-        <ul>
-        <li>nombre (tipo: string)</li>
-        <li>poblacion (tipo: string)</li>
-        <li>capacidad (tipo: int, como mínimo debe ser 150)</li>
-        </ul>
-        <li>Nivel de validación: estricto</li>
-        <li>Acción de validación: aviso (warning)</li>
-        </ul>
-        <li><i>Continúa en la siguiente diapositiva</i></li>
-        </ul>
+
+    <section class="slide">
+        <h2>Crear y gestionar índices</h2>
+        <pre style="font-size:13px; line-height:1.4; overflow:auto; background:#f7f7f7; padding:8px;">
+// Cargar ehu.alumni.json en coleccion ehu.alumni1000<br>
+<br>
+// Ver índices existentes:<br>
+db.alumni1000.getIndexes()<br>
+<br>
+// Crear un índice simple:<br>
+db.alumni1000.createIndex({ email: 1 })   // 1 = ascendente; -1 = descendente<br>
+<br>
+// Índice compuesto (sobre múltiples campos):<br>
+db.alumni1000.createIndex({ nombre: 1, edad: -1 })<br>
+<br>
+// Índice único (no permite duplicados):<br>
+db.alumni1000.createIndex({ email: 1 }, { unique: true })<br>
+<br>
+// Eliminar un índice:<br>
+db.alumni1000.dropIndex({ email: 1 })<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 3</h1>
-        <ul>
-        <li>Introducir los siguientes documentos en ”salas”:</li>
-        </ul>
-        <ul>
-        <li>Verificar que se ha escrito un aviso en el log debido a la inserción de la sala “Autocine”.</li>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>nombre</b></p>
-            </td>
-            <td>
-        <p><b>población</b></p>
-            </td>
-            <td>
-        <p><b>capacidad</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Yelmo Megapark</p>
-            </td>
-            <td>
-        <p>Barakaldo</p>
-            </td>
-            <td>
-        <p>500</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Autocine</p>
-            </td>
-            <td>
-        <p>Getxo</p>
-            </td>
-            <td>
-        <p>100</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Zubiarte</p>
-            </td>
-            <td>
-        <p>Bilbao</p>
-            </td>
-            <td>
-        <p>250</p>
-            </td>
-          </tr>
-        </table>
+
+    <section class="slide">
+        <h2>explain(): analizar consultas</h2>
+        <pre style="font-size:12px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+db.alumni1000.find({ email: "alumno0680@ikasle.ehu.eus" }).explain("executionStats")<br>
+// COLLSCAN: sin índice, escanea toda la colección<br>
+// IXSCAN: con índice, busca directamente<br>
+        </pre>
+        
+        <p>Crear índices en campos que se usan frecuentemente en consultas</p>
+        <p>Los índices aceleran las lecturas pero ralentizan las escrituras</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Bibliografía</h1>
-        <p>55</p>
-        <ul>
-        <li>R. Elmasri, S. B. Navathe. “Fundamentals of Database Systems”, 7th edition, Pearson, 2017</li>
-        <li>M. Schwarzmüller. “MongoDB - The Complete Developer's Guide”, Udemy, 2022.</li>
-        <ul>
-        <li><u>https://<a href="http://www.udemy.com/course/mongodb-the-complete-">www.udemy.com/course/mongodb-the-complete-</u></a> <u>developers-guide</u></li>
-        </ul>
-        <li>MongoDB Documentation, 2022.</li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/docs">www.mongodb.com/docs</u></a></li>
-        </ul>
-        </ul>
+
+    
+    <section class="slide">
+        <h2>Validación de esquema</h2>
+        <p>Aunque MongoDB es schemaless, se puede definir validación opcional</p>
+        <p>Usar JSON Schema para definir reglas sobre los documentos</p>
+        <pre style="font-size:11px; line-height:1.3; overflow:auto; background:#f7f7f7; padding:8px;">
+db.createCollection("ehu-schema", {<br>
+&nbsp;&nbsp;validator: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$jsonSchema: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bsonType: "object",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required: ["nombre", "email", "edad"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nombre: { bsonType: "string",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description: "debe ser un string" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email:&nbsp;&nbsp;{ bsonType: "string",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pattern: "^.+@.+$" },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edad:&nbsp;&nbsp;&nbsp;{ bsonType: "int",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum: 16, maximum: 99 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+})<br>
+        </pre>
     </section>
-    <section class="slide source-slide">
-        <h1>Optimización en MongoDB</h1>
-        <p>Administración de Bases de Datos</p>
-        <p>Departamento de Lenguajes y Sistemas Informáticos</p>
+
+    <section class="slide">
+        <h2>Validación: niveles</h2>
+<p>Nivel "strict" (por defecto): valida en insert y update</p>
+<p>Nivel "moderate": valida solo docs nuevos o válidos existentes</p>
+<p>Permite equilibrar flexibilidad de esquema e integridad de datos</p>
+<p>collMod_moderate, collMod_strict, productos_ejemplo, invalid_productos</p>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Contenido</h1>
-        <ul>
-        <li>Índices</li>
-        <li>Explain</li>
-        <li>Colecciones limitadas</li>
-        </ul>
+
+    <section class="slide">
+      <h2>Buenas prácticas con MongoDB</h2>
+      <ul>
+        <li>Diseñar documentos según los patrones de consulta más frecuentes</li>
+        <li>Elegir entre embeber y referenciar con criterios de acceso y tamaño</li>
+        <li>Crear índices en campos usados en filtros y ordenaciones</li>
+        <li>Aplicar validación de esquema cuando la integridad sea crítica</li>
+        <li>Monitorizar consultas con <code>explain()</code> y métricas de rendimiento</li>
+      </ul>
     </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>Al igual que en los sistemas relacionales, en MongoDB se pueden añadir índices para agilizar consultas.</li>
-        <li>Se definen para uno o varios campos de una colección.</li>
-        <li>Tienen las mismas desventajas que en los sistemas relacionales:</li>
-        <ul>
-        <li>Ocupan espacio en disco</li>
-        <li>Hacen que las operaciones de actualización se ralenticen</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>Añadir índice al campo de una colección:</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li><i>campo</i>: Campo al que queremos añadir el índice</li>
-        <li><i>ORDEN: </i>1 para que el índice sea ascendente, -1 para que sea descendente.</li>
-        </ul>
-        <li>En general, el orden del índice no afecta en exceso.</li>
-        <ul>
-        <li>MongoDB es capaz de recorrer un índice en ambas direcciones</li>
-        </ul>
-        <li>Ejemplo:</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.createIndex( { campo: ORDEN } )</li>
-        </ul>
-        <ul>
-        <li>db.clientes.createIndex( { DNI: 1 } )</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>Se pueden crear índices compuestos que relacionen diferentes campos de una colección</li>
-        <ul>
-        <li>Al igual que en los sistemas relacionales</li>
-        </ul>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Índice sobre el campo “edad” junto con el campo “DNI”:</li>
-        <ul>
-        <li>Datos de ejemplo a la derecha.</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.clientes.createIndex(</li>
-        <p>{</p>
-        <p>edad: 1, DNI: 1</p>
-        <p>} )</p>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>edad</b></p>
-            </td>
-            <td>
-        <p><b>DNI</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>20</p>
-            </td>
-            <td>
-        <p>1112223</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>20</p>
-            </td>
-            <td>
-        <p>1155566</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>20</p>
-            </td>
-            <td>
-        <p>2227744</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>21</p>
-            </td>
-            <td>
-        <p>1119944</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>21</p>
-            </td>
-            <td>
-        <p>2288448</p>
-            </td>
-          </tr>
-        </table>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>Se puede especificar que el índice sólo recoja valores concretos de un campo.</li>
-        <ul>
-        <li>Útil si sabemos que un % elevado de nuestras consultas van a un rango determinado de valores.</li>
-        <li>El índice creado ocupará menos espacio en disco.</li>
-        </ul>
-        <li>Se utiliza el 2º parámetro de createIndex</li>
-        <ul>
-        <li>Ejemplo: indexar sólo DNIs con valor igual o mayor que 50000000.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.clientes.createIndex(</li>
-        <p>{ DNI: 1 },</p>
-        <p>{</p>
-        <p>partialFilterExpression: { DNI: { $gte: 50000000 }</p>
-        <p>}</p>
-        <p>})</p>
-        </ul>
-        <p>Definición del rango</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>MongoDB proporciona un tipo concreto de índice para campos de texto.</li>
-        <ul>
-        <li>Segmenta un campo de texto en palabras, elimina palabras vacías1 e indexa en base a las palabras restantes.</li>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Para la siguiente cadena de texto:</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Se indexarían las siguientes palabras:</li>
-        </ul>
-        <p>6</p>
-        <p>1Definición de “palabra vacía”: <a href="https://es.wikipedia.org/wiki/Palabra_vac%C3%ADa"><u>https://es.wikipedia.org/wiki/Palabra_vac%C3%ADa</u></a></p>
-        <p>“This product is a must-buy for all fans of modern fiction”</p>
-        <p>product</p>
-        <p>must</p>
-        <p>fiction</p>
-        <p>modern</p>
-        <p>fans</p>
-        <p>buy</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>MongoDB proporciona un tipo concreto de índice para campos de texto.</li>
-        <ul>
-        <li>Crear índices de texto tiene un alto coste computacional y MongoDB sólo permite tener uno por cada colección</li>
-        <li>Crear un índice de texto sobre un campo:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Crear un índice de texto sobre varios campos:</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.createIndex({ campo1: “text” })</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.createIndex({ campo1: “text”, campo2: “text” })</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>MongoDB proporciona un tipo concreto de índice para campos de texto.</li>
-        <ul>
-        <li>Para buscar en una colección que contenga un índice de texto, se utilizan las palabras clave $text y $search.</li>
-        <ul>
-        <li>Busca documentos que contengan “libro”</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Busca documentos que contengan “libro” o “rojo”:</li>
-        </ul>
-        <ul>
-        <li>Busca documentos que contengan “libro rojo”:</li>
-        </ul>
-        <ul>
-        <li>No es necesario indicar el campo sobre el que se ha establecido el índice.</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.find({ $text: { $search: &quot;libro&quot;} })</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.find({ $text: { $search: &quot;libro rojo&quot;} })</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.find({ $text: { $search: &quot;\&quot;libro rojo\&quot;&quot;} })</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Índices</h1>
-        <ul>
-        <li>Mostrar los índices en una colección:</li>
-        <ul>
-        <li>Ejemplo: índices en la colección “clientes”</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Para eliminar un índice, se utiliza la función dropIndex con los mismos parámetros utilizados para crearlo.</li>
-        <ul>
-        <li>Ejemplo: Eliminar un índice ascendente sobre el campo DNI.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Para eliminar índices de texto hay que utilizar el nombre del índice.</li>
-        <ul>
-        <li>Se puede obtener con el comando getIndexes.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.clientes.dropIndex( { DNI: 1 } )</li>
-        </ul>
-        <ul>
-        <li>db.clientes.getIndexes()</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.dropIndex({“nombre-del-índice”})</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Explain</h1>
-        <ul>
-        <li>La función Explain proporciona información sobre tiempos y plan de ejecución de una consulta.</li>
-        <ul>
-        <li>Equivalente al comando Explain Analyze en sistemas relacionales.</li>
-        </ul>
-        <li>Se ejecuta como función de la colección:</li>
-        </ul>
-        <ul>
-        <li>Ejemplo:</li>
-        </ul>
-        <ul>
-        <li>db.&lt;colección&gt;.explain().&lt;comandoAAnalizar&gt;</li>
-        </ul>
-        <ul>
-        <li>db.clientes.explain().find({ DNI: 12345678})</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Explain</h1>
-        <ul>
-        <li>El comando Explain recibe como parámetro un <i>string</i></li>
-        <p>que determina el nivel de detalle que muestra:</p>
-        <ul>
-        <li>Ejemplo:</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Valores posibles e información mostrada:</li>
-        </ul>
-        <ul>
-        <li>db.clientes.explain(“executionStats”).find({ DNI: 12345678})</li>
-        </ul>
-        <table>
-          <tr>
-            <td>
-            </td>
-            <td>
-        <p><b>“queryPlanner”</b></p>
-            </td>
-            <td>
-        <p><b>“executionStats”</b></p>
-            </td>
-            <td>
-        <p><b>“allPlansExecution”</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Estadísticas de la ejecución</p>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Detalles del plan ejecutado</p>
-            </td>
-            <td>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Planes descartados</p>
-            </td>
-            <td>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Proceso de decisión</p>
-            </td>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-        <p>✓</p>
-            </td>
-          </tr>
-        </table>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Importar datos</h1>
-        <ul>
-        <li>Mongoimport permite importar datos en formato JSON</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;ruta-fichero&gt;: Ruta y nombre del fichero JSON con datos</li>
-        <li>&lt;BD&gt;: BD de MongoDB en la que importar los datos</li>
-        <li>&lt;colección&gt;: Colección de &lt;BD&gt; en la que importar los datos</li>
-        </ul>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Importar el contenido del fichero misDatos.json en la colección proveedores de la BD tienda</li>
-        </ul>
-        </ul>
-        <p>$ mongoimport &lt;ruta-fichero&gt; -d &lt;BD&gt; -c &lt;colección&gt;</p>
-        <p>$ mongoimport misDatos.json -d tienda -c proveedores</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 1</h1>
-        <ul>
-        <li>Importar el siguiente dataset en MongoDB:</li>
-        <ul>
-        <li>Repositorio: <a href="https://github.com/mcampo2/mongodb-sample-databases/tree/master/sample_airbnb"><u>https://github.com/mcampo2/mongodb-sample-databases/tree/master/sample_airbnb</u></a></li>
-        <ul>
-        <li>Raw:  <a href="https://github.com/mcampo2/mongodb-sample-databases/raw/master/sample_airbnb/listingsAndReviews.json"><u>https://github.com/mcampo2/mongodb-sample-	databases/raw/master/sample_airbnb/listingsAndReviews.json</u></a></li>
-        </ul>
-        <li>Dataset de muestra de MongoDB</li>
-        <li>Contiene datos y comentarios para 5555 alojamientos de AirBnB</li>
-        </ul>
-        <li><i>Continúa en la siguiente diapositiva</i></li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 1</h1>
-        <ul>
-        <li>Realizar las siguientes consultas:</li>
-        <ul>
-        <li>Obtener cuántos alojamientos tienen un <i>rating </i>superior a 90.</li>
-        <ul>
-        <li>Campo review_scores.review_scores_rating</li>
-        </ul>
-        <li>Obtener cuántos alojamientos tienen uno (o más comentarios) donde se les califique como “awesome”</li>
-        <ul>
-        <li>Campo reviews.comments</li>
-        <li>Usar {$<u>rege</u>x: &quot;awesome&quot;}</li>
-        </ul>
-        </ul>
-        <li>Obtener el tiempo de ejecución de las consultas</li>
-        <li>Crear índices en los campos afectados por las consultas</li>
-        <ul>
-        <li>Probar diferentes tipos de índices y medir cuánto se reducen los tiempos de ejecución</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Colecciones limitadas</h1>
-        <ul>
-        <li>Son colecciones con un límite máximo de documentos</li>
-        <ul>
-        <li>Cuando se llegue al límite, la inserción de un nuevo documento provoca que se elimine el más antiguo.</li>
-        <li>Ejemplo: Colección limitada a 3 documentos</li>
-        </ul>
-        </ul>
-        <p>{ nombre: “A”}</p>
-        <p>{ nombre: “A”}</p>
-        <p>{ nombre: “B”}</p>
-        <p>Inserción de “A”</p>
-        <p>{ nombre: “C”}</p>
-        <p>{ nombre: “B”}</p>
-        <p>{ nombre: “A”}</p>
-        <p>{ nombre: “D”}</p>
-        <p>{ nombre: “C”}</p>
-        <p>{ nombre: “B”}</p>
-        <p>Inserción de “B”</p>
-        <p>Inserción de “C”</p>
-        <p>Inserción de “D”</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Colecciones limitadas</h1>
-        <ul>
-        <li>Útiles cuando no interese conservar los datos más antiguos y sea necesario ahorrar espacio en disco</li>
-        <ul>
-        <li>Posibles escenarios de uso:</li>
-        <ul>
-        <li>Monitorización de servidores que generen muchos logs</li>
-        <li>Caché de documentos recientes</li>
-        </ul>
-        </ul>
-        <li>Crear una colección limitada</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;max-tam&gt;: Tamaño máximo en Bytes que puede ocupar la colección.</li>
-        <li>&lt;max-docs&gt;: Número máximo de documentos permitidos en la colección.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.createCollection(“nombre”,{capped: true, size: &lt;max-tam&gt;, max: &lt;max-docs})</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 2</h1>
-        <ul>
-        <li>Crear una BD “masrecientes” y una colección limitada 	“llamadas” con un límite máximo de 3 documentos.</li>
-        <li>Introducir los siguientes documentos:</li>
-        </ul>
-        <ul>
-        <li>Verificar que la inserción del último documento provoca que 	se elimine el primero.</li>
-        </ul>
-        <table>
-          <tr>
-            <td>
-        <p><b>contacto</b></p>
-            </td>
-            <td>
-        <p><b>número</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Mikel</p>
-            </td>
-            <td>
-        <p>944123456</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Ainhoa</p>
-            </td>
-            <td>
-        <p>946015588</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Unai</p>
-            </td>
-            <td>
-        <p>612345667</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Amaia</p>
-            </td>
-            <td>
-        <p>612398765</p>
-            </td>
-          </tr>
-        </table>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Bibliografía</h1>
-        <ul>
-        <li>R. Elmasri, S. B. Navathe. “Fundamentals of Database Systems”, 7th edition, Pearson, 2017</li>
-        <li>M. Schwarzmüller. “MongoDB - The Complete Developer's Guide”, Udemy, 2022.</li>
-        <ul>
-        <li><a href="https://www.udemy.com/course/mongodb-the-complete-"><u>https://www.udemy.com/course/mongodb-the-complete-</a>developers-guide</u></li>
-        </ul>
-        <li>MongoDB Documentation, 2022.</li>
-        <ul>
-        <li><a href="https://www.mongodb.com/docs"><u>https://www.mongodb.com/docs</u></a></li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1>Administración MongoDB</h1>
-        <p>Administración de Bases de Datos</p>
-        <p>Departamento de Lenguajes y Sistemas Informáticos</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Contenido</h1>
-        <ul>
-        <li>Usuarios y roles</li>
-        <li>Copias de seguridad</li>
-        <li>Sharding</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>Hasta ahora hemos utilizado MongoDB de forma local con permisos de administrador.</li>
-        <li><i>pero…</i></li>
-        <li>En un entorno real necesitamos gestionar la actividad mediante usuarios y permisos.</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>En MongoDB, los usuarios y permisos se gestionan a través de roles.</li>
-        <li>Un rol es un conjunto de permisos para realizar <u>acciones</u> en un <u>recurso</u>, donde:</li>
-        <ul>
-        <li>Un recurso es, p.e., una colección de una BD.</li>
-        <li>Una acción es, p.e., insertar documentos.</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>Posibles roles para una base de datos “Tienda”.</li>
-        </ul>
-        </ul>
-        <p>Administrador</p>
-        <p>Analista de datos</p>
-        <p>Desarollador / App</p>
-        <ul>
-        <li>Gestiona la configuración</li>
-        <li>Gestiona usuarios</li>
-        </ul>
-        <ul>
-        <li>No tiene por qué leer o insertar datos en las colecciones</li>
-        </ul>
-        <ul>
-        <li>Inserta, modifica y lee datos</li>
-        </ul>
-        <ul>
-        <li>No debe modificar la configuración o permisos de la BD</li>
-        </ul>
-        <ul>
-        <li>Lee datos</li>
-        </ul>
-        <ul>
-        <li>No debe modificar la configuración o permisos de la BD</li>
-        <li>No debe insertar o modificar datos</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>MongoDB tiene roles predefinidos.</li>
-        <ul>
-        <li>Listado de los más relevantes:</li>
-        <ul>
-        <li>Listado completo en 1</li>
-        </ul>
-        </ul>
-        </ul>
-        <p>5</p>
-        <table>
-          <tr>
-            <td>
-        <p><b>Categoría</b></p>
-            </td>
-            <td>
-        <p><b>Rol</b></p>
-            </td>
-            <td>
-        <p><b>Permisos</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Usuario de 1 BD</p>
-            </td>
-            <td>
-        <p>read</p>
-            </td>
-            <td>
-        <p>Leer todas las colecciones</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-            <td>
-        <p>readWrite</p>
-            </td>
-            <td>
-        <p>Leer y modificar todas las colecciones</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Administrador de 1 BD</p>
-            </td>
-            <td>
-        <p>userAdmin</p>
-            </td>
-            <td>
-        <p>Gestionar usuarios</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-            <td>
-        <p>dbOwner</p>
-            </td>
-            <td>
-        <p>Equivale a userAdmin + readWrite</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-        <p>Administrador de todas las BBDD</p>
-            </td>
-            <td>
-        <p>readAnyDatabase</p>
-            </td>
-            <td>
-        <p>Leer cualquier colección</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-            <td>
-        <p>readWriteAnyDatabase</p>
-            </td>
-            <td>
-        <p>Leer y modificar cualquier colección</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-            <td>
-        <p>root</p>
-            </td>
-            <td>
-        <p>Control total</p>
-            </td>
-          </tr>
-        </table>
-        <p>1MongoDB, Built-in roles: <u>https://<a href="http://www.mongodb.com/docs/manual/reference/built-in-roles/">www.mongodb.com/docs/manual/reference/built-in-roles/</u></a></p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles: Activación</h1>
-        <ul>
-        <li>Por defecto, MongoDB:</li>
-        <ul>
-        <li>No tiene ningún usuario creado</li>
-        <li>No tiene activado el control de usuarios</li>
-        <li>Sólo permite conexiones locales</li>
-        </ul>
-        <li>Antes de activar el control de usuarios, es necesario crear un usuario “root”:</li>
-        </ul>
-        <ul>
-        <li>Ejemplo:</li>
-        </ul>
-        <ul>
-        <li>use admin</li>
-        <li>db.createUser({</li>
-        <p>... user: &quot;unai&quot;,</p>
-        <p>... pwd: passwordPrompt(),</p>
-        <p>... roles: [&quot;root&quot;]</p>
-        <p>... })</p>
-        </ul>
-        <p>Asignar el rol “root”</p>
-        <p>al usuario “unai”</p>
-        <p>No hace falta que el nombre sea “root”</p>
-        <p>Solicitar la contraseña en un siguiente paso</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles: Activación</h1>
-        <ul>
-        <li>Tras crear un usuario “root”, activar el control de usuarios:</li>
-        <ul>
-        <li>Editar el fichero de configuración de MongoDB:</li>
-        <ul>
-        <li>Por defecto, /etc/mongod.conf</li>
-        </ul>
-        </ul>
-        </ul>
-        <p>2)	Reiniciar el servicio de MongoDB para aplicar los cambios</p>
-        <p>...</p>
-        <p>security: authorization: enabled</p>
-        <p>...</p>
-        <p><i>enabled </i>para activar el control de usuarios</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles: Activación</h1>
-        <ul>
-        <li>El usuario con rol ”root” se crea en la BD “admin”</li>
-        </ul>
-        <ul>
-        <li>Un usuario se crea vinculado a una BD concreta</li>
-        <ul>
-        <li>El usuario se autentica contra esa BD</li>
-        <li>No impide que el usuario acceda a otras BBDD</li>
-        <ul>
-        <li>Pero tiene que tener permisos para ello</li>
-        </ul>
-        </ul>
-        <li>Conectarse con autenticación a MongoDB:</li>
-        <ul>
-        <li>Desde la consola Linux:</li>
-        <p>$ mongosh –u &lt;usuario&gt; -p --authenticationDatabase &lt;DB&gt;</p>
-        </ul>
-        </ul>
-        <p>Indicar la BD</p>
-        <p>vinculada al usuario</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>Crear nuevos usuarios con el comando createUser</li>
-        <ul>
-        <li>Ejemplo: crear el usuario “mikel” vinculado a la BD “tienda” con diferentes roles.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>La contraseña se podría escribir en texto plano en el campo “pwd”, pero no 	es recomendable por seguridad.</li>
-        <li>El campo “roles” contiene un listado de los roles a asignar al usuario, tanto 	para su BD vinculada, como para otras existentes.</li>
-        </ul>
-        <ul>
-        <li>use tienda</li>
-        <li>db.createUser({ 	user: &quot;mikel&quot;,</li>
-        <p>pwd: passwordPrompt(), roles: [</p>
-        <p>{ role: &quot;readWrite&quot;, db: &quot;tienda&quot; },</p>
-        <p>{ role: &quot;read&quot;, db: &quot;edificios&quot; }</p>
-        <p>]</p>
-        <p>})</p>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>Modificar un usuario con el comando updateUser:</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;nombre&gt;: Nombre del usuario en un string, p.e. “mikel”</li>
-        <li>&lt;cambios&gt;: Documento indicando los cambios a realizar, p.e.:</li>
-        <ul>
-        <li>Asignar la contraseña a “Pass456” y el rol a “read” en la BD que está vinculado.</li>
-        </ul>
-        </ul>
-        </ul>
-        <ul>
-        <li>Asignar el rol “readWrite” en la BD “almacen”.</li>
-        </ul>
-        <p>{ pwd: “Pass456”, roles: [“read”]}</p>
-        <p>{ roles: [</p>
-        <p>{ db: ”almacen”, role: “readWrite”}</p>
-        <p>]}</p>
-        <ul>
-        <li>db.updateUser(&lt;nombre&gt;, &lt;cambios&gt;)</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>Visualizar los roles de un usuario, utilizar el comando getUser.</li>
-        <ul>
-        <li>Es necesario estar usando la BD a la que está vinculado el usuario.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>Eliminar un usuario con el comando dropUser.</li>
-        <ul>
-        <li>Es necesario estar usando la BD a la que está vinculado el usuario.</li>
-        </ul>
-        </ul>
-        <ul>
-        <li>db.getUser(&lt;nombre&gt;)</li>
-        </ul>
-        <ul>
-        <li>db.dropUser(&lt;nombre&gt;)</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Usuarios y roles</h1>
-        <ul>
-        <li>Listado de acciones posibles: 	<u>https://<a href="http://www.mongodb.com/docs/manual/reference/privilege-actions/">www.mongodb.com/docs/manual/reference/privilege-actions/</u></a></li>
-        </ul>
-        <ul>
-        <li>Se pueden crear roles personalizados</li>
-        <ul>
-        <li>Ejemplo: crear un rol que permita exclusivamente leer y actualizar documentos de la colección “productos” en la BD “tienda”.</li>
-        <ul>
-        <li>db.createRole(</li>
-        <p>{</p>
-        <p>role: &quot;dbTiendaLeerCambiarProductos&quot;, privileges: [</p>
-        <p>{ resource:</p>
-        <p>{</p>
-        <p>db: &quot;tienda&quot;, collection: &quot;productos&quot; }, actions: [ &quot;find&quot;, &quot;update&quot; ]</p>
-        <p>}</p>
-        <p>],</p>
-        <p>roles: []</p>
-        </ul>
-        </ul>
-        </ul>
-        <p>})</p>
-        <p>Permite indicar roles existentes de los que heredar privilegios</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 1</h1>
-        <ul>
-        <li>Pre-requisito:</li>
-        <ul>
-        <li>Haber creado un usuario “root” y activado el control de usuarios.</li>
-        </ul>
-        <li>Como usuario “root”:</li>
-        <ul>
-        <li>Crear una BD “libreria” que contenga una colección “libros”.</li>
-        <li>Insertar 3 documentos en “libros”.</li>
-        <li>Crear un usuario “koldo” con permisos de lectura en “libros”.</li>
-        </ul>
-        <li>Conectarse a MongoDB como “koldo” y:</li>
-        <ul>
-        <li>Verificar puede leer el contenido de “libros”.</li>
-        <li>Verificar que no puede insertar documentos en “libros”.</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Copias de seguridad</h1>
-        <ul>
-        <li>Realizar copias de seguridad periódicas es una tarea fundamental de administración.</li>
-        <li>Hay 2 formas principales en MongoDB:</li>
-        <ul>
-        <li>Utilizando sus propias plataformas en la nube (p.e. Atlas).</li>
-        <ul>
-        <li>Requiere contratar el servicio.</li>
-        </ul>
-        <li>De forma manual</li>
-        <ul>
-        <li>Lo veremos en este tema.</li>
-        </ul>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Copias de seguridad</h1>
-        <ul>
-        <li>mongodump realiza una copia de una BD en ficheros BSON.</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;usuario&gt;: Usuario para autenticarse a MongoDB y realizar la copia</li>
-        <li>&lt;BD-aut&gt;: BD vinculada al usuario para autenticación</li>
-        <li>&lt;BD&gt;: BD que se quiere copiar. Si este parámetro se omite, se copian todas.</li>
-        </ul>
-        <li>Se crea una carpeta <i>dump </i>con los ficheros BSON.</li>
-        <li>Es necesario que el usuario tenga permisos para leer las BDs que se quieran copiar.</li>
-        </ul>
-        <p>$ mongodump -u &lt;usuario&gt; --authenticationDatabase &lt;BD-aut&gt; -d &lt;BD&gt;</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Copias de seguridad</h1>
-        <ul>
-        <li>mongorestore restaura una copia hecha con mongodump.</li>
-        </ul>
-        <ul>
-        <li>donde:</li>
-        <ul>
-        <li>&lt;usuario&gt;: Usuario para autenticarse a MongoDB y restaurar la copia</li>
-        <li>&lt;BD-aut&gt;: BD vinculada al usuario para autenticación</li>
-        <li>&lt;BD&gt;: BD en la que restaurar la copia. Opcional.</li>
-        <li>&lt;carpeta-dump&gt;: Ruta a la carpeta con la copia hecha por mongodump.</li>
-        </ul>
-        <li>Es necesario que el usuario tenga permisos para escribir en las BDs que se quieren restaurar.</li>
-        </ul>
-        <p>$ mongorestore -u &lt;usuario&gt; --authenticationDatabase &lt;BD-aut&gt;</p>
-        <p>-d &lt;BD&gt; &lt;carpeta-dump&gt;</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Copias de seguridad</h1>
-        <ul>
-        <li>mongodump y mongorestore necesitan que MongoDB esté en marcha para realizar/restaurar una copia de seguridad.</li>
-        <ul>
-        <li>Su uso tiene un impacto en el rendimiento de MongoDB.</li>
-        </ul>
-        <li>Una alternativa es copiar las carpetas que contienen los datos con otras herramientas (p.e. rsync)</li>
-        <ul>
-        <li>Desventaja: las copias ocupan más que con mongodump.</li>
-        <li>Más información:</li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/docs/manual/core/backups/#back-up-by-">www.mongodb.com/docs/manual/core/backups/#back-up-by-</u></a> 	<u>copying-underlying-data-files</u></li>
-        </ul>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Ejercicio 2</h1>
-        <ul>
-        <li>Realizar una copia de la BD “librería” creada en el ejercicio 1.</li>
-        <ul>
-        <li>Utilizar el usuario con permisos “root”.</li>
-        </ul>
-        <li>Eliminar 2 documentos de la colección “libros”.</li>
-        <li>Restaurar la copia de seguridad y verificar que la colección vuelve a tener los documentos eliminados.</li>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>Hasta ahora hemos trabajado con una única instancia de MongoDB.</li>
-        <li>Pero…</li>
-        <li>MongoDB es un SGDB NoSQL pensado para trabajar como un sistema multi-nodo distribuido.</li>
-        <ul>
-        <li>Poder escalar horizontalmente facilita su crecimiento.</li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>Un shard es una instancia de MongoDB que contiene una porción de los datos.</li>
-        <li>Ejemplo:</li>
-        <ul>
-        <li>5 servidores, 1 instalación de MongoDB</li>
-        <li>Gestionan una BD sobre libros.</li>
-        <li>Cada Shard contiene un conjunto de los documentos.</li>
-        </ul>
-        </ul>
-        <p>Shard 1</p>
-        <p><i>Libros A a E</i></p>
-        <p>Shard 2</p>
-        <p><i>Libros F a J</i></p>
-        <p>Shard 3</p>
-        <p><i>Libros L a P</i></p>
-        <p>Shard 4</p>
-        <p><i>Libros Q a U</i></p>
-        <p>Shard 5</p>
-        <p><i>Libros V a Z</i></p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>El punto de acceso a una instalación MongoDB distribuida es mongos</li>
-        <ul>
-        <li>Proceso que actúa como <i>router</i>.</li>
-        <ul>
-        <li>Recibe peticiones y las redirige al Shard adecuado.</li>
-        </ul>
-        </ul>
-        </ul>
-        <p>21</p>
-        <p>Imagen de: <u>https://<a href="http://www.mongodb.com/docs/manual/sharding/">www.mongodb.com/docs/manual/sharding/</u></a></p>
-        <p>Se recomienda instalarlo en los servidores que contienen la aplicación</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>Los documentos de las colecciones se distribuyen entre Shards en base a una “Shard key”.</li>
-        <ul>
-        <li>Es uno de los campos de los documentos, elegida por el desarrollador y/o administrador.</li>
-        <li>En el ejemplo de la diapositiva 20, sería el título del libro.</li>
-        </ul>
-        <li>Debe elegirse con cuidado, ya que afecta al rendimiento del sistema.</li>
-        <ul>
-        <li>Limita la concurrencia.</li>
-        </ul>
-        </ul>
-        <p>22</p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>2 escenarios posibles en una instalación distribuida</li>
-        <ul>
-        <li>Consulta que no hace uso de Shard Key</li>
-        <ul>
-        <li>mongos debe enviar la consulta a todos los Shards.</li>
-        <li>Mayor saturación de la red.</li>
-        </ul>
-        </ul>
-        </ul>
-        <p>Imagen  de:  <u>https://<a href="http://www.mongodb.com/docs/manual/core/sharded-cluster-query-router/">www.mongodb.com/docs/manual/core/sharded-cluster-query-router/</u></a></p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>2 escenarios posibles en una instalación distribuida</li>
-        <ul>
-        <li>Consulta que hace uso de Shard Key</li>
-        <ul>
-        <li>mongos envía la consulta al Shards (o Shards) que contienen la respuesta.</li>
-        <li>Mejor tiempo de respuesta, menor uso de ancho de banda.</li>
-        </ul>
-        </ul>
-        </ul>
-        <p>Imagen  de:  <u>https://<a href="http://www.mongodb.com/docs/manual/core/sharded-cluster-query-router/">www.mongodb.com/docs/manual/core/sharded-cluster-query-router/</u></a></p>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Sharding</h1>
-        <ul>
-        <li>Cuándo considerar una instalación distribuida de MongoDB:</li>
-        <ul>
-        <li>Para atender consultas con muy baja latencia.</li>
-        <li>Para gestionar conjuntos de datos muy grandes.</li>
-        </ul>
-        <li>Una instalación distribuida provee alta disponibilidad y alto rendimiento pero es compleja de gestionar.</li>
-        <li>Más información:</li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/docs/manual/sharding/">www.mongodb.com/docs/manual/sharding/</u></a></li>
-        </ul>
-        </ul>
-    </section>
-    <section class="slide source-slide">
-        <h1 style="page-break-before:always; ">Bibliografía</h1>
-        <ul>
-        <li>M. Schwarzmüller. “MongoDB - The Complete Developer's Guide”, Udemy, 2022.</li>
-        <ul>
-        <li><u>https://<a href="http://www.udemy.com/course/mongodb-the-complete-">www.udemy.com/course/mongodb-the-complete-</u></a> <u>developers-guide</u></li>
-        </ul>
-        <li>MongoDB Documentation, 2022.</li>
-        <ul>
-        <li><u>https://<a href="http://www.mongodb.com/docs">www.mongodb.com/docs</u></a></li>
-        </ul>
-        </ul>
+
+    <section class="slide">
+        <h2>MongoDB / Triple Stores</h2>
+        ¿Se puede cargar un archivo RDF (JSON-LD) en MongoDB?<br>
+        ¿GraphDB / Ontop?
     </section>
 
     <footer class="badge">
