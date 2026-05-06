@@ -1,5 +1,7 @@
 # Releases
 
+(New branch in case I can teach LPGs, Vectorial and RAG)
+
 ## 2025-2026-5
 
 * Intro NoSQL, Grafos, RDF
